@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onboarding — Wellness / Zdrowie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg1: #ecfdf5;
+      --bg2: #f0f9ff;
+      --accent: #059669;
+      --accent-lt: #d1fae5;
+      --accent-dark: #047857;
+      --sky: #0ea5e9;
+      --sky-lt: #e0f2fe;
+      --ink: #1a3a2e;
+      --ink-m: #4a7060;
+      --ink-s: #8db5a4;
+      --border: #d1e7dd;
+      --white: #ffffff;
+      --font: 'Nunito', system-ui, sans-serif;
+    }
+    html { height: 100%; }
+    body {
+      min-height: 100vh; font-family: var(--font);
+      background: linear-gradient(160deg, var(--bg1) 0%, var(--bg2) 100%);
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; padding: 40px 20px;
+      position: relative; overflow-x: hidden;
+    }
+
+    /* organic background shapes */
+    .shape {
+      position: fixed; border-radius: 40% 60% 55% 45% / 45% 55% 45% 55%;
+      pointer-events: none; opacity: .18; animation: morph 14s ease-in-out infinite;
+    }
+    .shape:nth-child(1) { width: 600px; height: 500px; background: #6ee7b7; top: -200px; left: -200px; animation-delay: 0s; }
+    .shape:nth-child(2) { width: 400px; height: 350px; background: #bae6fd; bottom: -120px; right: -100px; animation-delay: 5s; }
+    .shape:nth-child(3) { width: 280px; height: 260px; background: #c7d2fe; top: 30%; right: 5%; animation-delay: 10s; }
+    @keyframes morph {
+      0%,100% { border-radius: 40% 60% 55% 45% / 45% 55% 45% 55%; transform: rotate(0deg) scale(1); }
+      33% { border-radius: 55% 45% 40% 60% / 60% 40% 60% 40%; transform: rotate(4deg) scale(1.03); }
+      66% { border-radius: 45% 55% 60% 40% / 40% 60% 55% 45%; transform: rotate(-3deg) scale(.97); }
+    }
+
+    /* center column */
+    .wrap { width: 100%; max-width: 520px; position: relative; z-index: 1; }
+
+    /* brand */
+    .brand {
+      text-align: center; margin-bottom: 32px;
+    }
+    .brand-icon { font-size: 32px; margin-bottom: 6px; }
+    .brand-name { font-size: 17px; font-weight: 700; color: var(--ink); letter-spacing: -.01em; }
+
+    /* steps */
+    .step { display: none; }
+    .step.vis { display: flex; flex-direction: column; align-items: center; animation: gentleFade .6s cubic-bezier(.22,1,.36,1); }
+    @keyframes gentleFade { from{opacity:0;transform:translateY(14px);} to{opacity:1;transform:translateY(0);} }
+
+    .step-q {
+      font-size: 28px; font-weight: 800; color: var(--ink);
+      text-align: center; line-height: 1.25; margin-bottom: 8px;
+      letter-spacing: -.01em;
+    }
+    .step-sub {
+      font-size: 15px; color: var(--ink-m); text-align: center;
+      line-height: 1.55; margin-bottom: 32px; max-width: 380px;
+    }
+
+    /* option buttons — big friendly rows */
+    .opts { width: 100%; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+    .opt {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 20px; border-radius: 16px;
+      border: 2px solid transparent; background: var(--white);
+      cursor: pointer; transition: all .25s cubic-bezier(.34,1.56,.64,1);
+      box-shadow: 0 2px 12px rgba(5,150,105,.06);
+    }
+    .opt:hover { transform: translateX(4px) scale(1.01); box-shadow: 0 4px 20px rgba(5,150,105,.12); border-color: var(--accent-lt); }
+    .opt.on { border-color: var(--accent); background: linear-gradient(135deg, #ecfdf5, #f0fdf4); transform: translateX(4px) scale(1.01); box-shadow: 0 6px 20px rgba(5,150,105,.16); }
+    .opt-em { font-size: 26px; flex-shrink: 0; }
+    .opt-body { flex: 1; }
+    .opt-nm { font-size: 15px; font-weight: 700; color: var(--ink); }
+    .opt-ds { font-size: 12px; color: var(--ink-s); margin-top: 2px; }
+    .opt-check {
+      width: 24px; height: 24px; border-radius: 50%;
+      border: 2px solid var(--border); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s; color: transparent; font-size: 13px; font-weight: 700;
+    }
+    .opt.on .opt-check { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* multi select note */
+    .multi-note { font-size: 12px; color: var(--ink-s); text-align: center; margin-bottom: 10px; font-style: italic; }
+
+    /* contact form */
+    .form-wrap {
+      width: 100%; background: var(--white); border-radius: 20px;
+      padding: 28px 28px 24px; box-shadow: 0 4px 24px rgba(5,150,105,.08);
+      margin-bottom: 12px;
+    }
+    .f-row { margin-bottom: 16px; }
+    .f-lbl { display: block; font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+    .f-inp {
+      width: 100%; padding: 13px 16px; font-size: 15px; font-family: var(--font);
+      font-weight: 500; border: 2px solid var(--border); border-radius: 12px;
+      color: var(--ink); background: var(--bg1); outline: none; transition: all .22s;
+    }
+    .f-inp:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(5,150,105,.1); background: #fff; }
+    .f-inp::placeholder { color: var(--ink-s); font-weight: 400; }
+    .privacy-line {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 12px; color: var(--ink-s); line-height: 1.5; margin-top: 16px;
+    }
+    .privacy-line span:first-child { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+
+    /* CTA button */
+    .btn-cta {
+      width: 100%; padding: 16px; border: none; border-radius: 14px;
+      font-size: 16px; font-family: var(--font); font-weight: 800;
+      color: #fff; background: linear-gradient(135deg, var(--accent), #10b981);
+      cursor: pointer; transition: all .22s; letter-spacing: -.01em;
+    }
+    .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(5,150,105,.3); }
+    .btn-cta:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    /* continue auto-button (shown after single pick) */
+    .auto-next {
+      width: 100%; padding: 14px; border: 2px solid var(--border); border-radius: 14px;
+      font-size: 15px; font-family: var(--font); font-weight: 700; color: var(--ink-m);
+      background: var(--white); cursor: pointer; transition: all .22s;
+    }
+    .auto-next:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-lt); }
+
+    /* back link */
+    .back-lnk { margin-top: 14px; font-size: 13px; color: var(--ink-s); cursor: pointer; transition: color .2s; text-align: center; }
+    .back-lnk:hover { color: var(--ink); }
+
+    /* success */
+    .ok-wrap { text-align: center; animation: gentleFade .6s ease; width: 100%; }
+    .ok-art { font-size: 72px; margin-bottom: 16px; animation: heartbeat 1.2s ease; }
+    @keyframes heartbeat { 0%{transform:scale(0) rotate(-10deg);} 70%{transform:scale(1.1) rotate(3deg);} 100%{transform:scale(1) rotate(0);} }
+    .ok-title { font-size: 28px; font-weight: 800; color: var(--ink); margin-bottom: 10px; }
+    .ok-msg {
+      font-size: 15px; color: var(--ink-m); line-height: 1.65; margin-bottom: 28px;
+      max-width: 380px; margin-left: auto; margin-right: auto;
+    }
+    .ok-card {
+      background: var(--white); border-radius: 16px; padding: 20px 22px;
+      margin-bottom: 20px; box-shadow: 0 2px 16px rgba(5,150,105,.08);
+    }
+    .ok-row { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--ink-m); padding: 6px 0; }
+    .ok-num { width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .ok-email-chip {
+      display: inline-block; margin: 10px 0 0;
+      padding: 8px 20px; background: var(--accent-lt);
+      border-radius: 99px; font-size: 13px; font-weight: 700; color: var(--accent-dark);
+    }
+
+    @media (max-width: 480px) {
+      .step-q { font-size: 23px; }
+      .step-sub { font-size: 14px; }
+      .form-wrap { padding: 22px 18px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shape"></div>
+  <div class="shape"></div>
+  <div class="shape"></div>
+
+  <div class="wrap">
+    <div class="brand">
+      <div class="brand-icon">🌿</div>
+      <div class="brand-name">TwojaKlinika</div>
+    </div>
+
+    <!-- Step 1: Need -->
+    <div class="step vis" id="w1">
+      <h2 class="step-q">Czego szukasz dla siebie?</h2>
+      <p class="step-sub">Nie ma złej odpowiedzi — powiedz nam, co Cię sprowadziło, a dopasujemy najlepszą ścieżkę.</p>
+      <div class="opts">
+        <div class="opt" data-v="relax" onclick="pickW1(this)">
+          <div class="opt-em">🧘</div><div class="opt-body"><div class="opt-nm">Relaks i redukcja stresu</div><div class="opt-ds">Spokój, równowaga, odpoczynek</div></div><div class="opt-check">✓</div>
+        </div>
+        <div class="opt" data-v="health" onclick="pickW1(this)">
+          <div class="opt-em">💪</div><div class="opt-body"><div class="opt-nm">Poprawa zdrowia fizycznego</div><div class="opt-ds">Kondycja, rehabilitacja, dieta</div></div><div class="opt-check">✓</div>
+        </div>
+        <div class="opt" data-v="mental" onclick="pickW1(this)">
+          <div class="opt-em">🧠</div><div class="opt-body"><div class="opt-nm">Zdrowie psychiczne</div><div class="opt-ds">Wsparcie, terapia, coaching</div></div><div class="opt-check">✓</div>
+        </div>
+        <div class="opt" data-v="beauty" onclick="pickW1(this)">
+          <div class="opt-em">✨</div><div class="opt-body"><div class="opt-nm">Uroda i pielęgnacja</div><div class="opt-ds">Zabiegi estetyczne i spa</div></div><div class="opt-check">✓</div>
+        </div>
+        <div class="opt" data-v="general" onclick="pickW1(this)">
+          <div class="opt-em">🌱</div><div class="opt-body"><div class="opt-nm">Ogólna poprawa stylu życia</div><div class="opt-ds">Holistyczne podejście do wellbeing</div></div><div class="opt-check">✓</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Priority -->
+    <div class="step" id="w2">
+      <h2 class="step-q">Co jest dla Ciebie najważniejsze?</h2>
+      <p class="step-sub">Możesz zaznaczyć kilka opcji — chcemy naprawdę zrozumieć Twoje potrzeby.</p>
+      <div class="multi-note">Zaznacz wszystko, co rezonuje z Tobą</div>
+      <div class="opts">
+        <div class="opt" data-v="personal" onclick="togW2(this)">
+          <div class="opt-em">👤</div><div class="opt-body"><div class="opt-nm">Indywidualne podejście</div><div class="opt-ds">Program szyty na miarę</div></div><div class="opt-check">✓</div>
+        </div>
+        <div class="opt" data-v="results" onclick="togW2(this)">
+          <div class="opt-em">🎯</div><div class="opt-body"><div class="opt-nm">Szybkie i trwałe efekty</div><div class="opt-ds">Mierzalne postępy i wyniki</div></div><div class="opt-check">✓</div>
+        </div>
+        <div class="opt" data-v="comfort" onclick="togW2(this)">
+          <div class="opt-em">🛋️</div><div class="opt-body"><div class="opt-nm">Komfort i dyskrecja</div><div class="opt-ds">Bezpieczna, przyjazna atmosfera</div></div><div class="opt-check">✓</div>
+        </div>
+        <div class="opt" data-v="online" onclick="togW2(this)">
+          <div class="opt-em">💻</div><div class="opt-body"><div class="opt-nm">Możliwość online</div><div class="opt-ds">Wizyty zdalne i aplikacja</div></div><div class="opt-check">✓</div>
+        </div>
+        <div class="opt" data-v="price" onclick="togW2(this)">
+          <div class="opt-em">💚</div><div class="opt-body"><div class="opt-nm">Przystępna cena</div><div class="opt-ds">Dobry stosunek ceny do jakości</div></div><div class="opt-check">✓</div>
+        </div>
+      </div>
+      <button class="auto-next" onclick="goW(3)">Dalej →</button>
+      <div class="back-lnk" onclick="goW(1)">← Wróć</div>
+    </div>
+
+    <!-- Step 3: Timeline -->
+    <div class="step" id="w3">
+      <h2 class="step-q">Kiedy chciałbyś zacząć?</h2>
+      <p class="step-sub">Nie ma presji — jesteśmy tu wtedy, kiedy Ty jesteś gotowy.</p>
+      <div class="opts">
+        <div class="opt" data-v="now" onclick="pickW3(this)">
+          <div class="opt-em">🌅</div><div class="opt-body"><div class="opt-nm">Jak najszybciej</div><div class="opt-ds">Chcę zacząć już teraz</div></div><div class="opt-check">✓</div>
+        </div>
+        <div class="opt" data-v="soon" onclick="pickW3(this)">
+          <div class="opt-em">📆</div><div class="opt-body"><div class="opt-nm">W ciągu miesiąca</div><div class="opt-ds">Najpierw chcę się zapoznać z ofertą</div></div><div class="opt-check">✓</div>
+        </div>
+        <div class="opt" data-v="later" onclick="pickW3(this)">
+          <div class="opt-em">🌙</div><div class="opt-body"><div class="opt-nm">Nie śpieszy mi się</div><div class="opt-ds">Zbieram informacje, bez pośpiechu</div></div><div class="opt-check">✓</div>
+        </div>
+      </div>
+      <div class="back-lnk" onclick="goW(2)">← Wróć</div>
+    </div>
+
+    <!-- Step 4: Contact -->
+    <div class="step" id="w4">
+      <h2 class="step-q">Jesteśmy tu dla Ciebie 🌿</h2>
+      <p class="step-sub">Zostaw kontakt — odezwiemy się z ciepłą, spersonalizowaną propozycją. Bez presji i bez spamu.</p>
+      <div class="form-wrap">
+        <div class="f-row"><label class="f-lbl" for="wl-nm">Jak masz na imię?</label><input type="text" id="wl-nm" class="f-inp" placeholder="np. Marta" autocomplete="given-name"></div>
+        <div class="f-row"><label class="f-lbl" for="wl-em">Adres e-mail <span style="color:#ef4444">*</span></label><input type="email" id="wl-em" class="f-inp" placeholder="marta@przykład.pl" autocomplete="email"></div>
+        <div class="f-row"><label class="f-lbl" for="wl-ph">Telefon <span style="color:var(--ink-s);font-weight:500">(opcjonalnie)</span></label><input type="tel" id="wl-ph" class="f-inp" placeholder="+48 123 456 789" autocomplete="tel"></div>
+        <div class="privacy-line"><span>🔒</span><span>Twoje dane są bezpieczne. Nie wysyłamy spamu — tylko jeden przyjazny kontakt od naszego specjalisty.</span></div>
+      </div>
+      <button class="btn-cta" id="wl-sub" onclick="wlSubmit()">Chcę dowiedzieć się więcej 🌿</button>
+      <div class="back-lnk" onclick="goW(3)">← Wróć</div>
+    </div>
+
+    <!-- Success -->
+    <div class="step" id="w-ok">
+      <div class="ok-wrap">
+        <div class="ok-art">🌸</div>
+        <div class="ok-title">Dziękujemy, <span id="ok-name">drogi gościu</span>!</div>
+        <p class="ok-msg">Twoje zgłoszenie dotarło do nas. Nasz specjalista skontaktuje się z Tobą z ciepłą, spersonalizowaną propozycją.</p>
+        <div class="ok-card">
+          <div class="ok-row"><div class="ok-num">1</div>Analizujemy Twoje potrzeby i dobieramy eksperta</div>
+          <div class="ok-row"><div class="ok-num">2</div>Kontakt na adres:<div class="ok-email-chip" id="ok-em">—</div></div>
+          <div class="ok-row"><div class="ok-num">3</div>Bezpłatna konsultacja — bez zobowiązań</div>
+        </div>
+        <div id="ok-err" style="display:none;margin-top:12px;padding:10px 14px;background:rgba(255,255,255,.85);border:1px solid #fca5a5;border-radius:12px;font-size:12px;color:#7f1d1d;">
+          ⚠️ Nie udało się połączyć z Make.com. Sprawdź URL webhooka w CONFIG.
+        </div>
+        <button class="btn-cta" onclick="location.reload()">Wypełnij dla innej osoby</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    /* ═══════════════════════════════════════════════════════════════
+       KONFIGURACJA MAKE.COM — zmień tylko tę sekcję
+       ───────────────────────────────────────────────────────────────
+       Jak podłączyć webhook:
+         1. Wejdź na make.com → utwórz nowy scenariusz
+         2. Dodaj moduł: Webhooks → Custom webhook
+         3. Kliknij "Add" i nadaj nazwę, np. "Onboarding Wellness"
+         4. Skopiuj wygenerowany URL i wklej poniżej
+       ═══════════════════════════════════════════════════════════════ */
+    const CONFIG = {
+      webhookUrl: '',           // ← WKLEJ TU URL z Make.com, np. https://hook.eu1.make.com/xxxx
+      brandName:  'TwojaKlinika',  // ← nazwa firmy w szablonie
+    };
+
+    /*  POLA WYSYŁANE DO MAKE.COM:
+        ┌──────────────┬───────────────────────────────────────────────────┐
+        │ template     │ "wellness-calm"                                   │
+        │ need         │ relax / health / mental / beauty / general        │
+        │ priorities   │ ["personal","results","comfort","online","price"] │
+        │ timeline     │ now / soon / later                                │
+        │ name         │ imię                                              │
+        │ email        │ adres e-mail                                      │
+        │ phone        │ telefon (opcjonalny)                              │
+        │ timestamp    │ data i czas w formacie ISO 8601                   │
+        └──────────────┴───────────────────────────────────────────────────┘  */
+
+    /* ── helper: wyślij do Make.com z retry (3 próby) ── */
+    async function sendToMake(payload) {
+      if (!CONFIG.webhookUrl) {
+        console.warn('[Make.com] webhookUrl nie jest ustawiony w CONFIG.');
+        return { ok: false, reason: 'no-url' };
+      }
+      for (let attempt = 1; attempt <= 3; attempt++) {
+        try {
+          const res = await fetch(CONFIG.webhookUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          if (res.ok) return { ok: true };
+        } catch (err) {
+          if (attempt === 3) return { ok: false, reason: 'network', error: err };
+          await new Promise(r => setTimeout(r, attempt * 900));
+        }
+      }
+      return { ok: false, reason: 'failed' };
+    }
+
+    /* ── stan formularza ── */
+    const WD = { need:'', priorities:[], timeline:'' };
+    let cur = 1;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.brand-name').forEach(el => el.textContent = CONFIG.brandName);
+    });
+
+    function goW(n) {
+      document.getElementById('w' + cur).classList.remove('vis');
+      cur = n;
+      const next = document.getElementById('w' + n) || document.getElementById('w-ok');
+      next.classList.add('vis');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function pickW1(el) {
+      document.querySelectorAll('#w1 .opt').forEach(o => o.classList.remove('on'));
+      el.classList.add('on');
+      WD.need = el.dataset.v;
+      setTimeout(() => goW(2), 260);
+    }
+
+    function togW2(el) {
+      el.classList.toggle('on');
+      const v = el.dataset.v;
+      WD.priorities = el.classList.contains('on') ? [...new Set([...WD.priorities, v])] : WD.priorities.filter(x => x !== v);
+    }
+
+    function pickW3(el) {
+      document.querySelectorAll('#w3 .opt').forEach(o => o.classList.remove('on'));
+      el.classList.add('on');
+      WD.timeline = el.dataset.v;
+      setTimeout(() => goW(4), 260);
+    }
+
+    async function wlSubmit() {
+      const emailInp = document.getElementById('wl-em');
+      const email = emailInp.value.trim();
+      if (!email) { emailInp.focus(); emailInp.style.borderColor = '#ef4444'; return; }
+      emailInp.style.borderColor = '';
+
+      const btn = document.getElementById('wl-sub');
+      btn.textContent = 'Wysyłanie…'; btn.disabled = true;
+      const name = document.getElementById('wl-nm').value.trim();
+
+      const payload = {
+        template:   'wellness-calm',
+        need:       WD.need,
+        priorities: WD.priorities,
+        timeline:   WD.timeline,
+        name,
+        email,
+        phone:      document.getElementById('wl-ph').value.trim(),
+        timestamp:  new Date().toISOString(),
+      };
+
+      const result = await sendToMake(payload);
+
+      document.getElementById('ok-name').textContent = name || 'drogi gościu';
+      document.getElementById('ok-em').textContent = email;
+      document.getElementById('w4').classList.remove('vis');
+      document.getElementById('w-ok').classList.add('vis');
+      cur = 99;
+
+      if (!result.ok && result.reason !== 'no-url') {
+        const note = document.getElementById('ok-err');
+        if (note) note.style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>

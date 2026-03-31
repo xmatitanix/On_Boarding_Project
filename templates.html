@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Szablony Onboardingu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #f8fafc; color: #0f172a; min-height: 100vh; }
+    header {
+      background: #0f172a; padding: 24px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { font-size: 18px; font-weight: 700; color: #fff; }
+    .logo span { color: #6366f1; }
+    .hero { text-align: center; padding: 64px 24px 48px; }
+    .hero h1 { font-size: 36px; font-weight: 800; color: #0f172a; margin-bottom: 14px; line-height: 1.2; }
+    .hero p { font-size: 17px; color: #475569; max-width: 520px; margin: 0 auto; line-height: 1.65; }
+    .grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px; max-width: 1100px; margin: 0 auto; padding: 0 32px 80px;
+    }
+    .card {
+      background: #fff; border-radius: 16px; overflow: hidden;
+      border: 1px solid #e2e8f0; transition: all .2s;
+      display: flex; flex-direction: column;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,.1); border-color: transparent; }
+    .card-preview {
+      height: 160px; display: flex; align-items: center; justify-content: center;
+      font-size: 52px; position: relative; overflow: hidden;
+    }
+    .card-preview.p1 { background: linear-gradient(135deg, #1e1b4b, #3730a3); }
+    .card-preview.p2 { background: linear-gradient(135deg, #f97316, #ec4899, #8b5cf6); }
+    .card-preview.p3 { background: linear-gradient(135deg, #0a1628, #1d3558); }
+    .card-preview.p4 { background: linear-gradient(135deg, #d1fae5, #bae6fd); }
+    .card-preview.p5 { background: linear-gradient(135deg, #1c1917, #78716c); }
+    .preview-label {
+      position: absolute; bottom: 10px; left: 0; right: 0; text-align: center;
+      font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    }
+    .p1 .preview-label, .p2 .preview-label, .p3 .preview-label { color: rgba(255,255,255,.6); }
+    .p4 .preview-label { color: rgba(5,150,105,.7); }
+    .p5 .preview-label { color: rgba(255,255,255,.5); }
+    .card-body { padding: 20px 20px 16px; flex: 1; display: flex; flex-direction: column; }
+    .card-tag {
+      display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; padding: 3px 9px; border-radius: 99px; margin-bottom: 10px;
+    }
+    .t1 { background: #e0e7ff; color: #4338ca; }
+    .t2 { background: #fce7f3; color: #be185d; }
+    .t3 { background: #fef3c7; color: #92400e; }
+    .t4 { background: #d1fae5; color: #065f46; }
+    .t5 { background: #f3f4f6; color: #374151; }
+    .card-title { font-size: 17px; font-weight: 700; color: #0f172a; margin-bottom: 6px; }
+    .card-desc { font-size: 13px; color: #64748b; line-height: 1.55; flex: 1; margin-bottom: 16px; }
+    .card-features { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+    .feat { font-size: 11px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 3px 8px; color: #475569; }
+    .btn-view {
+      display: block; width: 100%; text-align: center;
+      padding: 11px; border-radius: 10px; font-size: 14px; font-weight: 600;
+      text-decoration: none; transition: all .18s;
+    }
+    .bv1 { background: #6366f1; color: #fff; }
+    .bv1:hover { background: #4f46e5; }
+    .bv2 { background: linear-gradient(135deg, #f97316, #ec4899); color: #fff; }
+    .bv2:hover { opacity: .9; }
+    .bv3 { background: #0a1628; color: #fff; }
+    .bv3:hover { background: #1d3558; }
+    .bv4 { background: #059669; color: #fff; }
+    .bv4:hover { background: #047857; }
+    .bv5 { background: #1c1917; color: #fff; }
+    .bv5:hover { background: #292524; }
+    @media (max-width: 600px) {
+      header { padding: 18px 20px; }
+      .hero { padding: 40px 20px 32px; }
+      .hero h1 { font-size: 26px; }
+      .grid { padding: 0 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Onboarding<span>SaaS</span></div>
+  </header>
+  <div class="hero">
+    <h1>Szablony onboardingu dla każdej firmy</h1>
+    <p>5 gotowych szablonów w różnych stylach — wybierz ten, który pasuje do Twojej marki i klientów.</p>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-preview p5"><span>💬</span><div class="preview-label">Chat / Rozmowa</div></div>
+      <div class="card-body">
+        <span class="card-tag t5">Agencja / Freelance</span>
+        <div class="card-title">Konwersacyjny chat</div>
+        <div class="card-desc">Przyjazna rozmowa krok po kroku z animowanymi wiadomościami. Naturalny, ciepły styl — idealny dla agencji kreatywnych.</div>
+        <div class="card-features"><span class="feat">Chat UI</span><span class="feat">Animacje</span><span class="feat">Cząsteczki</span><span class="feat">5 kroków</span></div>
+        <a href="/index.html" class="btn-view bv5">Podgląd →</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-preview p1"><span>🧭</span><div class="preview-label">Wizard / Sidebar</div></div>
+      <div class="card-body">
+        <span class="card-tag t1">SaaS / Tech</span>
+        <div class="card-title">Wizard z sidebarem</div>
+        <div class="card-desc">Profesjonalny wizard z ciemnym panelem bocznym i widocznym postępem — jak Stripe, Linear czy Notion. Buduje zaufanie i przejrzystość.</div>
+        <div class="card-features"><span class="feat">Sidebar</span><span class="feat">4 kroki</span><span class="feat">Multi-select</span><span class="feat">Pasek postępu</span></div>
+        <a href="/template-saas.html" class="btn-view bv1">Podgląd →</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-preview p2"><span>🛒</span><div class="preview-label">Wizualny Quiz</div></div>
+      <div class="card-body">
+        <span class="card-tag t2">E-commerce / Retail</span>
+        <div class="card-title">Wizualny quiz z kartami</div>
+        <div class="card-desc">Energetyczny, pełnoekranowy quiz z ikonograficznymi kartami i gradientowym tłem. Klient wybiera odpowiedź — następny krok ładuje się automatycznie.</div>
+        <div class="card-features"><span class="feat">Gradient BG</span><span class="feat">Karty z emoji</span><span class="feat">Auto-next</span><span class="feat">Animacje</span></div>
+        <a href="/template-ecommerce.html" class="btn-view bv2">Podgląd →</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-preview p3"><span>⚖️</span><div class="preview-label">Trust-First</div></div>
+      <div class="card-body">
+        <span class="card-tag t3">Finanse / Prawo</span>
+        <div class="card-title">Formularz z panelem zaufania</div>
+        <div class="card-desc">Konserwatywny, profesjonalny layout z nagłówkiem nawigacyjnym i bocznym panelem certyfikatów, ocen i cytatów klientów. Bezpieczeństwo na pierwszym miejscu.</div>
+        <div class="card-features"><span class="feat">Panel zaufania</span><span class="feat">Breadcrumby</span><span class="feat">SSL badge</span><span class="feat">RODO</span></div>
+        <a href="/template-finance.html" class="btn-view bv3">Podgląd →</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-preview p4"><span>🌿</span><div class="preview-label">Calm / Wellness</div></div>
+      <div class="card-body">
+        <span class="card-tag t4">Wellness / Zdrowie</span>
+        <div class="card-title">Spokojny, jedno pytanie na raz</div>
+        <div class="card-desc">Miękki, organiczny design ze spokojnymi animacjami i dużymi, przyjaznymi opcjami. Bez pasków postępu — bez presji. Idealny dla klinik, spa i terapeutów.</div>
+        <div class="card-features"><span class="feat">Organiczne kształty</span><span class="feat">Delikatne przejścia</span><span class="feat">Brak presji</span><span class="feat">Ciepły ton</span></div>
+        <a href="/template-wellness.html" class="btn-view bv4">Podgląd →</a>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

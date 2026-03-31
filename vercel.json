@@ -1,5 +1,10 @@
 {
   "routes": [
-    { "src": "/", "dest": "/index.html" }
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/templates", "dest": "/templates.html" },
+    { "src": "/template-saas", "dest": "/template-saas.html" },
+    { "src": "/template-ecommerce", "dest": "/template-ecommerce.html" },
+    { "src": "/template-finance", "dest": "/template-finance.html" },
+    { "src": "/template-wellness", "dest": "/template-wellness.html" }
   ]
 }
