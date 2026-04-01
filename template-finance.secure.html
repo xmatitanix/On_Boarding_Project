@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; script-src 'self' 'unsafe-inline'; base-uri 'none'; form-action 'self'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Onboarding — Finanse / Prawo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0a1628;
+      --navy-mid: #152540;
+      --navy-lt: #1d3558;
+      --gold: #b45309;
+      --gold-lt: #fef3c7;
+      --bg: #f7f8fc;
+      --white: #ffffff;
+      --ink: #0c1b2e;
+      --ink-m: #4b5e77;
+      --ink-s: #8fa0b4;
+      --border: #dde3ec;
+      --green: #059669;
+      --serif: 'Crimson Pro', Georgia, serif;
+      --sans: 'Inter', system-ui, sans-serif;
+    }
+    html, body { height: 100%; }
+    body { font-family: var(--sans); background: var(--bg); min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* ── HEADER ──────────────────────────────── */
+    header {
+      background: var(--navy); padding: 0 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px; flex-shrink: 0;
+    }
+    .h-logo { display: flex; align-items: center; gap: 10px; }
+    .h-emblem {
+      width: 32px; height: 32px; border-radius: 6px;
+      background: linear-gradient(135deg, var(--gold), #f59e0b);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+    .h-name { font-family: var(--serif); font-size: 18px; font-weight: 600; color: #fff; }
+
+    /* step breadcrumbs */
+    .breadcrumb { display: flex; align-items: center; gap: 0; }
+    .bc-step {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 12px; color: rgba(255,255,255,.4); font-weight: 500;
+      padding: 6px 14px; border-radius: 99px;
+    }
+    .bc-step.active { color: #fff; background: rgba(255,255,255,.1); }
+    .bc-step.done { color: rgba(255,255,255,.6); }
+    .bc-step.done .bc-num { background: var(--green); border-color: var(--green); color: #fff; }
+    .bc-num {
+      width: 20px; height: 20px; border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,.25);
+      font-size: 10px; font-weight: 700; color: rgba(255,255,255,.4);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .bc-step.active .bc-num { border-color: #f59e0b; background: #f59e0b; color: #fff; }
+    .bc-sep { color: rgba(255,255,255,.2); font-size: 16px; padding: 0 2px; }
+
+    /* ── BODY ────────────────────────────────── */
+    .page { flex: 1; display: flex; align-items: flex-start; justify-content: center; padding: 40px 24px 60px; gap: 32px; }
+
+    /* Trust panel */
+    .trust-panel {
+      width: 240px; flex-shrink: 0;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 14px; padding: 24px 20px;
+      position: sticky; top: 40px;
+    }
+    .tp-title { font-family: var(--serif); font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 18px; }
+    .tp-badge {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+    }
+    .tp-badge:last-of-type { border-bottom: none; }
+    .tp-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .tp-text .tpt-name { font-size: 12px; font-weight: 600; color: var(--ink); }
+    .tp-text .tpt-desc { font-size: 11px; color: var(--ink-s); margin-top: 2px; line-height: 1.4; }
+    .tp-rating { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .stars { color: #f59e0b; font-size: 16px; letter-spacing: 1px; margin-bottom: 5px; }
+    .tp-rating .r-text { font-size: 12px; color: var(--ink-m); }
+    .tp-rating .r-text strong { color: var(--ink); }
+    .tp-quote {
+      margin-top: 16px; padding: 12px 14px;
+      background: var(--gold-lt); border-left: 3px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      font-family: var(--serif); font-size: 13px; font-style: italic;
+      color: var(--gold); line-height: 1.5;
+    }
+
+    /* Form area */
+    .form-area { flex: 1; max-width: 520px; }
+    .step-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 36px 36px 32px; display: none; }
+    .step-card.vis { display: block; animation: rise .3s ease; }
+    @keyframes rise { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
+
+    .sc-eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 10px;
+    }
+    .sc-title { font-family: var(--serif); font-size: 26px; font-weight: 600; color: var(--ink); line-height: 1.2; margin-bottom: 6px; }
+    .sc-desc { font-size: 14px; color: var(--ink-m); line-height: 1.6; margin-bottom: 28px; }
+
+    /* type grid */
+    .type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+    .type-card {
+      padding: 16px; border: 1.5px solid var(--border); border-radius: 10px;
+      cursor: pointer; background: var(--bg); transition: all .18s;
+    }
+    .type-card:hover { border-color: var(--gold); background: var(--gold-lt); }
+    .type-card.on { border-color: var(--gold); background: var(--gold-lt); box-shadow: 0 0 0 1px var(--gold); }
+    .type-card .tc-ic { font-size: 22px; margin-bottom: 7px; }
+    .type-card .tc-nm { font-size: 13px; font-weight: 600; color: var(--ink); }
+    .type-card .tc-ds { font-size: 11px; color: var(--ink-s); margin-top: 2px; }
+
+    /* service list */
+    .srv-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+    .srv {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px;
+      cursor: pointer; background: var(--bg); transition: all .18s;
+    }
+    .srv:hover { border-color: var(--gold); background: var(--gold-lt); }
+    .srv.on { border-color: var(--gold); background: var(--gold-lt); }
+    .srv-ic { font-size: 18px; flex-shrink: 0; }
+    .srv-nm { font-size: 14px; font-weight: 500; color: var(--ink); flex: 1; }
+    .srv-chk {
+      width: 18px; height: 18px; border-radius: 4px;
+      border: 1.5px solid var(--border); flex-shrink: 0; transition: all .18s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .srv.on .srv-chk { background: var(--gold); border-color: var(--gold); }
+    .srv.on .srv-chk::after { content: '✓'; font-size: 11px; color: #fff; font-weight: 700; }
+
+    /* timeline pills */
+    .tl-pills { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+    .tl-pill {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 16px; border: 1.5px solid var(--border); border-radius: 8px;
+      cursor: pointer; background: var(--bg); transition: all .18s;
+    }
+    .tl-pill:hover { border-color: var(--gold); background: var(--gold-lt); }
+    .tl-pill.on { border-color: var(--gold); background: var(--gold-lt); }
+    .tl-left { display: flex; align-items: center; gap: 10px; }
+    .tl-ic { font-size: 18px; }
+    .tl-nm { font-size: 14px; font-weight: 500; color: var(--ink); }
+    .tl-ds { font-size: 12px; color: var(--ink-s); }
+    .tl-radio {
+      width: 18px; height: 18px; border-radius: 50%;
+      border: 1.5px solid var(--border); flex-shrink: 0; transition: all .18s;
+    }
+    .tl-pill.on .tl-radio { border: 5px solid var(--gold); }
+
+    /* form fields */
+    .field { margin-bottom: 16px; }
+    .f-lbl { display: block; font-size: 12px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-m); margin-bottom: 6px; }
+    .f-inp {
+      width: 100%; padding: 11px 14px; font-size: 15px; font-family: var(--sans);
+      border: 1.5px solid var(--border); border-radius: 7px;
+      color: var(--ink); background: var(--bg); outline: none; transition: all .2s;
+    }
+    .f-inp:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(180,83,9,.1); background: #fff; }
+    .f-inp::placeholder { color: var(--ink-s); font-weight: 400; }
+
+    /* data security notice */
+    .sec-note {
+      display: flex; align-items: flex-start; gap: 8px;
+      padding: 10px 12px; background: #f0fdf4; border: 1px solid #bbf7d0;
+      border-radius: 7px; margin-bottom: 20px;
+    }
+    .sec-note .sn-ic { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+    .sec-note .sn-tx { font-size: 12px; color: #166534; line-height: 1.5; }
+
+    /* actions */
+    .actions { display: flex; align-items: center; gap: 10px; }
+    .btn-cta {
+      padding: 13px 28px; background: var(--navy); color: #fff;
+      border: none; border-radius: 8px;
+      font-size: 14px; font-family: var(--sans); font-weight: 600;
+      cursor: pointer; transition: all .18s;
+    }
+    .btn-cta:hover { background: var(--navy-lt); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(10,22,40,.2); }
+    .btn-cta:disabled { opacity: .4; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-ghost {
+      padding: 13px 18px; background: transparent;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      font-size: 13px; font-family: var(--sans); font-weight: 500;
+      cursor: pointer; color: var(--ink-m); transition: all .18s;
+    }
+    .btn-ghost:hover { border-color: var(--ink-m); color: var(--ink); }
+
+    /* footer note */
+    .foot-note { text-align: center; margin-top: 16px; font-size: 12px; color: var(--ink-s); }
+
+    /* success */
+    .ok { text-align: center; padding: 8px 0; }
+    .ok-seal { font-size: 52px; margin-bottom: 16px; }
+    .ok h2 { font-family: var(--serif); font-size: 28px; font-weight: 600; color: var(--ink); margin-bottom: 10px; }
+    .ok p { font-size: 14px; color: var(--ink-m); line-height: 1.65; margin-bottom: 24px; }
+    .ok-steps { text-align: left; border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin-bottom: 20px; }
+    .ok-step { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--ink-m); padding: 6px 0; }
+    .ok-step-n { width: 22px; height: 22px; border-radius: 50%; background: var(--navy); color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+    @media (max-width: 840px) {
+      .page { flex-direction: column; align-items: center; padding: 24px 16px 48px; gap: 20px; }
+      .trust-panel { width: 100%; max-width: 520px; position: static; }
+      .form-area { width: 100%; max-width: 520px; }
+    }
+    @media (max-width: 600px) {
+      header { padding: 0 20px; }
+      .breadcrumb { display: none; }
+      .step-card { padding: 24px 20px; }
+      .type-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 400px) {
+      .type-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="h-logo">
+    <div class="h-emblem">⚖️</div>
+    <span class="h-name brand-name">TwojaFirma</span>
+  </div>
+  <div class="breadcrumb">
+    <div class="bc-step active" id="bc1"><div class="bc-num">1</div><span>Firma</span></div>
+    <span class="bc-sep">›</span>
+    <div class="bc-step" id="bc2"><div class="bc-num">2</div><span>Usługi</span></div>
+    <span class="bc-sep">›</span>
+    <div class="bc-step" id="bc3"><div class="bc-num">3</div><span>Termin</span></div>
+    <span class="bc-sep">›</span>
+    <div class="bc-step" id="bc4"><div class="bc-num">4</div><span>Kontakt</span></div>
+  </div>
+</header>
+
+<!-- PAGE -->
+<div class="page">
+
+  <!-- Trust Panel -->
+  <aside class="trust-panel">
+    <div class="tp-title">Dlaczego nam zaufać?</div>
+    <div class="tp-badge">
+      <div class="tp-icon">🔒</div>
+      <div class="tp-text"><div class="tpt-name">Szyfrowanie SSL</div><div class="tpt-desc">Wszystkie dane są przesyłane w sposób bezpieczny</div></div>
+    </div>
+    <div class="tp-badge">
+      <div class="tp-icon">🛡️</div>
+      <div class="tp-text"><div class="tpt-name">Zgodność z RODO</div><div class="tpt-desc">Pełna ochrona Twoich danych osobowych</div></div>
+    </div>
+    <div class="tp-badge">
+      <div class="tp-icon">🏛️</div>
+      <div class="tp-text"><div class="tpt-name">15 lat na rynku</div><div class="tpt-desc">Zaufało nam ponad 1 200 firm</div></div>
+    </div>
+    <div class="tp-badge">
+      <div class="tp-icon">📋</div>
+      <div class="tp-text"><div class="tpt-name">Umowa NDA</div><div class="tpt-desc">Na życzenie podpisujemy umowę o poufności</div></div>
+    </div>
+    <div class="tp-rating">
+      <div class="stars">★★★★★</div>
+      <div class="r-text"><strong>4,9/5</strong> na podstawie 340 opinii</div>
+    </div>
+    <div class="tp-quote">"Profesjonalne podejście i pełna transparentność na każdym etapie."</div>
+  </aside>
+
+  <!-- Form Area -->
+  <div class="form-area">
+
+    <!-- Step 1 -->
+    <div class="step-card vis" id="f1">
+      <div class="sc-eyebrow">Krok 1 z 4</div>
+      <h2 class="sc-title">Kim jest Twoja firma?</h2>
+      <p class="sc-desc">Wybierz kategorię, która najlepiej opisuje Twoją działalność. Pomoże nam to zaproponować odpowiednie rozwiązania.</p>
+      <div class="type-grid">
+        <div class="type-card" data-v="finance" onclick="pickType(this)"><div class="tc-ic">🏦</div><div class="tc-nm">Finanse / Bankowość</div><div class="tc-ds">Instytucje finansowe</div></div>
+        <div class="type-card" data-v="law" onclick="pickType(this)"><div class="tc-ic">⚖️</div><div class="tc-nm">Kancelaria prawna</div><div class="tc-ds">Prawo, radcowie, adwokaci</div></div>
+        <div class="type-card" data-v="realestate" onclick="pickType(this)"><div class="tc-ic">🏢</div><div class="tc-nm">Nieruchomości</div><div class="tc-ds">Deweloperzy, agencje</div></div>
+        <div class="type-card" data-v="consulting" onclick="pickType(this)"><div class="tc-ic">📊</div><div class="tc-nm">Doradztwo</div><div class="tc-ds">Consulting, audyt</div></div>
+        <div class="type-card" data-v="insurance" onclick="pickType(this)"><div class="tc-ic">🛡️</div><div class="tc-nm">Ubezpieczenia</div><div class="tc-ds">Towarzystwa, brokerzy</div></div>
+        <div class="type-card" data-v="other" onclick="pickType(this)"><div class="tc-ic">🤝</div><div class="tc-nm">Inna branża</div><div class="tc-ds">Coś innego</div></div>
+      </div>
+      <div class="actions"><button class="btn-cta" onclick="goTo(2)">Dalej →</button></div>
+      <div class="foot-note">🔒 Twoje dane są bezpieczne — nigdy ich nie udostępnimy</div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step-card" id="f2">
+      <div class="sc-eyebrow">Krok 2 z 4</div>
+      <h2 class="sc-title">Jakiej pomocy szukasz?</h2>
+      <p class="sc-desc">Zaznacz wszystko, co Cię interesuje. To pomoże nam przygotować spersonalizowaną ofertę.</p>
+      <div class="srv-list">
+        <div class="srv" data-v="digital" onclick="togSrv(this)"><div class="srv-ic">💻</div><div class="srv-nm">Transformacja cyfrowa</div><div class="srv-chk"></div></div>
+        <div class="srv" data-v="compliance" onclick="togSrv(this)"><div class="srv-ic">📋</div><div class="srv-nm">Compliance i regulacje</div><div class="srv-chk"></div></div>
+        <div class="srv" data-v="automation" onclick="togSrv(this)"><div class="srv-ic">⚙️</div><div class="srv-nm">Automatyzacja procesów</div><div class="srv-chk"></div></div>
+        <div class="srv" data-v="security" onclick="togSrv(this)"><div class="srv-ic">🔐</div><div class="srv-nm">Bezpieczeństwo danych</div><div class="srv-chk"></div></div>
+        <div class="srv" data-v="reporting" onclick="togSrv(this)"><div class="srv-ic">📊</div><div class="srv-nm">Raportowanie i analityka</div><div class="srv-chk"></div></div>
+        <div class="srv" data-v="crm" onclick="togSrv(this)"><div class="srv-ic">👥</div><div class="srv-nm">Zarządzanie klientami (CRM)</div><div class="srv-chk"></div></div>
+      </div>
+      <div class="actions">
+        <button class="btn-ghost" onclick="goTo(1)">← Wróć</button>
+        <button class="btn-cta" onclick="goTo(3)">Dalej →</button>
+      </div>
+      <div class="foot-note">🔒 Twoje dane są bezpieczne — nigdy ich nie udostępnimy</div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step-card" id="f3">
+      <div class="sc-eyebrow">Krok 3 z 4</div>
+      <h2 class="sc-title">Kiedy chcesz zacząć?</h2>
+      <p class="sc-desc">Informacja o terminie pomaga nam odpowiednio zaplanować zasoby i priorytety dla Twojego projektu.</p>
+      <div class="tl-pills">
+        <div class="tl-pill" data-v="asap" onclick="pickTl(this)">
+          <div class="tl-left"><div class="tl-ic">🚀</div><div><div class="tl-nm">Jak najszybciej</div><div class="tl-ds">Projekt pilny — potrzebujemy działać natychmiast</div></div></div>
+          <div class="tl-radio"></div>
+        </div>
+        <div class="tl-pill" data-v="1-2m" onclick="pickTl(this)">
+          <div class="tl-left"><div class="tl-ic">📅</div><div><div class="tl-nm">Za 1–2 miesiące</div><div class="tl-ds">Mamy czas na solidne przygotowanie</div></div></div>
+          <div class="tl-radio"></div>
+        </div>
+        <div class="tl-pill" data-v="q" onclick="pickTl(this)">
+          <div class="tl-left"><div class="tl-ic">🗓️</div><div><div class="tl-nm">W tym kwartale</div><div class="tl-ds">Planujemy w perspektywie 3 miesięcy</div></div></div>
+          <div class="tl-radio"></div>
+        </div>
+        <div class="tl-pill" data-v="explore" onclick="pickTl(this)">
+          <div class="tl-left"><div class="tl-ic">🔍</div><div><div class="tl-nm">Dopiero rozpoznaję rynek</div><div class="tl-ds">Szukam informacji, bez presji</div></div></div>
+          <div class="tl-radio"></div>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn-ghost" onclick="goTo(2)">← Wróć</button>
+        <button class="btn-cta" onclick="goTo(4)">Dalej →</button>
+      </div>
+      <div class="foot-note">🔒 Twoje dane są bezpieczne — nigdy ich nie udostępnimy</div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step-card" id="f4">
+      <div class="sc-eyebrow">Krok 4 z 4 — ostatni krok</div>
+      <h2 class="sc-title">Dane do kontaktu</h2>
+      <p class="sc-desc">Skontaktujemy się z Tobą w ciągu 24 godzin roboczych z indywidualną propozycją współpracy.</p>
+      <div class="sec-note">
+        <div class="sn-ic">🔒</div>
+        <div class="sn-tx">Twoje dane są chronione zgodnie z RODO. Nie będziemy ich udostępniać podmiotom trzecim ani wysyłać Ci niechcianych wiadomości.</div>
+      </div>
+      <div class="field"><label class="f-lbl" for="fn-nm">Imię i nazwisko</label><input type="text" id="fn-nm" class="f-inp" maxlength="80" placeholder="Jan Kowalski" autocomplete="name"></div>
+      <div class="field"><label class="f-lbl" for="fn-co">Nazwa firmy</label><input type="text" id="fn-co" class="f-inp" maxlength="120" placeholder="Kowalski & Wspólnicy Sp. z o.o." autocomplete="organization"></div>
+      <div class="field"><label class="f-lbl" for="fn-em">Adres e-mail <span style="color:#ef4444;font-weight:400;letter-spacing:0;text-transform:none">*</span></label><input type="email" id="fn-em" class="f-inp" maxlength="120" required placeholder="jan.kowalski@firma.pl" autocomplete="email"></div>
+      <div class="field"><label class="f-lbl" for="fn-ph">Telefon <span style="color:var(--ink-s);font-weight:400;letter-spacing:0;text-transform:none">(opcjonalnie)</span></label><input type="tel" id="fn-ph" class="f-inp" placeholder="+48 123 456 789" autocomplete="tel" maxlength="20" pattern="^[0-9+()\-\s]{6,20}$">
+        <input type="text" id="hp-field" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;"></div>
+      <div class="actions">
+        <button class="btn-ghost" onclick="goTo(3)">← Wróć</button>
+        <button class="btn-cta" id="fn-sub" onclick="fnSubmit()">Wyślij zgłoszenie →</button>
+      </div>
+      <div class="foot-note">🔒 Szyfrowanie SSL · Zgodność z RODO · Żadnego spamu</div>
+    </div>
+
+    <!-- Success -->
+    <div class="step-card" id="f-ok">
+      <div class="ok">
+        <div class="ok-seal">📬</div>
+        <h2>Zgłoszenie przyjęte</h2>
+        <p>Dziękujemy za zaufanie. Nasz konsultant skontaktuje się z Tobą w ciągu <strong>24 godzin roboczych</strong> z indywidualną propozycją.</p>
+        <div class="ok-steps">
+          <div class="ok-step"><div class="ok-step-n">1</div>Analiza Twojego zgłoszenia przez eksperta</div>
+          <div class="ok-step"><div class="ok-step-n">2</div>Kontakt telefoniczny lub e-mailowy w ciągu 24h</div>
+          <div class="ok-step"><div class="ok-step-n">3</div>Bezpłatna konsultacja i propozycja rozwiązania</div>
+        </div>
+        <div id="ok-err" style="display:none;align-items:center;gap:8px;margin-bottom:16px;padding:10px 14px;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;font-size:12px;color:#9a3412;">
+          <span>⚠️</span><span>Nie udało się połączyć z API. Sprawdź endpoint apiEndpoint w CONFIG i upewnij się, że backend działa.</span>
+        </div>
+        <button class="btn-cta" onclick="location.reload()">Wypełnij ponownie</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  /* ═══════════════════════════════════════════════════════════════
+     KONFIGURACJA API — zmień tylko tę sekcję
+     ───────────────────────────────────────────────────────────────
+     Jak podłączyć backend API:
+       1. Wejdź na make.com → utwórz nowy scenariusz
+       2. Skonfiguruj endpoint backendu `POST /api/lead`
+       3. Kliknij "Add" i nadaj nazwę, np. "Onboarding Finanse"
+       4. Skopiuj wygenerowany URL i wklej poniżej
+     ═══════════════════════════════════════════════════════════════ */
+  const CONFIG = {
+    apiEndpoint: '/api/lead',          // ← endpoint Twojego backendu, np. /api/lead
+    brandName:  'TwojaFirma',  // ← nazwa firmy w szablonie
+  };
+
+  /*  POLA WYSYŁANE DO MAKE.COM:
+      ┌──────────────┬──────────────────────────────────────────────────────┐
+      │ template     │ "finance-trust"                                      │
+      │ type         │ finance / law / realestate / consulting / insurance  │
+      │ services     │ ["digital","compliance","automation","security",…]   │
+      │ timeline     │ asap / 1-2m / q / explore                           │
+      │ name         │ imię i nazwisko                                      │
+      │ company      │ nazwa firmy                                          │
+      │ email        │ adres e-mail                                         │
+      │ phone        │ telefon (opcjonalny)                                 │
+      │ timestamp    │ data i czas w formacie ISO 8601                      │
+      └──────────────┴──────────────────────────────────────────────────────┘  */
+
+  /* ── helper: wyślij do Make.com z retry (3 próby) ── */
+  async function sendLead(payload) {
+    if (!CONFIG.apiEndpoint) {
+      console.warn('[API] apiEndpoint nie jest ustawiony w CONFIG.');
+      return { ok: false, reason: 'no-url' };
+    }
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        const res = await fetch(CONFIG.apiEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify(payload),
+        });
+        if (res.ok) return { ok: true };
+      } catch (err) {
+        if (attempt === 3) return { ok: false, reason: 'network', error: err };
+        await new Promise(r => setTimeout(r, attempt * 900));
+      }
+    }
+    return { ok: false, reason: 'failed' };
+  }
+
+  /* ── stan formularza ── */
+  const FD = { type:'', services:[], timeline:'' };
+  let cur = 1;
+  let startedAt = Date.now();
+  let lastSubmitAt = 0;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.brand-name').forEach(el => el.textContent = CONFIG.brandName);
+  });
+
+  function goTo(n) {
+    document.getElementById('f' + cur).classList.remove('vis');
+    const bcOld = document.getElementById('bc' + cur);
+    if (bcOld) { bcOld.classList.remove('active'); bcOld.classList.add('done'); bcOld.querySelector('.bc-num').textContent = '✓'; }
+    cur = n;
+    document.getElementById('f' + n).classList.add('vis');
+    const bcNew = document.getElementById('bc' + n);
+    if (bcNew) { bcNew.classList.add('active'); bcNew.classList.remove('done'); }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function pickType(el) {
+    document.querySelectorAll('.type-card').forEach(c => c.classList.remove('on'));
+    el.classList.add('on'); FD.type = el.dataset.v;
+  }
+  function togSrv(el) {
+    el.classList.toggle('on');
+    const v = el.dataset.v;
+    FD.services = el.classList.contains('on') ? [...new Set([...FD.services, v])] : FD.services.filter(x => x !== v);
+  }
+  function pickTl(el) {
+    document.querySelectorAll('.tl-pill').forEach(p => p.classList.remove('on'));
+    el.classList.add('on'); FD.timeline = el.dataset.v;
+  }
+
+  async function fnSubmit() {
+    const emailInp = document.getElementById('fn-em');
+    const email = emailInp.value.trim();
+    if (!email) { emailInp.focus(); emailInp.style.borderColor = '#ef4444'; return; }
+    emailInp.style.borderColor = '';
+
+    const btn = document.getElementById('fn-sub');
+    btn.textContent = 'Wysyłanie…'; btn.disabled = true;
+
+    const payload = {
+      template:  'finance-trust',
+      type:      FD.type,
+      services:  FD.services,
+      timeline:  FD.timeline,
+      name:      document.getElementById('fn-nm').value.trim(),
+      company:   document.getElementById('fn-co').value.trim(),
+      email,
+      phone:     document.getElementById('fn-ph').value.trim(),
+      timestamp: new Date().toISOString(),
+    };
+
+    const hp = document.getElementById('hp-field')?.value || '';
+    if (hp) { console.warn('Bot detected (honeypot).'); return; }
+
+    const now = Date.now();
+    if (now - startedAt < 1500 || now - lastSubmitAt < 5000) {
+      console.warn('Submission blocked by anti-spam timing rule.');
+      return;
+    }
+    lastSubmitAt = now;
+
+    const result = await sendLead(payload);
+
+    document.getElementById('f4').classList.remove('vis');
+    document.getElementById('f-ok').classList.add('vis');
+    const bc4 = document.getElementById('bc4');
+    if (bc4) { bc4.classList.remove('active'); bc4.classList.add('done'); bc4.querySelector('.bc-num').textContent = '✓'; }
+
+    if (!result.ok && result.reason !== 'no-url') {
+      const note = document.getElementById('ok-err');
+      if (note) note.style.display = 'flex';
+    }
+  }
+</script>
+</body>
+</html>
