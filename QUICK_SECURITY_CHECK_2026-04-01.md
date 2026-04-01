@@ -57,20 +57,3 @@ W kodzie nie znaleziono mechanizmów typu:
 
 ## Szybki werdykt
 Projekt jest funkcjonalny UX-owo, ale **bez dodatkowej warstwy bezpieczeństwa nie powinien być traktowany jako bezpieczny formularz produkcyjny**.
-
-## Co oznaczają użyte komendy?
-Poniżej krótkie wyjaśnienie komend użytych w szybkim audycie:
-
-1. `rg -n "..." index.html template-*.html`  
-   - `rg` (ripgrep) szybko przeszukuje pliki tekstowe.
-   - `-n` pokazuje numer linii.
-   - Służyło do znalezienia ryzykownych wzorców (np. `innerHTML`, `fetch`, `webhook`).
-
-2. `rg -n "AKIA|SECRET|TOKEN|..." ...`  
-   - Skan pod kątem przypadkowo ujawnionych sekretów/tokenów w kodzie.
-   - To jest tylko szybki heurystyczny check (nie 100% gwarancji).
-
-3. `rg -n "<input|<textarea|maxlength|pattern=|required" ...`  
-   - Sprawdzenie, czy pola formularzy mają podstawowe ograniczenia i walidację po stronie HTML.
-
-To były **komendy diagnostyczne (read-only)** — nie zmieniają kodu produkcyjnego.
