@@ -134,6 +134,8 @@
     }
     .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(249,115,22,.3); }
     .btn:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
+    .step-err { display:none; margin-bottom:10px; padding:9px 13px; background:#fff7ed; border:1px solid #fed7aa; border-radius:8px; font-size:12px; color:#9a3412; }
+    .step-err.show { display:block; }
     .back-lnk {
       display: block; text-align: center; margin-top: 12px;
       font-size: 13px; color: var(--ink-s); cursor: pointer; transition: color .2s;
@@ -191,7 +193,8 @@
         <div class="ind-card" data-v="home" onclick="pickInd(this)"><div class="em"><span class="em-badge" style="background:linear-gradient(135deg,#06b6d4,#3b82f6)">DO</span></div><div class="nm">Dom i ogród</div></div>
         <div class="ind-card" data-v="sport" onclick="pickInd(this)"><div class="em"><span class="em-badge" style="background:linear-gradient(135deg,#10b981,#3b82f6)">SP</span></div><div class="nm">Sport</div></div>
       </div>
-      <button class="btn" onclick="nxt(2)">Dalej →</button>
+      <div class="step-err" id="err1">Wybierz kategorię sklepu, aby przejść dalej.</div>
+      <button class="btn" onclick="nxtV(2)">Dalej →</button>
     </div>
 
     <!-- Step 2: Size -->
@@ -220,7 +223,8 @@
           <div class="chk"></div>
         </div>
       </div>
-      <button class="btn" onclick="nxt(3)">Dalej →</button>
+      <div class="step-err" id="err2">Wybierz liczbę produktów, aby przejść dalej.</div>
+      <button class="btn" onclick="nxtV(3)">Dalej →</button>
       <a class="back-lnk" onclick="prv(1)">← Wróć</a>
     </div>
 
@@ -336,6 +340,16 @@
         const d = document.getElementById('d' + i);
         d.className = 'dot' + (i < n ? ' ok' : i === n ? ' on' : '');
       }
+    }
+    function nxtV(n) {
+      const prev = n - 1;
+      const err = document.getElementById('err' + prev);
+      let ok = true;
+      if (prev === 1 && !D.industry) ok = false;
+      if (prev === 2 && !D.size) ok = false;
+      if (!ok) { if (err) { err.classList.add('show'); err.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } return; }
+      if (err) err.classList.remove('show');
+      nxt(n);
     }
     function nxt(n) {
       document.getElementById('s' + cur).classList.remove('vis');
