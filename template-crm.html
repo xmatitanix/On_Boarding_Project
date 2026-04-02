@@ -212,8 +212,14 @@
   <!-- Step 2 -->
   <div class="card" id="c2">
     <div class="step-tag">Krok 2 z 4</div>
-    <h1 class="card-title">Które obszary chcesz usprawnić?</h1>
+    <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <h1 class="card-title">Które obszary chcesz usprawnić?</h1>
+      <span id="area-count" style="font-size:12px;font-weight:600;color:var(--accent);background:var(--accent-lt);padding:3px 10px;border-radius:99px">0 / 6</span>
+    </div>
     <p class="card-desc">Zaznacz wszystko, co dotyczy Twojej firmy. Im więcej kontekstu, tym dokładniej dopasujemy rozwiązanie.</p>
+    <div style="height:4px;background:var(--border);border-radius:99px;margin-bottom:18px;overflow:hidden">
+      <div id="area-bar" style="height:100%;width:0%;background:var(--accent);border-radius:99px;transition:width .3s ease"></div>
+    </div>
 
     <div class="area-grid">
       <div class="area-card" data-v="sales" onclick="togArea(this)">
@@ -389,6 +395,9 @@
     D.areas = el.classList.contains('on')
       ? [...new Set([...D.areas, v])]
       : D.areas.filter(x => x !== v);
+    const n = D.areas.length;
+    document.getElementById('area-count').textContent = n + ' / 6';
+    document.getElementById('area-bar').style.width = (n / 6 * 100) + '%';
   }
 
   function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e) && e.length <= 254; }

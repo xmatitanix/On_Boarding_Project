@@ -68,6 +68,15 @@
     .nav-step.active .ns-name { color: #fff; }
     .ns-sub { font-size: 11px; color: rgba(255,255,255,.3); margin-top: 2px; }
 
+    /* sidebar live picks */
+    .sidebar-picks { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
+    .sp-hd { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-s); margin-bottom: 10px; }
+    .sp-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 9px; animation: spIn .3s ease; }
+    @keyframes spIn { from { opacity:0; transform:translateX(-8px); } to { opacity:1; transform:translateX(0); } }
+    .sp-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; margin-top: 4px; }
+    .sp-lbl { font-size: 10px; color: var(--ink-s); line-height: 1.3; }
+    .sp-val { font-size: 12px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+
     .sidebar-trust {
       background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08);
       border-radius: 10px; padding: 14px 16px;
@@ -225,6 +234,10 @@
       <div><div class="ns-name">Dane kontaktowe</div><div class="ns-sub">Jak się z Tobą skontaktować</div></div>
     </div>
   </nav>
+  <div class="sidebar-picks" id="spicks" style="display:none">
+    <div class="sp-hd">Twoje wybory</div>
+    <div id="spicks-inner"></div>
+  </div>
   <div class="sidebar-trust">
     <div class="trust-row"><span class="tr-ic" style="background:#818cf8"></span><span>Szyfrowanie SSL</span></div>
     <div class="trust-row"><span class="tr-ic" style="background:#10b981"></span><span>Zgodność z RODO</span></div>
@@ -447,6 +460,26 @@
     const navNew = document.getElementById('nav-' + n);
     if (navNew) { navNew.classList.add('active'); navNew.classList.remove('done'); }
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    updateSidePicks(n);
+  }
+
+  const SP_LABELS = {
+    industry: { tech:'Technologia', retail:'Handel / Retail', services:'Usługi B2B', other:'Inna' },
+    goals: { sales:'Sprzedaż', automate:'Automatyzacja', team:'Zarządzanie', analytics:'Analityka', ux:'UX', costs:'Koszty' },
+    teamsize: { '1':'Tylko ja', '2-10':'2–10 osób', '11-50':'11–50 osób', '50+':'Ponad 50' },
+    role: { owner:'Właściciel / CEO', manager:'Kierownik', marketing:'Marketing', dev:'Programista', other:'Inna' },
+  };
+  function updateSidePicks(step) {
+    if (step <= 1) return;
+    const rows = [];
+    if (D.industry) rows.push({ l: 'Branża', v: SP_LABELS.industry[D.industry] || D.industry });
+    if (D.goals && D.goals.length) rows.push({ l: 'Cele', v: D.goals.map(g => SP_LABELS.goals[g] || g).join(', ') });
+    if (D.teamsize) rows.push({ l: 'Rozmiar', v: SP_LABELS.teamsize[D.teamsize] || D.teamsize });
+    if (!rows.length) return;
+    document.getElementById('spicks').style.display = 'block';
+    document.getElementById('spicks-inner').innerHTML = rows.map(r =>
+      '<div class="sp-row"><div class="sp-dot"></div><div><div class="sp-lbl">' + r.l + '</div><div class="sp-val">' + r.v + '</div></div></div>'
+    ).join('');
   }
 
   function pickOne(el) {

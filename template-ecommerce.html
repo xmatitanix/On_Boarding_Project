@@ -52,6 +52,8 @@
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
     .dots { display: flex; gap: 7px; }
+    .time-badge { font-size: 11px; font-weight: 600; color: var(--ink-s); background: rgba(255,255,255,.7); border: 1px solid var(--border); border-radius: 99px; padding: 3px 10px; }
+    .pop-badge { display: inline-block; font-size: 9px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; background: #fde68a; color: #92400e; border-radius: 4px; padding: 2px 5px; position: absolute; top: 6px; right: 6px; }
     .dot { width: 9px; height: 9px; border-radius: 50%; background: #e8e8f0; transition: all .3s; }
     .dot.on { background: var(--c1); transform: scale(1.45); }
     .dot.ok { background: #10b981; }
@@ -168,6 +170,7 @@
   <div class="quiz">
     <div class="qt">
       <div class="brand brand-name">TwójSklep</div>
+      <div class="time-badge">ok. 2 min</div>
       <div class="dots">
         <div class="dot on" id="d1"></div>
         <div class="dot" id="d2"></div>
@@ -182,7 +185,7 @@
       <div class="hint">Wybierz kategorię — zbudujemy rozwiązanie pod specyfikę Twojej branży</div>
       <div class="ind-grid">
         <div class="ind-card" data-v="fashion" onclick="pickInd(this)"><div class="em"><span class="em-badge" style="background:linear-gradient(135deg,#ec4899,#f97316)">MO</span></div><div class="nm">Moda</div></div>
-        <div class="ind-card" data-v="electronics" onclick="pickInd(this)"><div class="em"><span class="em-badge" style="background:linear-gradient(135deg,#8b5cf6,#3b82f6)">EL</span></div><div class="nm">Elektronika</div></div>
+        <div class="ind-card" data-v="electronics" onclick="pickInd(this)" style="position:relative"><span class="pop-badge">Popularne</span><div class="em"><span class="em-badge" style="background:linear-gradient(135deg,#8b5cf6,#3b82f6)">EL</span></div><div class="nm">Elektronika</div></div>
         <div class="ind-card" data-v="food" onclick="pickInd(this)"><div class="em"><span class="em-badge" style="background:linear-gradient(135deg,#f97316,#eab308)">JD</span></div><div class="nm">Jedzenie</div></div>
         <div class="ind-card" data-v="beauty" onclick="pickInd(this)"><div class="em"><span class="em-badge" style="background:linear-gradient(135deg,#ec4899,#a855f7)">UR</span></div><div class="nm">Uroda</div></div>
         <div class="ind-card" data-v="home" onclick="pickInd(this)"><div class="em"><span class="em-badge" style="background:linear-gradient(135deg,#06b6d4,#3b82f6)">DO</span></div><div class="nm">Dom i ogród</div></div>

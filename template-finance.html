@@ -170,6 +170,11 @@
     }
     .f-inp:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(180,83,9,.1); background: #fff; }
     .f-inp::placeholder { color: var(--ink-s); font-weight: 400; }
+    .f-inp.valid   { border-color: #059669; }
+    .f-inp.invalid { border-color: #ef4444; }
+    .val-hint { font-size: 11px; margin-top: 4px; display: none; }
+    .val-hint.ok  { display: block; color: #059669; }
+    .val-hint.err { display: block; color: #ef4444; }
 
     /* data security notice */
     .sec-note {
@@ -355,7 +360,11 @@
       </div>
       <div class="field"><label class="f-lbl" for="fn-nm">Imię i nazwisko</label><input type="text" id="fn-nm" class="f-inp" placeholder="Jan Kowalski" autocomplete="name" maxlength="100"></div>
       <div class="field"><label class="f-lbl" for="fn-co">Nazwa firmy</label><input type="text" id="fn-co" class="f-inp" placeholder="Kowalski & Wspólnicy Sp. z o.o." autocomplete="organization" maxlength="150"></div>
-      <div class="field"><label class="f-lbl" for="fn-em">Adres e-mail <span style="color:#ef4444;font-weight:400;letter-spacing:0;text-transform:none">*</span></label><input type="email" id="fn-em" class="f-inp" placeholder="jan.kowalski@firma.pl" autocomplete="email" maxlength="254"></div>
+      <div class="field">
+        <label class="f-lbl" for="fn-em">Adres e-mail <span style="color:#ef4444;font-weight:400;letter-spacing:0;text-transform:none">*</span></label>
+        <input type="email" id="fn-em" class="f-inp" placeholder="jan.kowalski@firma.pl" autocomplete="email" maxlength="254" oninput="validateEmail(this)">
+        <div class="val-hint" id="fn-em-hint"></div>
+      </div>
       <div class="field"><label class="f-lbl" for="fn-ph">Telefon <span style="color:var(--ink-s);font-weight:400;letter-spacing:0;text-transform:none">(opcjonalnie)</span></label><input type="tel" id="fn-ph" class="f-inp" placeholder="+48 123 456 789" autocomplete="tel" maxlength="30"></div>
       <!-- honeypot -->
       <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
@@ -477,6 +486,19 @@
   }
 
   function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e) && e.length <= 254; }
+
+  function validateEmail(inp) {
+    const hint = document.getElementById('fn-em-hint');
+    const v = inp.value.trim();
+    if (!v) { inp.classList.remove('valid','invalid'); hint.className='val-hint'; return; }
+    if (isValidEmail(v)) {
+      inp.classList.add('valid'); inp.classList.remove('invalid');
+      hint.className = 'val-hint ok'; hint.textContent = '✓ Prawidłowy adres e-mail';
+    } else {
+      inp.classList.add('invalid'); inp.classList.remove('valid');
+      hint.className = 'val-hint err'; hint.textContent = '✗ Nieprawidłowy format adresu';
+    }
+  }
 
   function _silentOk() {
     document.getElementById('f4').classList.remove('vis');
