@@ -416,6 +416,11 @@
 
   /* ── helper: wyślij do Make.com z retry (3 próby) ── */
   function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e) && e.length <= 254; }
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function isValidUrl(u) {
+    if (!u) return true; // optional field
+    try { const p = new URL(u); return p.protocol === 'http:' || p.protocol === 'https:'; } catch { return false; }
+  }
 
   function _silentOk() {
     document.getElementById('c4').classList.remove('show');
@@ -504,7 +509,7 @@
     if (!rows.length) return;
     document.getElementById('spicks').style.display = 'block';
     document.getElementById('spicks-inner').innerHTML = rows.map(r =>
-      '<div class="sp-row"><div class="sp-dot"></div><div><div class="sp-lbl">' + r.l + '</div><div class="sp-val">' + r.v + '</div></div></div>'
+      '<div class="sp-row"><div class="sp-dot"></div><div><div class="sp-lbl">' + esc(r.l) + '</div><div class="sp-val">' + esc(r.v) + '</div></div></div>'
     ).join('');
   }
 
@@ -541,6 +546,11 @@
     const email = emailInp.value.trim();
     if (!email || !isValidEmail(email)) { emailInp.focus(); emailInp.style.borderColor = '#ef4444'; return; }
     emailInp.style.borderColor = '';
+
+    const urlInp = document.getElementById('f-website');
+    const website = urlInp.value.trim();
+    if (website && !isValidUrl(website)) { urlInp.focus(); urlInp.style.borderColor = '#ef4444'; return; }
+    urlInp.style.borderColor = '';
 
     const btn = document.getElementById('submit-btn');
     btn.textContent = 'Wysyłanie…'; btn.disabled = true;
