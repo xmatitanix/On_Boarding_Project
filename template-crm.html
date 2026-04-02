@@ -137,6 +137,9 @@
     .ok-step { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--ink-m); padding: 5px 0; }
     .ok-num { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
+    .step-err { display:none; margin-bottom:10px; padding:9px 13px; background:#fff7ed; border:1px solid #fed7aa; border-radius:8px; font-size:12px; color:#9a3412; }
+    .step-err.show { display:block; }
+
     @media (max-width: 700px) {
       .hdr { padding: 0 20px; }
       .h-steps { display: none; }
@@ -206,7 +209,8 @@
       </div>
     </div>
 
-    <div class="actions"><button class="btn-next" onclick="go(2)">Dalej →</button></div>
+    <div class="step-err" id="err1">Wybierz branżę, liczbę pracowników i model sprzedaży, aby przejść dalej.</div>
+    <div class="actions"><button class="btn-next" onclick="goNext(2)">Dalej →</button></div>
   </div>
 
   <!-- Step 2 -->
@@ -254,9 +258,10 @@
       </div>
     </div>
 
+    <div class="step-err" id="err2">Zaznacz co najmniej jeden obszar, aby przejść dalej.</div>
     <div class="actions" style="margin-top:24px">
       <button class="btn-back" onclick="go(1)">← Wróć</button>
-      <button class="btn-next" onclick="go(3)">Dalej →</button>
+      <button class="btn-next" onclick="goNext(3)">Dalej →</button>
     </div>
   </div>
 
@@ -296,9 +301,10 @@
       </div>
     </div>
 
+    <div class="step-err" id="err3">Wybierz rolę, termin wdrożenia i budżet, aby przejść dalej.</div>
     <div class="actions">
       <button class="btn-back" onclick="go(2)">← Wróć</button>
-      <button class="btn-next" onclick="go(4)">Dalej →</button>
+      <button class="btn-next" onclick="goNext(4)">Dalej →</button>
     </div>
   </div>
 
@@ -369,17 +375,36 @@
   });
 
   function go(n) {
+    const fwd = n > cur;
     document.getElementById('c' + cur).classList.remove('show');
     const hs = document.getElementById('hs' + cur);
-    if (hs) { hs.classList.remove('active'); hs.classList.add('done'); hs.querySelector('.h-sn').textContent = '✓'; }
+    if (hs) {
+      if (fwd) {
+        hs.classList.remove('active'); hs.classList.add('done'); hs.querySelector('.h-sn').textContent = '✓';
+      } else {
+        hs.classList.remove('active', 'done'); hs.querySelector('.h-sn').textContent = String(cur);
+      }
+    }
     cur = n;
     const card = document.getElementById('c' + n);
     if (card) card.classList.add('show');
     const hsN = document.getElementById('hs' + n);
-    if (hsN) { hsN.classList.add('active'); hsN.classList.remove('done'); }
+    if (hsN) { hsN.classList.add('active'); hsN.classList.remove('done'); hsN.querySelector('.h-sn').textContent = String(n); }
     document.getElementById('prog').style.width = (PROG[n] || 100) + '%';
     document.getElementById('krok-n').textContent = n;
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goNext(n) {
+    const prev = n - 1;
+    const err = document.getElementById('err' + prev);
+    let ok = true;
+    if (prev === 1 && (!D.industry || !D.size || !D.model)) ok = false;
+    if (prev === 2 && !D.areas.length) ok = false;
+    if (prev === 3 && (!D.role || !D.timeline || !D.budget)) ok = false;
+    if (!ok) { if (err) { err.classList.add('show'); err.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } return; }
+    if (err) err.classList.remove('show');
+    go(n);
   }
 
   function pickPill(el) {

@@ -202,6 +202,8 @@
       cursor: pointer; color: var(--ink-m); transition: all .18s;
     }
     .btn-ghost:hover { border-color: var(--ink-m); color: var(--ink); }
+    .step-err { display:none; font-size:12px; color:#9a3412; background:#fff7ed; border:1px solid #fed7aa; border-radius:6px; padding:8px 12px; margin-top:4px; }
+    .step-err.show { display:block; }
 
     /* footer note */
     .foot-note { text-align: center; margin-top: 16px; font-size: 12px; color: var(--ink-s); }
@@ -295,7 +297,8 @@
         <div class="type-card" data-v="insurance" onclick="pickType(this)"><div class="tc-ic"><span class="tc-badge">UB</span></div><div class="tc-nm">Ubezpieczenia</div><div class="tc-ds">Towarzystwa, brokerzy</div></div>
         <div class="type-card" data-v="other" onclick="pickType(this)"><div class="tc-ic"><span class="tc-badge">···</span></div><div class="tc-nm">Inna branża</div><div class="tc-ds">Coś innego</div></div>
       </div>
-      <div class="actions"><button class="btn-cta" onclick="goTo(2)">Dalej →</button></div>
+      <div class="step-err" id="err1">Wybierz rodzaj działalności, żebyśmy mogli dopasować ofertę.</div>
+      <div class="actions"><button class="btn-cta" onclick="goToNext(2)">Dalej →</button></div>
       <div class="foot-note">SSL · Twoje dane są bezpieczne — nigdy ich nie udostępnimy</div>
     </div>
 
@@ -312,9 +315,10 @@
         <div class="srv" data-v="reporting" onclick="togSrv(this)"><div class="srv-ic srv-dot" style="background:#8b5cf6"></div><div class="srv-nm">Raportowanie i analityka</div><div class="srv-chk"></div></div>
         <div class="srv" data-v="crm" onclick="togSrv(this)"><div class="srv-ic srv-dot" style="background:#0ea5e9"></div><div class="srv-nm">Zarządzanie klientami (CRM)</div><div class="srv-chk"></div></div>
       </div>
+      <div class="step-err" id="err2">Zaznacz przynajmniej jedną interesującą Cię usługę.</div>
       <div class="actions">
         <button class="btn-ghost" onclick="goTo(1)">← Wróć</button>
-        <button class="btn-cta" onclick="goTo(3)">Dalej →</button>
+        <button class="btn-cta" onclick="goToNext(3)">Dalej →</button>
       </div>
       <div class="foot-note">SSL · Twoje dane są bezpieczne — nigdy ich nie udostępnimy</div>
     </div>
@@ -342,9 +346,10 @@
           <div class="tl-radio"></div>
         </div>
       </div>
+      <div class="step-err" id="err3">Wybierz orientacyjny horyzont czasowy.</div>
       <div class="actions">
         <button class="btn-ghost" onclick="goTo(2)">← Wróć</button>
-        <button class="btn-cta" onclick="goTo(4)">Dalej →</button>
+        <button class="btn-cta" onclick="goToNext(4)">Dalej →</button>
       </div>
       <div class="foot-note">SSL · Twoje dane są bezpieczne — nigdy ich nie udostępnimy</div>
     </div>
@@ -461,14 +466,35 @@
   });
 
   function goTo(n) {
+    const fwd = n > cur;
     document.getElementById('f' + cur).classList.remove('vis');
     const bcOld = document.getElementById('bc' + cur);
-    if (bcOld) { bcOld.classList.remove('active'); bcOld.classList.add('done'); bcOld.querySelector('.bc-num').textContent = '✓'; }
+    if (bcOld) {
+      if (fwd) {
+        bcOld.classList.remove('active'); bcOld.classList.add('done');
+        bcOld.querySelector('.bc-num').textContent = '✓';
+      } else {
+        bcOld.classList.remove('active', 'done');
+        bcOld.querySelector('.bc-num').textContent = String(cur);
+      }
+    }
     cur = n;
     document.getElementById('f' + n).classList.add('vis');
     const bcNew = document.getElementById('bc' + n);
-    if (bcNew) { bcNew.classList.add('active'); bcNew.classList.remove('done'); }
+    if (bcNew) { bcNew.classList.add('active'); bcNew.classList.remove('done'); bcNew.querySelector('.bc-num').textContent = String(n); }
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goToNext(n) {
+    const prev = n - 1;
+    const err = document.getElementById('err' + prev);
+    let ok = true;
+    if (prev === 1 && !FD.type) ok = false;
+    if (prev === 2 && !FD.services.length) ok = false;
+    if (prev === 3 && !FD.timeline) ok = false;
+    if (!ok) { if (err) { err.classList.add('show'); err.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } return; }
+    if (err) err.classList.remove('show');
+    goTo(n);
   }
 
   function pickType(el) {
