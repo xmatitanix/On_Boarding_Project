@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pixelwave — Porozmawiajmy</title>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<script src="/config.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -538,6 +539,10 @@ body {
 </head>
 <body>
 
+<!-- honeypot: pułapka na boty -->
+<div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
+  <input type="text" id="_hp" name="address" tabindex="-1" autocomplete="off">
+</div>
 <canvas id="canvas"></canvas>
 <div class="prog-bar"><div class="prog-fill" id="prog"></div></div>
 
@@ -705,6 +710,7 @@ body {
   frame();
 })();
 
+window._t0 = Date.now();
 let uname = '';
 let service = '';
 let budget = '';
@@ -900,8 +906,25 @@ async function submit(e) {
 
   setP(100);
 
+  const _sc = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG.security : null;
+  if (_sc) {
+    if (_sc.honeypot && document.getElementById('_hp')?.value) {
+      await type('m5-txt', `Gotowe! ✦<br><br>Dzięki za zaufanie, <span class="hi">${uname}</span>. Do zobaczenia wkrótce.`, 350);
+      document.getElementById('restart-area').style.display = 'block';
+      return;
+    }
+    if (((Date.now() - (window._t0 || 0)) / 1000) < (_sc.minFillSeconds || 5)) {
+      await type('m5-txt', `Gotowe! ✦<br><br>Dzięki za zaufanie, <span class="hi">${uname}</span>. Do zobaczenia wkrótce.`, 350);
+      document.getElementById('restart-area').style.display = 'block';
+      return;
+    }
+  }
+
+  const _webhookUrl = (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.webhooks?.chat)
+    || 'https://hook.eu1.make.com/8jim8g7chyfpgvolryyal8md0thdfgj7';
+
   try {
-    await fetch('https://hook.eu1.make.com/8jim8g7chyfpgvolryyal8md0thdfgj7', {
+    await fetch(_webhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

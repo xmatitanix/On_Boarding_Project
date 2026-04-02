@@ -6,6 +6,7 @@
   <title>Onboarding — SaaS / Tech</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="/config.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -331,6 +332,10 @@
         <label class="field-lbl" for="f-phone">Telefon <span class="opt">(opcjonalnie)</span></label>
         <input type="tel" id="f-phone" class="field-inp" placeholder="+48 123 456 789" autocomplete="tel">
       </div>
+      <!-- honeypot: niewidoczne dla ludzi, pułapka na boty -->
+      <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
+        <input type="text" id="_hp" name="address" tabindex="-1" autocomplete="off">
+      </div>
       <div class="actions">
         <button class="btn-back" onclick="go(3)">← Wróć</button>
         <button class="btn-next" id="submit-btn" onclick="doSubmit()">Wyślij zgłoszenie →</button>
@@ -368,10 +373,13 @@
        3. Kliknij "Add" i nadaj nazwę, np. "Onboarding SaaS"
        4. Skopiuj wygenerowany URL i wklej poniżej
      ═══════════════════════════════════════════════════════════════ */
+  // Odczytaj konfigurację z config.js; lokalne wartości jako fallback
+  const SC = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG : {};
   const CONFIG = {
-    webhookUrl: '',        // ← WKLEJ TU URL z Make.com, np. https://hook.eu1.make.com/xxxx
-    brandName:  'TwojaSaaS',  // ← nazwa firmy w szablonie
+    webhookUrl: SC.webhooks?.saas      || '',
+    brandName:  SC.brand?.name         || 'TwojaSaaS',
   };
+  window._t0 = Date.now(); // pomiar czasu wypełnienia formularza
 
   /*  POLA WYSYŁANE DO MAKE.COM (widoczne w scenariuszu):
       ┌──────────────┬──────────────────────────────────────────┐
@@ -389,6 +397,11 @@
       └──────────────┴──────────────────────────────────────────┘  */
 
   /* ── helper: wyślij do Make.com z retry (3 próby) ── */
+  function _silentOk() {
+    document.getElementById('c4').classList.remove('show');
+    document.getElementById('c-ok').classList.add('show');
+  }
+
   async function sendToMake(payload) {
     if (!CONFIG.webhookUrl || CONFIG.webhookUrl === '') {
       console.warn('[Make.com] webhookUrl nie jest ustawiony w CONFIG. Uzupełnij pole webhookUrl.');
@@ -456,6 +469,12 @@
   }
 
   async function doSubmit() {
+    // ── ochrona przed botami ──
+    const _sc = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG.security : null;
+    if (_sc) {
+      if (_sc.honeypot && document.getElementById('_hp')?.value) return _silentOk();
+      if (((Date.now() - (window._t0 || 0)) / 1000) < (_sc.minFillSeconds || 5)) return _silentOk();
+    }
     const emailInp = document.getElementById('f-email');
     const email = emailInp.value.trim();
     if (!email) { emailInp.focus(); emailInp.style.borderColor = '#ef4444'; return; }

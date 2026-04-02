@@ -6,6 +6,7 @@
   <title>Onboarding — Wellness / Zdrowie</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <script src="/config.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -257,6 +258,10 @@
         <div class="f-row"><label class="f-lbl" for="wl-ph">Telefon <span style="color:var(--ink-s);font-weight:500">(opcjonalnie)</span></label><input type="tel" id="wl-ph" class="f-inp" placeholder="+48 123 456 789" autocomplete="tel"></div>
         <div class="privacy-line"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#059669;flex-shrink:0;margin-top:4px"></span><span>Twoje dane są bezpieczne. Nie wysyłamy spamu — tylko jeden przyjazny kontakt od naszego specjalisty.</span></div>
       </div>
+      <!-- honeypot -->
+      <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
+        <input type="text" id="_hp" name="address" tabindex="-1" autocomplete="off">
+      </div>
       <button class="btn-cta" id="wl-sub" onclick="wlSubmit()">Chcę dowiedzieć się więcej →</button>
       <div class="back-lnk" onclick="goW(3)">← Wróć</div>
     </div>
@@ -291,10 +296,13 @@
          3. Kliknij "Add" i nadaj nazwę, np. "Onboarding Wellness"
          4. Skopiuj wygenerowany URL i wklej poniżej
        ═══════════════════════════════════════════════════════════════ */
+    // Odczytaj konfigurację z config.js; lokalne wartości jako fallback
+    const SC = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG : {};
     const CONFIG = {
-      webhookUrl: '',           // ← WKLEJ TU URL z Make.com, np. https://hook.eu1.make.com/xxxx
-      brandName:  'TwojaKlinika',  // ← nazwa firmy w szablonie
+      webhookUrl: SC.webhooks?.wellness || '',
+      brandName:  SC.brand?.name        || 'TwojaKlinika',
     };
+    window._t0 = Date.now();
 
     /*  POLA WYSYŁANE DO MAKE.COM:
         ┌──────────────┬───────────────────────────────────────────────────┐
@@ -366,7 +374,20 @@
       setTimeout(() => goW(4), 260);
     }
 
+    function _silentOk() {
+      const name = document.getElementById('wl-nm').value.trim();
+      document.getElementById('ok-name').textContent = name || 'drogi gościu';
+      document.getElementById('ok-em').textContent = document.getElementById('wl-em').value.trim();
+      document.getElementById('w4').classList.remove('vis');
+      document.getElementById('w-ok').classList.add('vis');
+    }
+
     async function wlSubmit() {
+      const _sc = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG.security : null;
+      if (_sc) {
+        if (_sc.honeypot && document.getElementById('_hp')?.value) return _silentOk();
+        if (((Date.now() - (window._t0 || 0)) / 1000) < (_sc.minFillSeconds || 5)) return _silentOk();
+      }
       const emailInp = document.getElementById('wl-em');
       const email = emailInp.value.trim();
       if (!email) { emailInp.focus(); emailInp.style.borderColor = '#ef4444'; return; }

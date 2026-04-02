@@ -6,6 +6,7 @@
   <title>Onboarding — E-commerce</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="/config.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -243,6 +244,10 @@
         <div class="fld"><label class="lbl" for="ec-em">Adres e-mail <span style="color:#ef4444">*</span></label><input type="email" id="ec-em" class="inp" placeholder="anna@twojesklep.pl" autocomplete="email"></div>
         <div class="fld"><label class="lbl" for="ec-ph">Telefon <span style="color:var(--ink-s);font-weight:400;text-transform:none;letter-spacing:0">(opcjonalnie)</span></label><input type="tel" id="ec-ph" class="inp" placeholder="+48 123 456 789" autocomplete="tel"></div>
       </div>
+      <!-- honeypot -->
+      <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
+        <input type="text" id="_hp" name="address" tabindex="-1" autocomplete="off">
+      </div>
       <button class="btn" id="ec-sub" onclick="ecSubmit()">Wyślij zgłoszenie →</button>
       <a class="back-lnk" onclick="prv(3)">← Wróć</a>
     </div>
@@ -272,10 +277,13 @@
          3. Kliknij "Add" i nadaj nazwę, np. "Onboarding E-commerce"
          4. Skopiuj wygenerowany URL i wklej poniżej
        ═══════════════════════════════════════════════════════════════ */
+    // Odczytaj konfigurację z config.js; lokalne wartości jako fallback
+    const SC = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG : {};
     const CONFIG = {
-      webhookUrl: '',       // ← WKLEJ TU URL z Make.com, np. https://hook.eu1.make.com/xxxx
-      brandName:  'TwójSklep',  // ← nazwa firmy w szablonie
+      webhookUrl: SC.webhooks?.ecommerce || '',
+      brandName:  SC.brand?.name         || 'TwójSklep',
     };
+    window._t0 = Date.now();
 
     /*  POLA WYSYŁANE DO MAKE.COM:
         ┌──────────────┬──────────────────────────────────────────────┐
@@ -352,7 +360,18 @@
       D.needs = el.classList.contains('on') ? [...new Set([...D.needs, v])] : D.needs.filter(x => x !== v);
     }
 
+    function _silentOk() {
+      document.getElementById('ok-email').textContent = document.getElementById('ec-em').value.trim();
+      document.getElementById('s4').classList.remove('vis');
+      document.getElementById('s-ok').classList.add('vis');
+    }
+
     async function ecSubmit() {
+      const _sc = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG.security : null;
+      if (_sc) {
+        if (_sc.honeypot && document.getElementById('_hp')?.value) return _silentOk();
+        if (((Date.now() - (window._t0 || 0)) / 1000) < (_sc.minFillSeconds || 5)) return _silentOk();
+      }
       const emailInp = document.getElementById('ec-em');
       const email = emailInp.value.trim();
       if (!email) { emailInp.focus(); emailInp.style.borderColor = '#ef4444'; return; }
