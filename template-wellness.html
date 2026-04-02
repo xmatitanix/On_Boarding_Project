@@ -253,9 +253,9 @@
       <h2 class="step-q">Jesteśmy tu dla Ciebie</h2>
       <p class="step-sub">Zostaw kontakt — odezwiemy się z ciepłą, spersonalizowaną propozycją. Bez presji i bez spamu.</p>
       <div class="form-wrap">
-        <div class="f-row"><label class="f-lbl" for="wl-nm">Jak masz na imię?</label><input type="text" id="wl-nm" class="f-inp" placeholder="np. Marta" autocomplete="given-name"></div>
-        <div class="f-row"><label class="f-lbl" for="wl-em">Adres e-mail <span style="color:#ef4444">*</span></label><input type="email" id="wl-em" class="f-inp" placeholder="marta@przykład.pl" autocomplete="email"></div>
-        <div class="f-row"><label class="f-lbl" for="wl-ph">Telefon <span style="color:var(--ink-s);font-weight:500">(opcjonalnie)</span></label><input type="tel" id="wl-ph" class="f-inp" placeholder="+48 123 456 789" autocomplete="tel"></div>
+        <div class="f-row"><label class="f-lbl" for="wl-nm">Jak masz na imię?</label><input type="text" id="wl-nm" class="f-inp" placeholder="np. Marta" autocomplete="given-name" maxlength="100"></div>
+        <div class="f-row"><label class="f-lbl" for="wl-em">Adres e-mail <span style="color:#ef4444">*</span></label><input type="email" id="wl-em" class="f-inp" placeholder="marta@przykład.pl" autocomplete="email" maxlength="254"></div>
+        <div class="f-row"><label class="f-lbl" for="wl-ph">Telefon <span style="color:var(--ink-s);font-weight:500">(opcjonalnie)</span></label><input type="tel" id="wl-ph" class="f-inp" placeholder="+48 123 456 789" autocomplete="tel" maxlength="30"></div>
         <div class="privacy-line"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#059669;flex-shrink:0;margin-top:4px"></span><span>Twoje dane są bezpieczne. Nie wysyłamy spamu — tylko jeden przyjazny kontakt od naszego specjalisty.</span></div>
       </div>
       <!-- honeypot -->
@@ -326,6 +326,7 @@
         try {
           const res = await fetch(CONFIG.webhookUrl, {
             method: 'POST',
+            credentials: 'omit',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload),
           });
@@ -374,6 +375,8 @@
       setTimeout(() => goW(4), 260);
     }
 
+    function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e) && e.length <= 254; }
+
     function _silentOk() {
       const name = document.getElementById('wl-nm').value.trim();
       document.getElementById('ok-name').textContent = name || 'drogi gościu';
@@ -390,7 +393,7 @@
       }
       const emailInp = document.getElementById('wl-em');
       const email = emailInp.value.trim();
-      if (!email) { emailInp.focus(); emailInp.style.borderColor = '#ef4444'; return; }
+      if (!email || !isValidEmail(email)) { emailInp.focus(); emailInp.style.borderColor = '#ef4444'; return; }
       emailInp.style.borderColor = '';
 
       const btn = document.getElementById('wl-sub');
