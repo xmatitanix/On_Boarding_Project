@@ -6,6 +6,7 @@
   <title>Onboarding — Finanse / Prawo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="/config.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -356,6 +357,10 @@
       <div class="field"><label class="f-lbl" for="fn-co">Nazwa firmy</label><input type="text" id="fn-co" class="f-inp" placeholder="Kowalski & Wspólnicy Sp. z o.o." autocomplete="organization"></div>
       <div class="field"><label class="f-lbl" for="fn-em">Adres e-mail <span style="color:#ef4444;font-weight:400;letter-spacing:0;text-transform:none">*</span></label><input type="email" id="fn-em" class="f-inp" placeholder="jan.kowalski@firma.pl" autocomplete="email"></div>
       <div class="field"><label class="f-lbl" for="fn-ph">Telefon <span style="color:var(--ink-s);font-weight:400;letter-spacing:0;text-transform:none">(opcjonalnie)</span></label><input type="tel" id="fn-ph" class="f-inp" placeholder="+48 123 456 789" autocomplete="tel"></div>
+      <!-- honeypot -->
+      <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
+        <input type="text" id="_hp" name="address" tabindex="-1" autocomplete="off">
+      </div>
       <div class="actions">
         <button class="btn-ghost" onclick="goTo(3)">← Wróć</button>
         <button class="btn-cta" id="fn-sub" onclick="fnSubmit()">Wyślij zgłoszenie →</button>
@@ -394,10 +399,13 @@
        3. Kliknij "Add" i nadaj nazwę, np. "Onboarding Finanse"
        4. Skopiuj wygenerowany URL i wklej poniżej
      ═══════════════════════════════════════════════════════════════ */
+  // Odczytaj konfigurację z config.js; lokalne wartości jako fallback
+  const SC = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG : {};
   const CONFIG = {
-    webhookUrl: '',          // ← WKLEJ TU URL z Make.com, np. https://hook.eu1.make.com/xxxx
-    brandName:  'TwojaFirma',  // ← nazwa firmy w szablonie
+    webhookUrl: SC.webhooks?.finance || '',
+    brandName:  SC.brand?.name       || 'TwojaFirma',
   };
+  window._t0 = Date.now();
 
   /*  POLA WYSYŁANE DO MAKE.COM:
       ┌──────────────┬──────────────────────────────────────────────────────┐
@@ -467,7 +475,17 @@
     el.classList.add('on'); FD.timeline = el.dataset.v;
   }
 
+  function _silentOk() {
+    document.getElementById('f4').classList.remove('vis');
+    document.getElementById('f-ok').classList.add('vis');
+  }
+
   async function fnSubmit() {
+    const _sc = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG.security : null;
+    if (_sc) {
+      if (_sc.honeypot && document.getElementById('_hp')?.value) return _silentOk();
+      if (((Date.now() - (window._t0 || 0)) / 1000) < (_sc.minFillSeconds || 5)) return _silentOk();
+    }
     const emailInp = document.getElementById('fn-em');
     const email = emailInp.value.trim();
     if (!email) { emailInp.focus(); emailInp.style.borderColor = '#ef4444'; return; }
