@@ -6,7 +6,8 @@
     { "source": "/template-finance", "destination": "/template-finance.html" },
     { "source": "/template-wellness", "destination": "/template-wellness.html" },
     { "source": "/template-crm", "destination": "/template-crm.html" },
-    { "source": "/template-sports", "destination": "/template-sports.html" }
+    { "source": "/template-sports", "destination": "/template-sports.html" },
+    { "source": "/template-industrial", "destination": "/template-industrial.html" }
   ],
   "headers": [
     {

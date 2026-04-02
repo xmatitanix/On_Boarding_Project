@@ -30,7 +30,8 @@ window.SITE_CONFIG = {
     finance:   '',   // ← template-finance.html    (styl: panel zaufania)
     wellness:  '',   // ← template-wellness.html   (styl: jedno pytanie naraz)
     crm:       '',   // ← template-crm.html         (styl: enterprise CRM/wizard)
-    sports:    '',   // ← template-sports.html      (styl: klub sportowy)
+    sports:      '',   // ← template-sports.html        (styl: klub sportowy)
+    industrial:  '',   // ← template-industrial.html   (styl: przemysł / CNC)
   },
 
   // ── ZABEZPIECZENIA ───────────────────────────────────────────────
