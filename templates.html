@@ -87,6 +87,16 @@
     .card-preview.p5 { background: linear-gradient(135deg, #1c1917, #78716c); }
     .card-preview.p6 { background: linear-gradient(135deg, #0f172a, #1e3a5f); }
     .card-preview.p7 { background: linear-gradient(135deg, #0f172a, #14532d); }
+    .card-preview.p8 { background: linear-gradient(135deg, #111827, #1c2333); }
+
+    /* Industrial mockup */
+    .mock-ind { display:flex;flex-direction:column;padding:10px 14px;gap:7px;width:100%; }
+    .mind-gr { display:grid;grid-template-columns:repeat(4,1fr);gap:5px; }
+    .mind-c { height:30px;border-radius:7px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.1); }
+    .mind-c.on { background:rgba(249,115,22,.25);border-color:rgba(249,115,22,.7); }
+    .mind-row { display:flex;gap:5px; }
+    .mind-pl { height:13px;border-radius:99px;flex:1;background:rgba(255,255,255,.1); }
+    .mind-pl.on { background:rgba(249,115,22,.55); }
 
     /* CRM mockup */
     .mock-crm { display:flex;flex-direction:column;padding:10px 14px;gap:6px;width:100%; }
@@ -117,6 +127,7 @@
     .p5 .preview-label { color: rgba(255,255,255,.5); }
     .p6 .preview-label { color: rgba(96,165,250,.7); }
     .p7 .preview-label { color: rgba(34,197,94,.7); }
+    .p8 .preview-label { color: rgba(249,115,22,.8); }
     .card-body { padding: 20px 20px 16px; flex: 1; display: flex; flex-direction: column; }
     .card-tag {
       display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: .1em;
@@ -150,8 +161,11 @@
     .bv6:hover { background: #1d4ed8; }
     .bv7 { background: #15803d; color: #fff; }
     .bv7:hover { background: #166534; }
+    .bv8 { background: #c2410c; color: #fff; }
+    .bv8:hover { background: #9a3412; }
     .t6 { background: #dbeafe; color: #1e40af; }
     .t7 { background: #dcfce7; color: #166534; }
+    .t8 { background: #ffedd5; color: #9a3412; }
     @media (max-width: 600px) {
       header { padding: 18px 20px; }
       .hero { padding: 40px 20px 32px; }
@@ -166,7 +180,7 @@
   </header>
   <div class="hero">
     <h1>Szablony onboardingu dla każdej firmy</h1>
-    <p>7 gotowych szablonów w różnych stylach — wybierz ten, który pasuje do Twojej marki i klientów.</p>
+    <p>8 gotowych szablonów w różnych stylach — wybierz ten, który pasuje do Twojej marki i klientów.</p>
   </div>
   <div class="grid">
 
@@ -317,6 +331,42 @@
         <div class="card-desc">Cztery kroki zbierające kompletny obraz organizacji: branża i skala, obszary do automatyzacji, rola decydenta i dane kontaktowe. Pasek kroków w nagłówku — jak Salesforce lub HubSpot.</div>
         <div class="card-features"><span class="feat">4 kroki</span><span class="feat">Multi-select karty</span><span class="feat">Sticky header</span><span class="feat">Enterprise</span></div>
         <a href="/template-crm.html" class="btn-view bv6">Podgląd →</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-preview p8">
+        <div class="mock-ind">
+          <div class="mind-gr">
+            <div class="mind-c on"></div>
+            <div class="mind-c"></div>
+            <div class="mind-c on"></div>
+            <div class="mind-c"></div>
+            <div class="mind-c"></div>
+            <div class="mind-c on"></div>
+            <div class="mind-c"></div>
+            <div class="mind-c"></div>
+          </div>
+          <div class="mind-row">
+            <div class="mind-pl on"></div>
+            <div class="mind-pl"></div>
+            <div class="mind-pl on"></div>
+          </div>
+          <div class="mind-row">
+            <div class="mind-pl on"></div>
+            <div class="mind-pl"></div>
+            <div class="mind-pl"></div>
+            <div class="mind-pl"></div>
+          </div>
+        </div>
+        <div class="preview-label">Przemysł / CNC</div>
+      </div>
+      <div class="card-body">
+        <span class="card-tag t8">Przemysł / Produkcja</span>
+        <div class="card-title">Zapytanie ofertowe CNC</div>
+        <div class="card-desc">Ciemny, przemysłowy styl. Siatka 8 usług (frezowanie, toczenie, spawanie itd.), potem parametry zlecenia (materiał, ilość, termin), typ współpracy i dane kontaktowe. Wycena w 24 h.</div>
+        <div class="card-features"><span class="feat">Siatka usług</span><span class="feat">Parametry zlecenia</span><span class="feat">Ciemny motyw</span><span class="feat">4 kroki</span></div>
+        <a href="/template-industrial.html" class="btn-view bv8">Podgląd →</a>
       </div>
     </div>
 

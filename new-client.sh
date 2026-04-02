@@ -35,17 +35,17 @@ if [ -z "$TEMPLATE" ] || [ -z "$CLIENT" ]; then
   echo ""
   echo "  Użycie: ./new-client.sh <szablon> <nazwa-folderu>"
   echo ""
-  echo "  Szablony: chat | saas | ecommerce | finance | wellness | crm | sports"
+  echo "  Szablony: chat | saas | ecommerce | finance | wellness | crm | sports | industrial"
   echo ""
   echo "  Przykład: ./new-client.sh saas acme-onboarding"
   echo ""
   exit 1
 fi
 
-VALID_TEMPLATES=("chat" "saas" "ecommerce" "finance" "wellness" "crm" "sports")
+VALID_TEMPLATES=("chat" "saas" "ecommerce" "finance" "wellness" "crm" "sports" "industrial")
 if [[ ! " ${VALID_TEMPLATES[@]} " =~ " ${TEMPLATE} " ]]; then
   echo "  Nieznany szablon: '$TEMPLATE'"
-  echo "  Dostępne: chat | saas | ecommerce | finance | wellness | crm | sports"
+  echo "  Dostępne: chat | saas | ecommerce | finance | wellness | crm | sports | industrial"
   exit 1
 fi
 

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zapytanie ofertowe — CNC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="/config.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #111827; --card: #1f2937; --accent: #f97316; --accent-lt: rgba(249,115,22,.12);
+      --accent-dk: #ea6c0a; --ink: #f9fafb; --ink-m: #9ca3af; --ink-s: #6b7280;
+      --border: #374151; --green: #10b981; --red: #ef4444;
+      --font: 'Inter', system-ui, sans-serif;
+    }
+    html, body { height: 100%; font-family: var(--font); }
+    body { background: var(--bg); color: var(--ink); min-height: 100vh; display: flex; flex-direction: column; }
+    .hdr {
+      background: #0d1117; border-bottom: 1px solid var(--border);
+      padding: 0 48px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 10; flex-shrink: 0;
+    }
+    .h-logo { display: flex; align-items: center; gap: 10px; }
+    .h-mark {
+      width: 34px; height: 34px; border-radius: 7px;
+      background: var(--accent); color: #fff;
+      font-size: 12px; font-weight: 800; letter-spacing: -.5px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .h-brand { font-size: 15px; font-weight: 700; color: var(--ink); }
+    .h-steps { display: flex; align-items: center; gap: 4px; }
+    .h-step {
+      display: flex; align-items: center; gap: 7px; padding: 5px 12px;
+      border-radius: 99px; font-size: 12px; font-weight: 500; color: var(--ink-s); transition: all .2s;
+    }
+    .h-step.active { background: var(--accent-lt); color: var(--accent); }
+    .h-step.done { color: var(--green); }
+    .h-sn {
+      width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid currentColor;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700; flex-shrink: 0;
+    }
+    .h-step.active .h-sn { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .h-step.done .h-sn { background: var(--green); border-color: var(--green); color: #fff; }
+    .h-sep { color: var(--border); font-size: 16px; }
+    @media (max-width: 640px) { .h-steps { display: none; } .hdr { padding: 0 20px; } }
+    .prog-bar { height: 3px; background: var(--border); }
+    .prog-fill { height: 100%; background: var(--accent); transition: width .4s; }
+    .main { flex: 1; display: flex; justify-content: center; padding: 40px 16px 60px; }
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+      padding: 40px 44px; width: 100%; max-width: 660px;
+    }
+    @media (max-width: 640px) { .card { padding: 28px 20px; } }
+    .step { display: none; }
+    .step.active { display: block; }
+    .step-tag {
+      display: inline-block; padding: 3px 10px; border-radius: 99px;
+      font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      background: var(--accent-lt); color: var(--accent); margin-bottom: 12px;
+    }
+    .step-title { font-size: 24px; font-weight: 800; color: var(--ink); line-height: 1.25; margin-bottom: 6px; }
+    .step-sub { font-size: 14px; color: var(--ink-m); margin-bottom: 28px; line-height: 1.5; }
+    .prod-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 10px; }
+    @media (max-width: 480px) { .prod-grid { grid-template-columns: repeat(2, 1fr); } }
+    .prod-card {
+      border: 2px solid var(--border); border-radius: 12px; padding: 16px 10px;
+      cursor: pointer; transition: all .18s; text-align: center; position: relative; background: transparent;
+    }
+    .prod-card:hover { border-color: var(--accent); background: var(--accent-lt); }
+    .prod-card.selected { border-color: var(--accent); background: var(--accent-lt); }
+    .prod-card.selected::after {
+      content: 'OK'; position: absolute; top: 5px; right: 7px;
+      font-size: 9px; font-weight: 800; color: var(--accent);
+    }
+    .prod-ic {
+      width: 44px; height: 44px; border-radius: 10px; margin: 0 auto 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 800; letter-spacing: -.3px;
+    }
+    .prod-name { font-size: 12px; font-weight: 600; color: var(--ink); line-height: 1.3; }
+    .sec-label { font-size: 12px; font-weight: 600; color: var(--ink-m); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 10px; }
+    .sec-sep { margin-top: 24px; }
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; }
+    .pill {
+      padding: 9px 18px; border-radius: 99px; border: 2px solid var(--border);
+      font-size: 14px; font-weight: 500; cursor: pointer; transition: all .15s; color: var(--ink-m); background: transparent;
+    }
+    .pill:hover { border-color: var(--accent); color: var(--ink); }
+    .pill.selected { border-color: var(--accent); background: var(--accent-lt); color: var(--accent); font-weight: 600; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+    .f-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .f-label { font-size: 13px; font-weight: 600; color: var(--ink-m); }
+    .f-input {
+      background: rgba(255,255,255,.05); border: 1.5px solid var(--border); border-radius: 10px;
+      padding: 12px 14px; font-size: 15px; font-family: var(--font); color: var(--ink);
+      transition: border-color .15s; width: 100%;
+    }
+    .f-input:focus { outline: none; border-color: var(--accent); }
+    .f-input::placeholder { color: var(--ink-s); }
+    .privacy { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: var(--ink-s); margin-top: 14px; line-height: 1.55; }
+    .priv-dot {
+      width: 14px; height: 14px; border-radius: 50%; background: var(--green);
+      flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center;
+      font-size: 8px; color: #fff; font-weight: 800;
+    }
+    .btn-row { display: flex; align-items: center; gap: 12px; margin-top: 32px; }
+    .btn-back {
+      background: transparent; border: 1.5px solid var(--border); border-radius: 10px;
+      padding: 12px 22px; font-size: 14px; font-weight: 600; color: var(--ink-m);
+      cursor: pointer; font-family: var(--font); transition: all .15s; flex-shrink: 0;
+    }
+    .btn-back:hover { border-color: var(--ink-m); color: var(--ink); }
+    .btn-next {
+      background: var(--accent); border: none; border-radius: 10px;
+      padding: 13px 32px; font-size: 15px; font-weight: 700; color: #fff;
+      cursor: pointer; font-family: var(--font); transition: background .15s; flex: 1;
+    }
+    .btn-next:hover { background: var(--accent-dk); }
+    .btn-next:disabled { opacity: .4; cursor: not-allowed; }
+    .btn-submit {
+      background: var(--accent); border: none; border-radius: 10px;
+      padding: 14px 0; font-size: 16px; font-weight: 700; color: #fff;
+      cursor: pointer; font-family: var(--font); transition: background .15s; width: 100%; margin-top: 20px;
+    }
+    .btn-submit:hover { background: var(--accent-dk); }
+    .btn-submit:disabled { opacity: .4; cursor: not-allowed; }
+    #success { display: none; text-align: center; padding: 20px 0; }
+    .suc-icon {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, #f97316, #ea6c0a);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px; font-size: 30px; color: #fff; font-weight: 800;
+    }
+    .suc-title { font-size: 26px; font-weight: 800; color: var(--ink); margin-bottom: 10px; }
+    .suc-sub { font-size: 15px; color: var(--ink-m); line-height: 1.65; }
+    .err-msg { color: var(--red); font-size: 13px; margin-top: 8px; display: none; }
+    .err-msg.show { display: block; }
+    .hp-field { opacity: 0; position: absolute; top: -9999px; left: -9999px; height: 0; }
+  </style>
+</head>
+<body>
+  <header class="hdr">
+    <div class="h-logo">
+      <div class="h-mark" id="hMark">CNC</div>
+      <span class="h-brand" id="hBrand">MetalWorks</span>
+    </div>
+    <div class="h-steps">
+      <div class="h-step active" id="hs1"><div class="h-sn">1</div>Wyroby</div>
+      <span class="h-sep">›</span>
+      <div class="h-step" id="hs2"><div class="h-sn">2</div>Szczegóły</div>
+      <span class="h-sep">›</span>
+      <div class="h-step" id="hs3"><div class="h-sn">3</div>Współpraca</div>
+      <span class="h-sep">›</span>
+      <div class="h-step" id="hs4"><div class="h-sn">4</div>Kontakt</div>
+    </div>
+  </header>
+  <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:25%"></div></div>
+
+  <main class="main">
+    <div class="card">
+      <div class="hp-field" aria-hidden="true">
+        <input type="text" name="website" id="hp" tabindex="-1" autocomplete="off">
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="step active" id="s1">
+        <div class="step-tag">Krok 1 z 4</div>
+        <h1 class="step-title">Czego szukasz?</h1>
+        <p class="step-sub">Wybierz rodzaj wyrobów lub usług. Możesz zaznaczyć kilka.</p>
+        <div class="prod-grid" id="prodGrid">
+          <div class="prod-card" data-val="milling">
+            <div class="prod-ic" style="background:#1c2a1e;color:#4ade80;">FR</div>
+            <div class="prod-name">Frezowanie CNC</div>
+          </div>
+          <div class="prod-card" data-val="turning">
+            <div class="prod-ic" style="background:#1a2030;color:#60a5fa;">TO</div>
+            <div class="prod-name">Toczenie CNC</div>
+          </div>
+          <div class="prod-card" data-val="sheet_metal">
+            <div class="prod-ic" style="background:#2a1f10;color:#fbbf24;">BL</div>
+            <div class="prod-name">Wyroby z blachy</div>
+          </div>
+          <div class="prod-card" data-val="welding">
+            <div class="prod-ic" style="background:#2a1010;color:#f87171;">SP</div>
+            <div class="prod-name">Spawanie</div>
+          </div>
+          <div class="prod-card" data-val="aluminium">
+            <div class="prod-ic" style="background:#1a1e2a;color:#a78bfa;">AL</div>
+            <div class="prod-name">Obróbka aluminium</div>
+          </div>
+          <div class="prod-card" data-val="steel_parts">
+            <div class="prod-ic" style="background:#1e2020;color:#94a3b8;">ST</div>
+            <div class="prod-name">Części ze stali</div>
+          </div>
+          <div class="prod-card" data-val="prototypes">
+            <div class="prod-ic" style="background:#1a1a2a;color:#c084fc;">PR</div>
+            <div class="prod-name">Prototypy</div>
+          </div>
+          <div class="prod-card" data-val="other">
+            <div class="prod-ic" style="background:#1f1f1f;color:#6b7280;">···</div>
+            <div class="prod-name">Inne</div>
+          </div>
+        </div>
+        <div class="err-msg" id="e1">Wybierz co najmniej jeden rodzaj wyrobu.</div>
+        <div class="btn-row" style="justify-content:flex-end;">
+          <button class="btn-next" style="flex:none;padding:13px 40px;" onclick="go1()">Dalej →</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step" id="s2">
+        <div class="step-tag">Krok 2 z 4</div>
+        <h1 class="step-title">Szczegóły zlecenia</h1>
+        <p class="step-sub">Podaj podstawowe parametry — przyspieszy to przygotowanie wyceny.</p>
+        <div class="sec-label">Materiał</div>
+        <div class="pills">
+          <div class="pill" data-group="mat" data-val="steel">Stal</div>
+          <div class="pill" data-group="mat" data-val="aluminium">Aluminium</div>
+          <div class="pill" data-group="mat" data-val="brass">Mosiądz</div>
+          <div class="pill" data-group="mat" data-val="plastic">Tworzywo sztuczne</div>
+          <div class="pill" data-group="mat" data-val="other_mat">Inny / nie wiem</div>
+        </div>
+        <div class="sec-label sec-sep">Ilość sztuk</div>
+        <div class="pills">
+          <div class="pill" data-group="qty" data-val="1_10">1–10 szt.</div>
+          <div class="pill" data-group="qty" data-val="11_100">11–100 szt.</div>
+          <div class="pill" data-group="qty" data-val="101_500">101–500 szt.</div>
+          <div class="pill" data-group="qty" data-val="500plus">500+ szt.</div>
+        </div>
+        <div class="sec-label sec-sep">Oczekiwany termin realizacji</div>
+        <div class="pills">
+          <div class="pill" data-group="deadline" data-val="2w">Do 2 tygodni</div>
+          <div class="pill" data-group="deadline" data-val="4w">2–4 tygodnie</div>
+          <div class="pill" data-group="deadline" data-val="3m">1–3 miesiące</div>
+          <div class="pill" data-group="deadline" data-val="open">Otwarty / negocjowalny</div>
+        </div>
+        <div class="err-msg" id="e2">Wybierz materiał, ilość i termin realizacji.</div>
+        <div class="btn-row">
+          <button class="btn-back" onclick="goStep(1)">← Wróć</button>
+          <button class="btn-next" onclick="go2()">Dalej →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step" id="s3">
+        <div class="step-tag">Krok 3 z 4</div>
+        <h1 class="step-title">Typ współpracy</h1>
+        <p class="step-sub">Dobierzemy model współpracy odpowiedni do Twojego projektu.</p>
+        <div class="sec-label">Rodzaj zamówienia</div>
+        <div class="pills">
+          <div class="pill" data-group="order" data-val="prototype">Prototyp / pierwsza sztuka</div>
+          <div class="pill" data-group="order" data-val="pilot">Seria próbna</div>
+          <div class="pill" data-group="order" data-val="serial">Produkcja seryjna</div>
+          <div class="pill" data-group="order" data-val="ongoing">Stała współpraca</div>
+        </div>
+        <div class="sec-label sec-sep">Branża</div>
+        <div class="pills">
+          <div class="pill" data-group="industry" data-val="auto">Motoryzacja</div>
+          <div class="pill" data-group="industry" data-val="aerospace">Lotnictwo / obronność</div>
+          <div class="pill" data-group="industry" data-val="medical">Medycyna / farmacja</div>
+          <div class="pill" data-group="industry" data-val="automation">Automatyka / robotyka</div>
+          <div class="pill" data-group="industry" data-val="construction">Budownictwo / maszyny</div>
+          <div class="pill" data-group="industry" data-val="other_ind">Inna</div>
+        </div>
+        <div class="err-msg" id="e3">Wybierz rodzaj zamówienia i branżę.</div>
+        <div class="btn-row">
+          <button class="btn-back" onclick="goStep(2)">← Wróć</button>
+          <button class="btn-next" onclick="go3()">Dalej →</button>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step" id="s4">
+        <div class="step-tag">Krok 4 z 4</div>
+        <h1 class="step-title">Dane kontaktowe</h1>
+        <p class="step-sub">Wyślemy wycenę na Twój adres e-mail w ciągu 24 godzin roboczych.</p>
+        <div class="form-row">
+          <div class="f-group">
+            <label class="f-label" for="fName">Imię i nazwisko</label>
+            <input class="f-input" id="fName" type="text" placeholder="Jan Kowalski" maxlength="100" autocomplete="name">
+          </div>
+          <div class="f-group">
+            <label class="f-label" for="fCompany">Firma <span style="font-weight:400;color:var(--ink-s)">(opcjonalnie)</span></label>
+            <input class="f-input" id="fCompany" type="text" placeholder="Nazwa sp. z o.o." maxlength="150" autocomplete="organization">
+          </div>
+        </div>
+        <div class="f-group">
+          <label class="f-label" for="fEmail">Adres e-mail <span style="color:var(--accent)">*</span></label>
+          <input class="f-input" id="fEmail" type="email" placeholder="jan@firma.pl" maxlength="254" autocomplete="email">
+        </div>
+        <div class="f-group">
+          <label class="f-label" for="fPhone">Telefon <span style="font-weight:400;color:var(--ink-s)">(opcjonalnie)</span></label>
+          <input class="f-input" id="fPhone" type="tel" placeholder="+48 600 000 000" maxlength="30" autocomplete="tel">
+        </div>
+        <div class="privacy">
+          <div class="priv-dot">✓</div>
+          <span>Dane służą wyłącznie do przygotowania wyceny i kontaktu w sprawie zlecenia. Nie udostępniamy ich osobom trzecim.</span>
+        </div>
+        <div class="err-msg" id="e4">Podaj prawidłowy adres e-mail.</div>
+        <button class="btn-submit" id="btnSubmit" onclick="doSubmit()">Wyślij zapytanie →</button>
+        <div class="btn-row" style="margin-top:16px;">
+          <button class="btn-back" onclick="goStep(3)">← Wróć</button>
+        </div>
+      </div>
+
+      <!-- SUCCESS -->
+      <div id="success">
+        <div class="suc-icon">✓</div>
+        <div class="suc-title">Wycena w drodze!</div>
+        <p class="suc-sub">Dziękujemy za zapytanie. Wrócimy do Ciebie z wyceną<br>w ciągu 24 godzin roboczych.<br><br>Jeśli masz dokumentację techniczną (rysunki, pliki STEP/DXF),<br>możesz ją dosłać odpowiadając na naszego maila.</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const SC = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG : {};
+    const CONFIG = {
+      webhookUrl:     SC.webhooks?.industrial || '',
+      brandName:      SC.brand?.name          || 'MetalWorks',
+      honeypot:       SC.security?.honeypot        ?? true,
+      minFillSeconds: SC.security?.minFillSeconds  ?? 5,
+    };
+    window._t0 = Date.now();
+
+    document.getElementById('hBrand').textContent = CONFIG.brandName;
+    const _ini = CONFIG.brandName.replace(/[^a-zA-Z\u00C0-\u024F\s]/g,'').split(/\s+/).map(w=>w[0]||'').join('').slice(0,3).toUpperCase()||'CNC';
+    document.getElementById('hMark').textContent = _ini;
+
+    let currentStep = 1;
+
+    function sanitize(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
+    function isValidEmail(e) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(e).trim());
+    }
+
+    function goStep(n) {
+      document.getElementById('s'+currentStep).classList.remove('active');
+      currentStep = n;
+      document.getElementById('s'+n).classList.add('active');
+      updateHeader(n);
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+    function updateHeader(n) {
+      document.getElementById('progFill').style.width = (Math.min(n,4)/4*100)+'%';
+      [1,2,3,4].forEach(i => {
+        const el = document.getElementById('hs'+i);
+        el.classList.remove('active','done');
+        if (i < n)  el.classList.add('done');
+        if (i === n) el.classList.add('active');
+        el.querySelector('.h-sn').textContent = i < n ? '\u2713' : String(i);
+      });
+    }
+
+    document.querySelectorAll('.prod-card').forEach(c => {
+      c.addEventListener('click', () => c.classList.toggle('selected'));
+    });
+    document.querySelectorAll('.pill[data-group]').forEach(p => {
+      p.addEventListener('click', () => {
+        document.querySelectorAll('.pill[data-group="'+p.dataset.group+'"]').forEach(x=>x.classList.remove('selected'));
+        p.classList.add('selected');
+      });
+    });
+
+    function getProds()   { return [...document.querySelectorAll('.prod-card.selected')].map(c=>c.dataset.val); }
+    function getPill(grp) { const el=document.querySelector('.pill[data-group="'+grp+'"].selected'); return el?el.dataset.val:''; }
+
+    function go1() {
+      const err=document.getElementById('e1');
+      if (getProds().length===0) { err.classList.add('show'); return; }
+      err.classList.remove('show'); goStep(2);
+    }
+    function go2() {
+      const err=document.getElementById('e2');
+      if (!getPill('mat')||!getPill('qty')||!getPill('deadline')) { err.classList.add('show'); return; }
+      err.classList.remove('show'); goStep(3);
+    }
+    function go3() {
+      const err=document.getElementById('e3');
+      if (!getPill('order')||!getPill('industry')) { err.classList.add('show'); return; }
+      err.classList.remove('show'); goStep(4);
+    }
+
+    function _silentOk() {
+      document.querySelectorAll('.step').forEach(s=>{ s.style.display='none'; });
+      document.getElementById('success').style.display='block';
+      document.getElementById('progFill').style.width='100%';
+    }
+
+    async function doSubmit() {
+      const emailVal = document.getElementById('fEmail').value.trim();
+      const err4 = document.getElementById('e4');
+      if (!isValidEmail(emailVal)) {
+        err4.textContent = 'Podaj prawidłowy adres e-mail.';
+        err4.classList.add('show'); return;
+      }
+      err4.classList.remove('show');
+      if (CONFIG.honeypot && document.getElementById('hp').value !== '') { _silentOk(); return; }
+      if ((Date.now()-window._t0)/1000 < CONFIG.minFillSeconds) { _silentOk(); return; }
+      if (!CONFIG.webhookUrl) {
+        console.warn('[industrial] Brak webhookUrl w config.js.');
+        _silentOk(); return;
+      }
+      const btn = document.getElementById('btnSubmit');
+      btn.disabled = true; btn.textContent = 'Wysyłam\u2026';
+      const payload = {
+        template:   'industrial-cnc',
+        products:   getProds(),
+        material:   getPill('mat'),
+        quantity:   getPill('qty'),
+        deadline:   getPill('deadline'),
+        order_type: getPill('order'),
+        industry:   getPill('industry'),
+        name:       document.getElementById('fName').value.trim(),
+        company:    document.getElementById('fCompany').value.trim(),
+        email:      emailVal,
+        phone:      document.getElementById('fPhone').value.trim(),
+        brand:      CONFIG.brandName,
+        timestamp:  new Date().toISOString(),
+      };
+      try {
+        const res = await fetch(CONFIG.webhookUrl, {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          credentials:'omit', body:JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error('HTTP '+res.status);
+        document.querySelectorAll('.step').forEach(s=>{ s.style.display='none'; });
+        document.getElementById('success').style.display='block';
+        document.getElementById('progFill').style.width='100%';
+        updateHeader(5);
+      } catch(e) {
+        btn.disabled=false; btn.textContent='Wyślij zapytanie \u2192';
+        err4.textContent='Błąd połączenia. Spróbuj ponownie.';
+        err4.classList.add('show');
+      }
+    }
+  </script>
+</body>
+</html>
