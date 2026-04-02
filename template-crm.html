@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onboarding — CRM / Enterprise</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="/config.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f8fafc; --card: #fff; --accent: #2563eb; --accent-lt: #eff6ff;
+      --accent-dk: #1d4ed8; --ink: #0f172a; --ink-m: #475569; --ink-s: #94a3b8;
+      --border: #e2e8f0; --green: #10b981; --font: 'Inter', system-ui, sans-serif;
+    }
+    html, body { height: 100%; font-family: var(--font); }
+    body { background: var(--bg); display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* ── HEADER ────────────────────────────── */
+    .hdr {
+      background: #fff; border-bottom: 1px solid var(--border);
+      padding: 0 48px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-shrink: 0; position: sticky; top: 0; z-index: 10;
+    }
+    .h-logo { display: flex; align-items: center; gap: 10px; }
+    .h-mark {
+      width: 34px; height: 34px; border-radius: 8px; background: var(--accent);
+      color: #fff; font-size: 15px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .h-brand { font-size: 15px; font-weight: 600; color: var(--ink); }
+    .h-steps { display: flex; align-items: center; gap: 2px; }
+    .h-step {
+      display: flex; align-items: center; gap: 7px; padding: 5px 12px;
+      border-radius: 99px; font-size: 12px; font-weight: 500; color: var(--ink-s);
+    }
+    .h-step.active { background: var(--accent-lt); color: var(--accent); }
+    .h-step.done { color: var(--green); }
+    .h-sn {
+      width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid currentColor;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700;
+    }
+    .h-step.active .h-sn { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .h-step.done .h-sn { background: var(--green); border-color: var(--green); color: #fff; }
+    .h-sep { color: var(--border); font-size: 18px; padding: 0 2px; }
+    .h-krok { font-size: 12px; font-weight: 500; color: var(--ink-s); }
+
+    /* progress bar */
+    .prog-bar { height: 3px; background: var(--border); }
+    .prog-fill { height: 100%; background: var(--accent); border-radius: 0 3px 3px 0; transition: width .5s ease; }
+
+    /* ── CONTENT ───────────────────────────── */
+    .content { flex: 1; display: flex; align-items: flex-start; justify-content: center; padding: 48px 24px 80px; }
+    .card {
+      background: #fff; border: 1px solid var(--border); border-radius: 16px;
+      padding: 40px; width: 100%; max-width: 640px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.05); display: none;
+    }
+    .card.show { display: block; animation: up .3s ease; }
+    @keyframes up { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+    .step-tag { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .card-title { font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+    .card-desc { font-size: 14px; color: var(--ink-m); line-height: 1.6; margin-bottom: 28px; }
+
+    /* section */
+    .sec { margin-bottom: 22px; }
+    .sec-lbl { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-m); margin-bottom: 10px; }
+
+    /* pills */
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill {
+      padding: 7px 14px; border: 1.5px solid var(--border); border-radius: 99px;
+      font-size: 13px; font-family: var(--font); font-weight: 500;
+      cursor: pointer; background: var(--bg); color: var(--ink); transition: all .15s;
+    }
+    .pill:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-lt); }
+    .pill.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* area multi-select cards */
+    .area-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+    .area-card {
+      padding: 13px 14px; border: 1.5px solid var(--border); border-radius: 10px;
+      cursor: pointer; background: var(--bg); display: flex; align-items: center; gap: 10px; transition: all .15s;
+    }
+    .area-card:hover { border-color: var(--accent); background: var(--accent-lt); }
+    .area-card.on { border-color: var(--accent); background: var(--accent-lt); box-shadow: 0 0 0 1px var(--accent); }
+    .area-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .area-nm { font-size: 13px; font-weight: 500; color: var(--ink); flex: 1; }
+    .area-chk {
+      width: 18px; height: 18px; border-radius: 4px; border: 1.5px solid var(--border);
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all .15s;
+    }
+    .area-card.on .area-chk { background: var(--accent); border-color: var(--accent); }
+    .area-card.on .area-chk::after { content: '✓'; font-size: 11px; color: #fff; font-weight: 700; }
+
+    /* fields */
+    .field { margin-bottom: 16px; }
+    .f-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .f-lbl { display: block; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-m); margin-bottom: 6px; }
+    .f-inp {
+      width: 100%; padding: 10px 14px; font-size: 14px; font-family: var(--font);
+      border: 1.5px solid var(--border); border-radius: 8px;
+      color: var(--ink); background: var(--bg); outline: none; transition: all .2s;
+    }
+    .f-inp:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,.1); background: #fff; }
+    .f-inp::placeholder { color: var(--ink-s); }
+
+    /* divider */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+    /* actions */
+    .actions { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+    .btn-next {
+      padding: 11px 24px; background: var(--accent); color: #fff;
+      border: none; border-radius: 8px; font-size: 14px; font-family: var(--font);
+      font-weight: 600; cursor: pointer; transition: all .15s;
+    }
+    .btn-next:hover { background: var(--accent-dk); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37,99,235,.25); }
+    .btn-next:disabled { opacity: .4; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-back {
+      padding: 11px 16px; background: transparent; border: 1.5px solid var(--border);
+      border-radius: 8px; font-size: 14px; font-family: var(--font); font-weight: 500;
+      cursor: pointer; color: var(--ink-m); transition: all .15s;
+    }
+    .btn-back:hover { border-color: var(--ink-m); color: var(--ink); }
+    .note { margin-top: 14px; font-size: 12px; color: var(--ink-s); }
+
+    /* success */
+    .ok { text-align: center; padding: 8px 0; }
+    .ok h2 { font-size: 24px; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+    .ok p { font-size: 14px; color: var(--ink-m); line-height: 1.65; margin-bottom: 24px; }
+    .ok-steps { text-align: left; background: var(--bg); border-radius: 10px; padding: 16px 18px; margin-bottom: 20px; }
+    .ok-step { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--ink-m); padding: 5px 0; }
+    .ok-num { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+    @media (max-width: 700px) {
+      .hdr { padding: 0 20px; }
+      .h-steps { display: none; }
+      .content { padding: 24px 16px 60px; }
+      .card { padding: 28px 20px; }
+      .area-grid, .f-row2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="h-logo">
+    <div class="h-mark brand-initial">C</div>
+    <span class="h-brand brand-name">TwojaCRM</span>
+  </div>
+  <div class="h-steps">
+    <div class="h-step active" id="hs1"><div class="h-sn">1</div>Organizacja</div>
+    <span class="h-sep">›</span>
+    <div class="h-step" id="hs2"><div class="h-sn">2</div>Obszary</div>
+    <span class="h-sep">›</span>
+    <div class="h-step" id="hs3"><div class="h-sn">3</div>Projekt</div>
+    <span class="h-sep">›</span>
+    <div class="h-step" id="hs4"><div class="h-sn">4</div>Kontakt</div>
+  </div>
+  <div class="h-krok">Krok <span id="krok-n">1</span> z 4</div>
+</header>
+<div class="prog-bar"><div class="prog-fill" id="prog" style="width:25%"></div></div>
+
+<div class="content">
+
+  <!-- Step 1 -->
+  <div class="card show" id="c1">
+    <div class="step-tag">Krok 1 z 4</div>
+    <h1 class="card-title">Powiedz nam o swojej organizacji</h1>
+    <p class="card-desc">Kilka pytań kwalifikacyjnych pozwoli nam pokazać Ci dokładnie to, czego potrzebujesz — bez marnowania Twojego czasu.</p>
+
+    <div class="sec">
+      <div class="sec-lbl">Branża</div>
+      <div class="pills" id="industry-pills">
+        <button class="pill" data-g="industry" data-v="it" onclick="pickPill(this)">IT / Software</button>
+        <button class="pill" data-g="industry" data-v="agency" onclick="pickPill(this)">Agencja / Marketing</button>
+        <button class="pill" data-g="industry" data-v="manufacturing" onclick="pickPill(this)">Produkcja</button>
+        <button class="pill" data-g="industry" data-v="retail" onclick="pickPill(this)">Handel / Retail</button>
+        <button class="pill" data-g="industry" data-v="finance" onclick="pickPill(this)">Finanse / Prawo</button>
+        <button class="pill" data-g="industry" data-v="other" onclick="pickPill(this)">Inna</button>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-lbl">Liczba pracowników</div>
+      <div class="pills">
+        <button class="pill" data-g="size" data-v="1-10" onclick="pickPill(this)">1–10</button>
+        <button class="pill" data-g="size" data-v="11-50" onclick="pickPill(this)">11–50</button>
+        <button class="pill" data-g="size" data-v="51-200" onclick="pickPill(this)">51–200</button>
+        <button class="pill" data-g="size" data-v="201-1000" onclick="pickPill(this)">201–1000</button>
+        <button class="pill" data-g="size" data-v="1000+" onclick="pickPill(this)">Powyżej 1000</button>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-lbl">Model sprzedaży</div>
+      <div class="pills">
+        <button class="pill" data-g="model" data-v="b2b" onclick="pickPill(this)">B2B</button>
+        <button class="pill" data-g="model" data-v="b2c" onclick="pickPill(this)">B2C</button>
+        <button class="pill" data-g="model" data-v="both" onclick="pickPill(this)">Oba kanały</button>
+      </div>
+    </div>
+
+    <div class="actions"><button class="btn-next" onclick="go(2)">Dalej →</button></div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="card" id="c2">
+    <div class="step-tag">Krok 2 z 4</div>
+    <h1 class="card-title">Które obszary chcesz usprawnić?</h1>
+    <p class="card-desc">Zaznacz wszystko, co dotyczy Twojej firmy. Im więcej kontekstu, tym dokładniej dopasujemy rozwiązanie.</p>
+
+    <div class="area-grid">
+      <div class="area-card" data-v="sales" onclick="togArea(this)">
+        <div class="area-dot" style="background:#2563eb"></div>
+        <span class="area-nm">Sprzedaż i leady</span>
+        <div class="area-chk"></div>
+      </div>
+      <div class="area-card" data-v="marketing" onclick="togArea(this)">
+        <div class="area-dot" style="background:#ec4899"></div>
+        <span class="area-nm">Marketing i kampanie</span>
+        <div class="area-chk"></div>
+      </div>
+      <div class="area-card" data-v="support" onclick="togArea(this)">
+        <div class="area-dot" style="background:#f59e0b"></div>
+        <span class="area-nm">Obsługa klienta</span>
+        <div class="area-chk"></div>
+      </div>
+      <div class="area-card" data-v="ops" onclick="togArea(this)">
+        <div class="area-dot" style="background:#8b5cf6"></div>
+        <span class="area-nm">Operacje i procesy</span>
+        <div class="area-chk"></div>
+      </div>
+      <div class="area-card" data-v="hr" onclick="togArea(this)">
+        <div class="area-dot" style="background:#10b981"></div>
+        <span class="area-nm">HR i rekrutacja</span>
+        <div class="area-chk"></div>
+      </div>
+      <div class="area-card" data-v="finance" onclick="togArea(this)">
+        <div class="area-dot" style="background:#f97316"></div>
+        <span class="area-nm">Finanse i rozliczenia</span>
+        <div class="area-chk"></div>
+      </div>
+    </div>
+
+    <div class="actions" style="margin-top:24px">
+      <button class="btn-back" onclick="go(1)">← Wróć</button>
+      <button class="btn-next" onclick="go(3)">Dalej →</button>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="card" id="c3">
+    <div class="step-tag">Krok 3 z 4</div>
+    <h1 class="card-title">Kilka słów o projekcie</h1>
+    <p class="card-desc">To pozwala nam priorytetyzować i dobrać właściwy zespół po naszej stronie.</p>
+
+    <div class="sec">
+      <div class="sec-lbl">Twoja rola w organizacji</div>
+      <div class="pills">
+        <button class="pill" data-g="role" data-v="owner" onclick="pickPill(this)">Właściciel / CEO</button>
+        <button class="pill" data-g="role" data-v="vp" onclick="pickPill(this)">VP / Dyrektor</button>
+        <button class="pill" data-g="role" data-v="manager" onclick="pickPill(this)">Kierownik</button>
+        <button class="pill" data-g="role" data-v="specialist" onclick="pickPill(this)">Specjalista</button>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-lbl">Kiedy chcesz zacząć wdrożenie?</div>
+      <div class="pills">
+        <button class="pill" data-g="timeline" data-v="asap" onclick="pickPill(this)">Jak najszybciej</button>
+        <button class="pill" data-g="timeline" data-v="1-3m" onclick="pickPill(this)">1–3 miesiące</button>
+        <button class="pill" data-g="timeline" data-v="3-6m" onclick="pickPill(this)">3–6 miesięcy</button>
+        <button class="pill" data-g="timeline" data-v="planning" onclick="pickPill(this)">Jeszcze planuję</button>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-lbl">Orientacyjny budżet projektu</div>
+      <div class="pills">
+        <button class="pill" data-g="budget" data-v="<10k" onclick="pickPill(this)">Do 10 tys. zł</button>
+        <button class="pill" data-g="budget" data-v="10-50k" onclick="pickPill(this)">10–50 tys. zł</button>
+        <button class="pill" data-g="budget" data-v="50-200k" onclick="pickPill(this)">50–200 tys. zł</button>
+        <button class="pill" data-g="budget" data-v="200k+" onclick="pickPill(this)">Powyżej 200 tys. zł</button>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn-back" onclick="go(2)">← Wróć</button>
+      <button class="btn-next" onclick="go(4)">Dalej →</button>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="card" id="c4">
+    <div class="step-tag">Krok 4 z 4 — ostatni</div>
+    <h1 class="card-title">Dane kontaktowe</h1>
+    <p class="card-desc">Nasz konsultant odezwie się do Ciebie w ciągu 24 godzin roboczych. Żadnych automatycznych maili — tylko konkretna rozmowa.</p>
+
+    <div class="f-row2">
+      <div class="field"><label class="f-lbl" for="cn-fn">Imię</label><input type="text" id="cn-fn" class="f-inp" placeholder="Jan" autocomplete="given-name" maxlength="60"></div>
+      <div class="field"><label class="f-lbl" for="cn-ln">Nazwisko</label><input type="text" id="cn-ln" class="f-inp" placeholder="Kowalski" autocomplete="family-name" maxlength="60"></div>
+    </div>
+    <div class="f-row2">
+      <div class="field"><label class="f-lbl" for="cn-co">Nazwa firmy</label><input type="text" id="cn-co" class="f-inp" placeholder="Acme Sp. z o.o." autocomplete="organization" maxlength="150"></div>
+      <div class="field"><label class="f-lbl" for="cn-ti">Stanowisko</label><input type="text" id="cn-ti" class="f-inp" placeholder="np. Head of Sales" maxlength="100"></div>
+    </div>
+    <div class="field"><label class="f-lbl" for="cn-em">E-mail służbowy <span style="color:#ef4444">*</span></label><input type="email" id="cn-em" class="f-inp" placeholder="jan@firma.pl" autocomplete="email" maxlength="254"></div>
+    <div class="field"><label class="f-lbl" for="cn-ph">Telefon <span style="color:var(--ink-s);font-weight:400;text-transform:none;letter-spacing:0">(opcjonalnie)</span></label><input type="tel" id="cn-ph" class="f-inp" placeholder="+48 123 456 789" autocomplete="tel" maxlength="30"></div>
+
+    <!-- honeypot -->
+    <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
+      <input type="text" id="_hp" name="address" tabindex="-1" autocomplete="off">
+    </div>
+
+    <div class="actions">
+      <button class="btn-back" onclick="go(3)">← Wróć</button>
+      <button class="btn-next" id="sub-btn" onclick="doSubmit()">Wyślij zgłoszenie →</button>
+    </div>
+    <p class="note">SSL · Dane zgodne z RODO · Bez spamu</p>
+  </div>
+
+  <!-- Success -->
+  <div class="card" id="c-ok">
+    <div class="ok">
+      <div class="ok-icon"><div style="width:64px;height:64px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:28px;color:#fff;font-weight:700">✓</div></div>
+      <h2>Zgłoszenie przyjęte</h2>
+      <p>Dziękujemy. Nasz konsultant zapozna się z Twoją odpowiedzią i odezwie się w ciągu <strong>24 godzin roboczych</strong> z konkretną propozycją.</p>
+      <div class="ok-steps">
+        <div class="ok-step"><div class="ok-num">1</div>Analizujemy Twój profil i dobieramy właściwego konsultanta</div>
+        <div class="ok-step"><div class="ok-num">2</div>Kontakt e-mail lub telefoniczny w ciągu 24h</div>
+        <div class="ok-step"><div class="ok-num">3</div>Bezpłatna konsultacja i demo dopasowane do Twojej branży</div>
+      </div>
+      <div id="ok-err" style="display:none;align-items:center;gap:8px;margin-bottom:16px;padding:10px 14px;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;font-size:12px;color:#9a3412;">
+        <span>Nie udało się połączyć z Make.com. Sprawdź URL webhooka w config.js.</span>
+      </div>
+      <button class="btn-next" onclick="location.reload()">Wypełnij ponownie</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const SC = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG : {};
+  const CONFIG = {
+    webhookUrl: SC.webhooks?.crm   || '',
+    brandName:  SC.brand?.name     || 'TwojaCRM',
+  };
+  window._t0 = Date.now();
+
+  const PROG = { 1:25, 2:50, 3:75, 4:100 };
+  const D = { industry:'', size:'', model:'', areas:[], role:'', timeline:'', budget:'' };
+  let cur = 1;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.brand-name').forEach(el => el.textContent = CONFIG.brandName);
+    document.querySelectorAll('.brand-initial').forEach(el => el.textContent = CONFIG.brandName.charAt(0).toUpperCase());
+  });
+
+  function go(n) {
+    document.getElementById('c' + cur).classList.remove('show');
+    const hs = document.getElementById('hs' + cur);
+    if (hs) { hs.classList.remove('active'); hs.classList.add('done'); hs.querySelector('.h-sn').textContent = '✓'; }
+    cur = n;
+    const card = document.getElementById('c' + n);
+    if (card) card.classList.add('show');
+    const hsN = document.getElementById('hs' + n);
+    if (hsN) { hsN.classList.add('active'); hsN.classList.remove('done'); }
+    document.getElementById('prog').style.width = (PROG[n] || 100) + '%';
+    document.getElementById('krok-n').textContent = n;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function pickPill(el) {
+    const g = el.dataset.g;
+    document.querySelectorAll('.pill[data-g="' + g + '"]').forEach(b => b.classList.remove('on'));
+    el.classList.add('on');
+    D[g] = el.dataset.v;
+  }
+
+  function togArea(el) {
+    el.classList.toggle('on');
+    const v = el.dataset.v;
+    D.areas = el.classList.contains('on')
+      ? [...new Set([...D.areas, v])]
+      : D.areas.filter(x => x !== v);
+  }
+
+  function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e) && e.length <= 254; }
+
+  function _silentOk() {
+    document.getElementById('c4').classList.remove('show');
+    document.getElementById('c-ok').classList.add('show');
+  }
+
+  async function sendToMake(payload) {
+    if (!CONFIG.webhookUrl) { console.warn('[Make.com] webhookUrl nie ustawiony w config.js'); return { ok: false, reason: 'no-url' }; }
+    for (let i = 1; i <= 3; i++) {
+      try {
+        const r = await fetch(CONFIG.webhookUrl, {
+          method: 'POST', credentials: 'omit',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (r.ok) return { ok: true };
+      } catch (e) {
+        if (i === 3) return { ok: false, reason: 'network' };
+        await new Promise(r => setTimeout(r, i * 900));
+      }
+    }
+    return { ok: false, reason: 'failed' };
+  }
+
+  async function doSubmit() {
+    const _sc = SC.security;
+    if (_sc) {
+      if (_sc.honeypot && document.getElementById('_hp')?.value) return _silentOk();
+      if (((Date.now() - (window._t0 || 0)) / 1000) < (_sc.minFillSeconds || 5)) return _silentOk();
+    }
+    const emailInp = document.getElementById('cn-em');
+    const email = emailInp.value.trim();
+    if (!email || !isValidEmail(email)) { emailInp.focus(); emailInp.style.borderColor = '#ef4444'; return; }
+    emailInp.style.borderColor = '';
+
+    const btn = document.getElementById('sub-btn');
+    btn.textContent = 'Wysyłanie…'; btn.disabled = true;
+
+    const result = await sendToMake({
+      template:  'crm-enterprise',
+      industry:  D.industry,
+      size:      D.size,
+      model:     D.model,
+      areas:     D.areas,
+      role:      D.role,
+      timeline:  D.timeline,
+      budget:    D.budget,
+      first_name: document.getElementById('cn-fn').value.trim(),
+      last_name:  document.getElementById('cn-ln').value.trim(),
+      company:    document.getElementById('cn-co').value.trim(),
+      title:      document.getElementById('cn-ti').value.trim(),
+      email,
+      phone:      document.getElementById('cn-ph').value.trim(),
+      timestamp:  new Date().toISOString(),
+    });
+
+    document.getElementById('c4').classList.remove('show');
+    document.getElementById('c-ok').classList.add('show');
+    const hs4 = document.getElementById('hs4');
+    if (hs4) { hs4.classList.remove('active'); hs4.classList.add('done'); hs4.querySelector('.h-sn').textContent = '✓'; }
+    document.getElementById('prog').style.width = '100%';
+
+    if (!result.ok && result.reason !== 'no-url') {
+      const note = document.getElementById('ok-err');
+      if (note) note.style.display = 'flex';
+    }
+  }
+</script>
+</body>
+</html>

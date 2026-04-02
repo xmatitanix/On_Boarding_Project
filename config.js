@@ -29,6 +29,8 @@ window.SITE_CONFIG = {
     ecommerce: '',   // ← template-ecommerce.html  (styl: wizualny quiz)
     finance:   '',   // ← template-finance.html    (styl: panel zaufania)
     wellness:  '',   // ← template-wellness.html   (styl: jedno pytanie naraz)
+    crm:       '',   // ← template-crm.html         (styl: enterprise CRM/wizard)
+    sports:    '',   // ← template-sports.html      (styl: klub sportowy)
   },
 
   // ── ZABEZPIECZENIA ───────────────────────────────────────────────
