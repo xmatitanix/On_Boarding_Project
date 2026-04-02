@@ -11,6 +11,8 @@
 #    ecommerce  — wizualny quiz
 #    finance    — formularz z panelem zaufania
 #    wellness   — jedno pytanie naraz
+#    crm        — enterprise wizard (CRM / duże firmy)
+#    sports     — klub sportowy (ciemny motyw)
 #
 #  Przykład:
 #    ./new-client.sh saas acme-onboarding
@@ -33,17 +35,17 @@ if [ -z "$TEMPLATE" ] || [ -z "$CLIENT" ]; then
   echo ""
   echo "  Użycie: ./new-client.sh <szablon> <nazwa-folderu>"
   echo ""
-  echo "  Szablony: chat | saas | ecommerce | finance | wellness"
+  echo "  Szablony: chat | saas | ecommerce | finance | wellness | crm | sports"
   echo ""
   echo "  Przykład: ./new-client.sh saas acme-onboarding"
   echo ""
   exit 1
 fi
 
-VALID_TEMPLATES=("chat" "saas" "ecommerce" "finance" "wellness")
+VALID_TEMPLATES=("chat" "saas" "ecommerce" "finance" "wellness" "crm" "sports")
 if [[ ! " ${VALID_TEMPLATES[@]} " =~ " ${TEMPLATE} " ]]; then
   echo "  Nieznany szablon: '$TEMPLATE'"
-  echo "  Dostępne: chat | saas | ecommerce | finance | wellness"
+  echo "  Dostępne: chat | saas | ecommerce | finance | wellness | crm | sports"
   exit 1
 fi
 

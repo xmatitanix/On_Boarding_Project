@@ -4,7 +4,9 @@
     { "source": "/template-saas", "destination": "/template-saas.html" },
     { "source": "/template-ecommerce", "destination": "/template-ecommerce.html" },
     { "source": "/template-finance", "destination": "/template-finance.html" },
-    { "source": "/template-wellness", "destination": "/template-wellness.html" }
+    { "source": "/template-wellness", "destination": "/template-wellness.html" },
+    { "source": "/template-crm", "destination": "/template-crm.html" },
+    { "source": "/template-sports", "destination": "/template-sports.html" }
   ],
   "headers": [
     {

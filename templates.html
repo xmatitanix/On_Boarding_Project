@@ -85,6 +85,29 @@
     .card-preview.p3 { background: linear-gradient(135deg, #0a1628, #1d3558); }
     .card-preview.p4 { background: linear-gradient(135deg, #d1fae5, #bae6fd); }
     .card-preview.p5 { background: linear-gradient(135deg, #1c1917, #78716c); }
+    .card-preview.p6 { background: linear-gradient(135deg, #0f172a, #1e3a5f); }
+    .card-preview.p7 { background: linear-gradient(135deg, #0f172a, #14532d); }
+
+    /* CRM mockup */
+    .mock-crm { display:flex;flex-direction:column;padding:10px 14px;gap:6px;width:100%; }
+    .mcrm-hdr { display:flex;gap:8px;margin-bottom:2px; }
+    .mcrm-step { height:6px;border-radius:99px;flex:1;background:rgba(255,255,255,.15); }
+    .mcrm-step.dn { background:rgba(37,99,235,.7); }
+    .mcrm-step.ac { background:rgba(37,99,235,1); }
+    .mcrm-row { display:grid;grid-template-columns:repeat(3,1fr);gap:5px; }
+    .mcrm-chip { height:22px;border-radius:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12); }
+    .mcrm-chip.on { background:rgba(37,99,235,.5);border-color:rgba(37,99,235,.8); }
+    .mcrm-fi { height:15px;border-radius:4px;background:rgba(255,255,255,.1); }
+    .mcrm-btn { height:12px;border-radius:4px;background:rgba(37,99,235,.75);width:36%;margin-top:2px;align-self:flex-end; }
+
+    /* Sports mockup */
+    .mock-spt { display:flex;flex-direction:column;padding:12px 14px;gap:7px;width:100%; }
+    .mspt-gr { display:grid;grid-template-columns:repeat(3,1fr);gap:5px; }
+    .mspt-c { height:32px;border-radius:8px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.1); }
+    .mspt-c.on { background:rgba(34,197,94,.2);border-color:rgba(34,197,94,.7); }
+    .mspt-pills { display:flex;gap:5px; }
+    .mspt-pl { height:14px;border-radius:99px;flex:1;background:rgba(255,255,255,.1); }
+    .mspt-pl.on { background:rgba(34,197,94,.5); }
     .preview-label {
       position: absolute; bottom: 10px; left: 0; right: 0; text-align: center;
       font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
@@ -92,6 +115,8 @@
     .p1 .preview-label, .p2 .preview-label, .p3 .preview-label { color: rgba(255,255,255,.6); }
     .p4 .preview-label { color: rgba(5,150,105,.7); }
     .p5 .preview-label { color: rgba(255,255,255,.5); }
+    .p6 .preview-label { color: rgba(96,165,250,.7); }
+    .p7 .preview-label { color: rgba(34,197,94,.7); }
     .card-body { padding: 20px 20px 16px; flex: 1; display: flex; flex-direction: column; }
     .card-tag {
       display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: .1em;
@@ -121,6 +146,12 @@
     .bv4:hover { background: #047857; }
     .bv5 { background: #1c1917; color: #fff; }
     .bv5:hover { background: #292524; }
+    .bv6 { background: #2563eb; color: #fff; }
+    .bv6:hover { background: #1d4ed8; }
+    .bv7 { background: #15803d; color: #fff; }
+    .bv7:hover { background: #166534; }
+    .t6 { background: #dbeafe; color: #1e40af; }
+    .t7 { background: #dcfce7; color: #166534; }
     @media (max-width: 600px) {
       header { padding: 18px 20px; }
       .hero { padding: 40px 20px 32px; }
@@ -135,7 +166,7 @@
   </header>
   <div class="hero">
     <h1>Szablony onboardingu dla każdej firmy</h1>
-    <p>5 gotowych szablonów w różnych stylach — wybierz ten, który pasuje do Twojej marki i klientów.</p>
+    <p>7 gotowych szablonów w różnych stylach — wybierz ten, który pasuje do Twojej marki i klientów.</p>
   </div>
   <div class="grid">
 
@@ -255,6 +286,71 @@
         <div class="card-desc">Jedno pytanie naraz, bez licznika kroków ani paska postępu. Opcje jako duże przyciski-karty z płynnym przejściem. Dla gabinetów i klinik, gdzie liczy się spokój.</div>
         <div class="card-features"><span class="feat">Organiczne kształty</span><span class="feat">Delikatne przejścia</span><span class="feat">Brak presji</span><span class="feat">Ciepły ton</span></div>
         <a href="/template-wellness.html" class="btn-view bv4">Podgląd →</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-preview p6">
+        <div class="mock-crm">
+          <div class="mcrm-hdr">
+            <div class="mcrm-step dn"></div>
+            <div class="mcrm-step dn"></div>
+            <div class="mcrm-step ac"></div>
+            <div class="mcrm-step"></div>
+          </div>
+          <div class="mcrm-row">
+            <div class="mcrm-chip on"></div>
+            <div class="mcrm-chip"></div>
+            <div class="mcrm-chip on"></div>
+            <div class="mcrm-chip"></div>
+            <div class="mcrm-chip on"></div>
+            <div class="mcrm-chip"></div>
+          </div>
+          <div class="mcrm-fi"></div>
+          <div class="mcrm-btn"></div>
+        </div>
+        <div class="preview-label">Enterprise Wizard</div>
+      </div>
+      <div class="card-body">
+        <span class="card-tag t6">CRM / Enterprise</span>
+        <div class="card-title">Enterprise onboarding wizard</div>
+        <div class="card-desc">Cztery kroki zbierające kompletny obraz organizacji: branża i skala, obszary do automatyzacji, rola decydenta i dane kontaktowe. Pasek kroków w nagłówku — jak Salesforce lub HubSpot.</div>
+        <div class="card-features"><span class="feat">4 kroki</span><span class="feat">Multi-select karty</span><span class="feat">Sticky header</span><span class="feat">Enterprise</span></div>
+        <a href="/template-crm.html" class="btn-view bv6">Podgląd →</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-preview p7">
+        <div class="mock-spt">
+          <div class="mspt-gr">
+            <div class="mspt-c on"></div>
+            <div class="mspt-c"></div>
+            <div class="mspt-c on"></div>
+            <div class="mspt-c"></div>
+            <div class="mspt-c"></div>
+            <div class="mspt-c"></div>
+          </div>
+          <div class="mspt-pills">
+            <div class="mspt-pl on"></div>
+            <div class="mspt-pl"></div>
+            <div class="mspt-pl"></div>
+          </div>
+          <div class="mspt-pills">
+            <div class="mspt-pl on"></div>
+            <div class="mspt-pl on"></div>
+            <div class="mspt-pl"></div>
+            <div class="mspt-pl"></div>
+          </div>
+        </div>
+        <div class="preview-label">Klub Sportowy</div>
+      </div>
+      <div class="card-body">
+        <span class="card-tag t7">Sport / Fitness</span>
+        <div class="card-title">Zapisy do klubu sportowego</div>
+        <div class="card-desc">Ciemny motyw, neonowa zieleń. Siatka 9 dyscyplin do wyboru, potem profil (wiek, poziom), dostępność (dni + pora dnia), kontakt. Trener dzwoni w 24 h.</div>
+        <div class="card-features"><span class="feat">Ciemny motyw</span><span class="feat">Siatka sportów</span><span class="feat">Dni tygodnia</span><span class="feat">4 kroki</span></div>
+        <a href="/template-sports.html" class="btn-view bv7">Podgląd →</a>
       </div>
     </div>
 
