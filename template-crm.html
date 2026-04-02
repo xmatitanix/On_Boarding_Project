@@ -180,37 +180,37 @@
     <div class="sec">
       <div class="sec-lbl">Branża</div>
       <div class="pills" id="industry-pills">
-        <button class="pill" data-g="industry" data-v="it" onclick="pickPill(this)">IT / Software</button>
-        <button class="pill" data-g="industry" data-v="agency" onclick="pickPill(this)">Agencja / Marketing</button>
-        <button class="pill" data-g="industry" data-v="manufacturing" onclick="pickPill(this)">Produkcja</button>
-        <button class="pill" data-g="industry" data-v="retail" onclick="pickPill(this)">Handel / Retail</button>
-        <button class="pill" data-g="industry" data-v="finance" onclick="pickPill(this)">Finanse / Prawo</button>
-        <button class="pill" data-g="industry" data-v="other" onclick="pickPill(this)">Inna</button>
+        <button class="pill" data-g="industry" data-v="it">IT / Software</button>
+        <button class="pill" data-g="industry" data-v="agency">Agencja / Marketing</button>
+        <button class="pill" data-g="industry" data-v="manufacturing">Produkcja</button>
+        <button class="pill" data-g="industry" data-v="retail">Handel / Retail</button>
+        <button class="pill" data-g="industry" data-v="finance">Finanse / Prawo</button>
+        <button class="pill" data-g="industry" data-v="other">Inna</button>
       </div>
     </div>
 
     <div class="sec">
       <div class="sec-lbl">Liczba pracowników</div>
       <div class="pills">
-        <button class="pill" data-g="size" data-v="1-10" onclick="pickPill(this)">1–10</button>
-        <button class="pill" data-g="size" data-v="11-50" onclick="pickPill(this)">11–50</button>
-        <button class="pill" data-g="size" data-v="51-200" onclick="pickPill(this)">51–200</button>
-        <button class="pill" data-g="size" data-v="201-1000" onclick="pickPill(this)">201–1000</button>
-        <button class="pill" data-g="size" data-v="1000+" onclick="pickPill(this)">Powyżej 1000</button>
+        <button class="pill" data-g="size" data-v="1-10">1–10</button>
+        <button class="pill" data-g="size" data-v="11-50">11–50</button>
+        <button class="pill" data-g="size" data-v="51-200">51–200</button>
+        <button class="pill" data-g="size" data-v="201-1000">201–1000</button>
+        <button class="pill" data-g="size" data-v="1000+">Powyżej 1000</button>
       </div>
     </div>
 
     <div class="sec">
       <div class="sec-lbl">Model sprzedaży</div>
       <div class="pills">
-        <button class="pill" data-g="model" data-v="b2b" onclick="pickPill(this)">B2B</button>
-        <button class="pill" data-g="model" data-v="b2c" onclick="pickPill(this)">B2C</button>
-        <button class="pill" data-g="model" data-v="both" onclick="pickPill(this)">Oba kanały</button>
+        <button class="pill" data-g="model" data-v="b2b">B2B</button>
+        <button class="pill" data-g="model" data-v="b2c">B2C</button>
+        <button class="pill" data-g="model" data-v="both">Oba kanały</button>
       </div>
     </div>
 
     <div class="step-err" id="err1">Wybierz branżę, liczbę pracowników i model sprzedaży, aby przejść dalej.</div>
-    <div class="actions"><button class="btn-next" onclick="goNext(2)">Dalej →</button></div>
+    <div class="actions"><button class="btn-next" data-gonext="2">Dalej →</button></div>
   </div>
 
   <!-- Step 2 -->
@@ -226,32 +226,32 @@
     </div>
 
     <div class="area-grid">
-      <div class="area-card" data-v="sales" onclick="togArea(this)">
+      <div class="area-card" data-v="sales">
         <div class="area-dot" style="background:#2563eb"></div>
         <span class="area-nm">Sprzedaż i leady</span>
         <div class="area-chk"></div>
       </div>
-      <div class="area-card" data-v="marketing" onclick="togArea(this)">
+      <div class="area-card" data-v="marketing">
         <div class="area-dot" style="background:#ec4899"></div>
         <span class="area-nm">Marketing i kampanie</span>
         <div class="area-chk"></div>
       </div>
-      <div class="area-card" data-v="support" onclick="togArea(this)">
+      <div class="area-card" data-v="support">
         <div class="area-dot" style="background:#f59e0b"></div>
         <span class="area-nm">Obsługa klienta</span>
         <div class="area-chk"></div>
       </div>
-      <div class="area-card" data-v="ops" onclick="togArea(this)">
+      <div class="area-card" data-v="ops">
         <div class="area-dot" style="background:#8b5cf6"></div>
         <span class="area-nm">Operacje i procesy</span>
         <div class="area-chk"></div>
       </div>
-      <div class="area-card" data-v="hr" onclick="togArea(this)">
+      <div class="area-card" data-v="hr">
         <div class="area-dot" style="background:#10b981"></div>
         <span class="area-nm">HR i rekrutacja</span>
         <div class="area-chk"></div>
       </div>
-      <div class="area-card" data-v="finance" onclick="togArea(this)">
+      <div class="area-card" data-v="finance">
         <div class="area-dot" style="background:#f97316"></div>
         <span class="area-nm">Finanse i rozliczenia</span>
         <div class="area-chk"></div>
@@ -260,8 +260,8 @@
 
     <div class="step-err" id="err2">Zaznacz co najmniej jeden obszar, aby przejść dalej.</div>
     <div class="actions" style="margin-top:24px">
-      <button class="btn-back" onclick="go(1)">← Wróć</button>
-      <button class="btn-next" onclick="goNext(3)">Dalej →</button>
+      <button class="btn-back" data-goto="1">← Wróć</button>
+      <button class="btn-next" data-gonext="3">Dalej →</button>
     </div>
   </div>
 
@@ -274,37 +274,37 @@
     <div class="sec">
       <div class="sec-lbl">Twoja rola w organizacji</div>
       <div class="pills">
-        <button class="pill" data-g="role" data-v="owner" onclick="pickPill(this)">Właściciel / CEO</button>
-        <button class="pill" data-g="role" data-v="vp" onclick="pickPill(this)">VP / Dyrektor</button>
-        <button class="pill" data-g="role" data-v="manager" onclick="pickPill(this)">Kierownik</button>
-        <button class="pill" data-g="role" data-v="specialist" onclick="pickPill(this)">Specjalista</button>
+        <button class="pill" data-g="role" data-v="owner">Właściciel / CEO</button>
+        <button class="pill" data-g="role" data-v="vp">VP / Dyrektor</button>
+        <button class="pill" data-g="role" data-v="manager">Kierownik</button>
+        <button class="pill" data-g="role" data-v="specialist">Specjalista</button>
       </div>
     </div>
 
     <div class="sec">
       <div class="sec-lbl">Kiedy chcesz zacząć wdrożenie?</div>
       <div class="pills">
-        <button class="pill" data-g="timeline" data-v="asap" onclick="pickPill(this)">Jak najszybciej</button>
-        <button class="pill" data-g="timeline" data-v="1-3m" onclick="pickPill(this)">1–3 miesiące</button>
-        <button class="pill" data-g="timeline" data-v="3-6m" onclick="pickPill(this)">3–6 miesięcy</button>
-        <button class="pill" data-g="timeline" data-v="planning" onclick="pickPill(this)">Jeszcze planuję</button>
+        <button class="pill" data-g="timeline" data-v="asap">Jak najszybciej</button>
+        <button class="pill" data-g="timeline" data-v="1-3m">1–3 miesiące</button>
+        <button class="pill" data-g="timeline" data-v="3-6m">3–6 miesięcy</button>
+        <button class="pill" data-g="timeline" data-v="planning">Jeszcze planuję</button>
       </div>
     </div>
 
     <div class="sec">
       <div class="sec-lbl">Orientacyjny budżet projektu</div>
       <div class="pills">
-        <button class="pill" data-g="budget" data-v="<10k" onclick="pickPill(this)">Do 10 tys. zł</button>
-        <button class="pill" data-g="budget" data-v="10-50k" onclick="pickPill(this)">10–50 tys. zł</button>
-        <button class="pill" data-g="budget" data-v="50-200k" onclick="pickPill(this)">50–200 tys. zł</button>
-        <button class="pill" data-g="budget" data-v="200k+" onclick="pickPill(this)">Powyżej 200 tys. zł</button>
+        <button class="pill" data-g="budget" data-v="<10k">Do 10 tys. zł</button>
+        <button class="pill" data-g="budget" data-v="10-50k">10–50 tys. zł</button>
+        <button class="pill" data-g="budget" data-v="50-200k">50–200 tys. zł</button>
+        <button class="pill" data-g="budget" data-v="200k+">Powyżej 200 tys. zł</button>
       </div>
     </div>
 
     <div class="step-err" id="err3">Wybierz rolę, termin wdrożenia i budżet, aby przejść dalej.</div>
     <div class="actions">
-      <button class="btn-back" onclick="go(2)">← Wróć</button>
-      <button class="btn-next" onclick="goNext(4)">Dalej →</button>
+      <button class="btn-back" data-goto="2">← Wróć</button>
+      <button class="btn-next" data-gonext="4">Dalej →</button>
     </div>
   </div>
 
@@ -331,8 +331,8 @@
     </div>
 
     <div class="actions">
-      <button class="btn-back" onclick="go(3)">← Wróć</button>
-      <button class="btn-next" id="sub-btn" onclick="doSubmit()">Wyślij zgłoszenie →</button>
+      <button class="btn-back" data-goto="3">← Wróć</button>
+      <button class="btn-next" id="sub-btn">Wyślij zgłoszenie →</button>
     </div>
     <p class="note">SSL · Dane zgodne z RODO · Bez spamu</p>
   </div>
@@ -351,148 +351,12 @@
       <div id="ok-err" style="display:none;align-items:center;gap:8px;margin-bottom:16px;padding:10px 14px;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;font-size:12px;color:#9a3412;">
         <span>Nie udało się połączyć z Make.com. Sprawdź URL webhooka w config.js.</span>
       </div>
-      <button class="btn-next" onclick="location.reload()">Wypełnij ponownie</button>
+      <button class="btn-next" data-action="reload">Wypełnij ponownie</button>
     </div>
   </div>
 
 </div>
 
-<script>
-  const SC = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG : {};
-  const CONFIG = {
-    webhookUrl: SC.webhooks?.crm   || '',
-    brandName:  SC.brand?.name     || 'TwojaCRM',
-  };
-  window._t0 = Date.now();
-
-  const PROG = { 1:25, 2:50, 3:75, 4:100 };
-  const D = { industry:'', size:'', model:'', areas:[], role:'', timeline:'', budget:'' };
-  let cur = 1;
-
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.brand-name').forEach(el => el.textContent = CONFIG.brandName);
-    document.querySelectorAll('.brand-initial').forEach(el => el.textContent = CONFIG.brandName.charAt(0).toUpperCase());
-  });
-
-  function go(n) {
-    const fwd = n > cur;
-    document.getElementById('c' + cur).classList.remove('show');
-    const hs = document.getElementById('hs' + cur);
-    if (hs) {
-      if (fwd) {
-        hs.classList.remove('active'); hs.classList.add('done'); hs.querySelector('.h-sn').textContent = '✓';
-      } else {
-        hs.classList.remove('active', 'done'); hs.querySelector('.h-sn').textContent = String(cur);
-      }
-    }
-    cur = n;
-    const card = document.getElementById('c' + n);
-    if (card) card.classList.add('show');
-    const hsN = document.getElementById('hs' + n);
-    if (hsN) { hsN.classList.add('active'); hsN.classList.remove('done'); hsN.querySelector('.h-sn').textContent = String(n); }
-    document.getElementById('prog').style.width = (PROG[n] || 100) + '%';
-    document.getElementById('krok-n').textContent = n;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function goNext(n) {
-    const prev = n - 1;
-    const err = document.getElementById('err' + prev);
-    let ok = true;
-    if (prev === 1 && (!D.industry || !D.size || !D.model)) ok = false;
-    if (prev === 2 && !D.areas.length) ok = false;
-    if (prev === 3 && (!D.role || !D.timeline || !D.budget)) ok = false;
-    if (!ok) { if (err) { err.classList.add('show'); err.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } return; }
-    if (err) err.classList.remove('show');
-    go(n);
-  }
-
-  function pickPill(el) {
-    const g = el.dataset.g;
-    document.querySelectorAll('.pill[data-g="' + g + '"]').forEach(b => b.classList.remove('on'));
-    el.classList.add('on');
-    D[g] = el.dataset.v;
-  }
-
-  function togArea(el) {
-    el.classList.toggle('on');
-    const v = el.dataset.v;
-    D.areas = el.classList.contains('on')
-      ? [...new Set([...D.areas, v])]
-      : D.areas.filter(x => x !== v);
-    const n = D.areas.length;
-    document.getElementById('area-count').textContent = n + ' / 6';
-    document.getElementById('area-bar').style.width = (n / 6 * 100) + '%';
-  }
-
-  function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e) && e.length <= 254; }
-
-  function _silentOk() {
-    document.getElementById('c4').classList.remove('show');
-    document.getElementById('c-ok').classList.add('show');
-  }
-
-  async function sendToMake(payload) {
-    if (!CONFIG.webhookUrl) { console.warn('[Make.com] webhookUrl nie ustawiony w config.js'); return { ok: false, reason: 'no-url' }; }
-    for (let i = 1; i <= 3; i++) {
-      try {
-        const r = await fetch(CONFIG.webhookUrl, {
-          method: 'POST', credentials: 'omit',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-        if (r.ok) return { ok: true };
-      } catch (e) {
-        if (i === 3) return { ok: false, reason: 'network' };
-        await new Promise(r => setTimeout(r, i * 900));
-      }
-    }
-    return { ok: false, reason: 'failed' };
-  }
-
-  async function doSubmit() {
-    const _sc = SC.security;
-    if (_sc) {
-      if (_sc.honeypot && document.getElementById('_hp')?.value) return _silentOk();
-      if (((Date.now() - (window._t0 || 0)) / 1000) < (_sc.minFillSeconds || 5)) return _silentOk();
-    }
-    const emailInp = document.getElementById('cn-em');
-    const email = emailInp.value.trim();
-    if (!email || !isValidEmail(email)) { emailInp.focus(); emailInp.style.borderColor = '#ef4444'; return; }
-    emailInp.style.borderColor = '';
-
-    const btn = document.getElementById('sub-btn');
-    btn.textContent = 'Wysyłanie…'; btn.disabled = true;
-
-    const result = await sendToMake({
-      template:  'crm-enterprise',
-      industry:  D.industry,
-      size:      D.size,
-      model:     D.model,
-      areas:     D.areas,
-      role:      D.role,
-      timeline:  D.timeline,
-      budget:    D.budget,
-      first_name: document.getElementById('cn-fn').value.trim(),
-      last_name:  document.getElementById('cn-ln').value.trim(),
-      company:    document.getElementById('cn-co').value.trim(),
-      title:      document.getElementById('cn-ti').value.trim(),
-      email,
-      phone:      document.getElementById('cn-ph').value.trim(),
-      timestamp:  new Date().toISOString(),
-    });
-
-    document.getElementById('c4').classList.remove('show');
-    document.getElementById('c-ok').classList.add('show');
-    const hs4 = document.getElementById('hs4');
-    if (hs4) { hs4.classList.remove('active'); hs4.classList.add('done'); hs4.querySelector('.h-sn').textContent = '✓'; }
-    document.getElementById('prog').style.width = '100%';
-
-    if (!result.ok && result.reason !== 'no-url') {
-      const note = document.getElementById('ok-err');
-      if (note) note.style.display = 'flex';
-    }
-  }
-</script>
+  <script src="/js/crm.js" defer></script>
 </body>
 </html>

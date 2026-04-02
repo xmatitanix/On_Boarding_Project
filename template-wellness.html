@@ -189,19 +189,19 @@
       <h2 class="step-q">Czego szukasz dla siebie?</h2>
       <p class="step-sub">Nie ma złej odpowiedzi — powiedz nam, co Cię sprowadziło, a dopasujemy najlepszą ścieżkę.</p>
       <div class="opts">
-        <div class="opt" data-v="relax" onclick="pickW1(this)">
+        <div class="opt" data-v="relax">
           <div class="opt-em opt-dot" style="background:#059669">RS</div><div class="opt-body"><div class="opt-nm">Relaks i redukcja stresu</div><div class="opt-ds">Spokój, równowaga, odpoczynek</div></div><div class="opt-check">✓</div>
         </div>
-        <div class="opt" data-v="health" onclick="pickW1(this)">
+        <div class="opt" data-v="health">
           <div class="opt-em opt-dot" style="background:#0ea5e9">FZ</div><div class="opt-body"><div class="opt-nm">Poprawa zdrowia fizycznego</div><div class="opt-ds">Kondycja, rehabilitacja, dieta</div></div><div class="opt-check">✓</div>
         </div>
-        <div class="opt" data-v="mental" onclick="pickW1(this)">
+        <div class="opt" data-v="mental">
           <div class="opt-em opt-dot" style="background:#8b5cf6">PS</div><div class="opt-body"><div class="opt-nm">Zdrowie psychiczne</div><div class="opt-ds">Wsparcie, terapia, coaching</div></div><div class="opt-check">✓</div>
         </div>
-        <div class="opt" data-v="beauty" onclick="pickW1(this)">
+        <div class="opt" data-v="beauty">
           <div class="opt-em opt-dot" style="background:#ec4899">UR</div><div class="opt-body"><div class="opt-nm">Uroda i pielęgnacja</div><div class="opt-ds">Zabiegi estetyczne i spa</div></div><div class="opt-check">✓</div>
         </div>
-        <div class="opt" data-v="general" onclick="pickW1(this)">
+        <div class="opt" data-v="general">
           <div class="opt-em opt-dot" style="background:#10b981">WB</div><div class="opt-body"><div class="opt-nm">Ogólna poprawa stylu życia</div><div class="opt-ds">Holistyczne podejście do wellbeing</div></div><div class="opt-check">✓</div>
         </div>
       </div>
@@ -213,24 +213,24 @@
       <p class="step-sub">Możesz zaznaczyć kilka opcji — chcemy naprawdę zrozumieć Twoje potrzeby.</p>
       <div class="multi-note">Zaznacz wszystko, co rezonuje z Tobą</div>
       <div class="opts">
-        <div class="opt" data-v="personal" onclick="togW2(this)">
+        <div class="opt" data-v="personal">
           <div class="opt-em opt-dot" style="background:#6366f1">IN</div><div class="opt-body"><div class="opt-nm">Indywidualne podejście</div><div class="opt-ds">Program szyty na miarę</div></div><div class="opt-check">✓</div>
         </div>
-        <div class="opt" data-v="results" onclick="togW2(this)">
+        <div class="opt" data-v="results">
           <div class="opt-em opt-dot" style="background:#f97316">EF</div><div class="opt-body"><div class="opt-nm">Szybkie i trwałe efekty</div><div class="opt-ds">Mierzalne postępy i wyniki</div></div><div class="opt-check">✓</div>
         </div>
-        <div class="opt" data-v="comfort" onclick="togW2(this)">
+        <div class="opt" data-v="comfort">
           <div class="opt-em opt-dot" style="background:#0ea5e9">KO</div><div class="opt-body"><div class="opt-nm">Komfort i dyskrecja</div><div class="opt-ds">Bezpieczna, przyjazna atmosfera</div></div><div class="opt-check">✓</div>
         </div>
-        <div class="opt" data-v="online" onclick="togW2(this)">
+        <div class="opt" data-v="online">
           <div class="opt-em opt-dot" style="background:#8b5cf6">ON</div><div class="opt-body"><div class="opt-nm">Możliwość online</div><div class="opt-ds">Wizyty zdalne i aplikacja</div></div><div class="opt-check">✓</div>
         </div>
-        <div class="opt" data-v="price" onclick="togW2(this)">
+        <div class="opt" data-v="price">
           <div class="opt-em opt-dot" style="background:#059669">$$</div><div class="opt-body"><div class="opt-nm">Przystępna cena</div><div class="opt-ds">Dobry stosunek ceny do jakości</div></div><div class="opt-check">✓</div>
         </div>
       </div>
-      <button class="auto-next" onclick="goW(3)">Dalej →</button>
-      <div class="back-lnk" onclick="goW(1)">← Wróć</div>
+      <button class="auto-next" data-gow="3">Dalej →</button>
+      <div class="back-lnk" data-gow="1">← Wróć</div>
     </div>
 
     <!-- Step 3: Timeline -->
@@ -238,17 +238,17 @@
       <h2 class="step-q">Kiedy chciałbyś zacząć?</h2>
       <p class="step-sub">Nie ma presji — jesteśmy tu wtedy, kiedy Ty jesteś gotowy.</p>
       <div class="opts">
-        <div class="opt" data-v="now" onclick="pickW3(this)">
+        <div class="opt" data-v="now">
           <div class="opt-em opt-dot" style="background:#f97316">TD</div><div class="opt-body"><div class="opt-nm">Jak najszybciej</div><div class="opt-ds">Chcę zacząć już teraz</div></div><div class="opt-check">✓</div>
         </div>
-        <div class="opt" data-v="soon" onclick="pickW3(this)">
+        <div class="opt" data-v="soon">
           <div class="opt-em opt-dot" style="background:#3b82f6">1M</div><div class="opt-body"><div class="opt-nm">W ciągu miesiąca</div><div class="opt-ds">Najpierw chcę się zapoznać z ofertą</div></div><div class="opt-check">✓</div>
         </div>
-        <div class="opt" data-v="later" onclick="pickW3(this)">
+        <div class="opt" data-v="later">
           <div class="opt-em opt-dot" style="background:#8b5cf6">NP</div><div class="opt-body"><div class="opt-nm">Nie śpieszy mi się</div><div class="opt-ds">Zbieram informacje, bez pośpiechu</div></div><div class="opt-check">✓</div>
         </div>
       </div>
-      <div class="back-lnk" onclick="goW(2)">← Wróć</div>
+      <div class="back-lnk" data-gow="2">← Wróć</div>
     </div>
 
     <!-- Step 4: Contact -->
@@ -265,8 +265,8 @@
       <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
         <input type="text" id="_hp" name="address" tabindex="-1" autocomplete="off">
       </div>
-      <button class="btn-cta" id="wl-sub" onclick="wlSubmit()">Chcę dowiedzieć się więcej →</button>
-      <div class="back-lnk" onclick="goW(3)">← Wróć</div>
+      <button class="btn-cta" id="wl-sub" data-action="submit">Chcę dowiedzieć się więcej →</button>
+      <div class="back-lnk" data-gow="3">← Wróć</div>
     </div>
 
     <!-- Success -->
@@ -283,152 +283,12 @@
         <div id="ok-err" style="display:none;margin-top:12px;padding:10px 14px;background:rgba(255,255,255,.85);border:1px solid #fca5a5;border-radius:12px;font-size:12px;color:#7f1d1d;">
           ⚠️ Nie udało się połączyć z Make.com. Sprawdź URL webhooka w CONFIG.
         </div>
-        <button class="btn-cta" onclick="location.reload()">Wypełnij dla innej osoby</button>
+        <button class="btn-cta" data-action="reload">Wypełnij dla innej osoby</button>
       </div>
     </div>
 
   </div>
 
-  <script>
-    /* ═══════════════════════════════════════════════════════════════
-       KONFIGURACJA MAKE.COM — zmień tylko tę sekcję
-       ───────────────────────────────────────────────────────────────
-       Jak podłączyć webhook:
-         1. Wejdź na make.com → utwórz nowy scenariusz
-         2. Dodaj moduł: Webhooks → Custom webhook
-         3. Kliknij "Add" i nadaj nazwę, np. "Onboarding Wellness"
-         4. Skopiuj wygenerowany URL i wklej poniżej
-       ═══════════════════════════════════════════════════════════════ */
-    // Odczytaj konfigurację z config.js; lokalne wartości jako fallback
-    const SC = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG : {};
-    const CONFIG = {
-      webhookUrl: SC.webhooks?.wellness || '',
-      brandName:  SC.brand?.name        || 'TwojaKlinika',
-    };
-    window._t0 = Date.now();
-
-    /*  POLA WYSYŁANE DO MAKE.COM:
-        ┌──────────────┬───────────────────────────────────────────────────┐
-        │ template     │ "wellness-calm"                                   │
-        │ need         │ relax / health / mental / beauty / general        │
-        │ priorities   │ ["personal","results","comfort","online","price"] │
-        │ timeline     │ now / soon / later                                │
-        │ name         │ imię                                              │
-        │ email        │ adres e-mail                                      │
-        │ phone        │ telefon (opcjonalny)                              │
-        │ timestamp    │ data i czas w formacie ISO 8601                   │
-        └──────────────┴───────────────────────────────────────────────────┘  */
-
-    /* ── helper: wyślij do Make.com z retry (3 próby) ── */
-    async function sendToMake(payload) {
-      if (!CONFIG.webhookUrl) {
-        console.warn('[Make.com] webhookUrl nie jest ustawiony w CONFIG.');
-        return { ok: false, reason: 'no-url' };
-      }
-      for (let attempt = 1; attempt <= 3; attempt++) {
-        try {
-          const res = await fetch(CONFIG.webhookUrl, {
-            method: 'POST',
-            credentials: 'omit',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-          });
-          if (res.ok) return { ok: true };
-        } catch (err) {
-          if (attempt === 3) return { ok: false, reason: 'network', error: err };
-          await new Promise(r => setTimeout(r, attempt * 900));
-        }
-      }
-      return { ok: false, reason: 'failed' };
-    }
-
-    /* ── stan formularza ── */
-    const WD = { need:'', priorities:[], timeline:'' };
-    let cur = 1;
-
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.brand-name').forEach(el => el.textContent = CONFIG.brandName);
-    });
-
-    function goW(n) {
-      const dir = n > cur ? 'slide-fwd' : 'slide-back';
-      document.getElementById('w' + cur).classList.remove('vis', 'slide-fwd', 'slide-back');
-      cur = n;
-      const next = document.getElementById('w' + n) || document.getElementById('w-ok');
-      next.classList.add('vis', dir);
-      next.addEventListener('animationend', () => next.classList.remove(dir), { once: true });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function pickW1(el) {
-      document.querySelectorAll('#w1 .opt').forEach(o => o.classList.remove('on'));
-      el.classList.add('on');
-      WD.need = el.dataset.v;
-      setTimeout(() => goW(2), 260);
-    }
-
-    function togW2(el) {
-      el.classList.toggle('on');
-      const v = el.dataset.v;
-      WD.priorities = el.classList.contains('on') ? [...new Set([...WD.priorities, v])] : WD.priorities.filter(x => x !== v);
-    }
-
-    function pickW3(el) {
-      document.querySelectorAll('#w3 .opt').forEach(o => o.classList.remove('on'));
-      el.classList.add('on');
-      WD.timeline = el.dataset.v;
-      setTimeout(() => goW(4), 260);
-    }
-
-    function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e) && e.length <= 254; }
-
-    function _silentOk() {
-      const name = document.getElementById('wl-nm').value.trim();
-      document.getElementById('ok-name').textContent = name || 'drogi gościu';
-      document.getElementById('ok-em').textContent = document.getElementById('wl-em').value.trim();
-      document.getElementById('w4').classList.remove('vis');
-      document.getElementById('w-ok').classList.add('vis');
-    }
-
-    async function wlSubmit() {
-      const _sc = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG.security : null;
-      if (_sc) {
-        if (_sc.honeypot && document.getElementById('_hp')?.value) return _silentOk();
-        if (((Date.now() - (window._t0 || 0)) / 1000) < (_sc.minFillSeconds || 5)) return _silentOk();
-      }
-      const emailInp = document.getElementById('wl-em');
-      const email = emailInp.value.trim();
-      if (!email || !isValidEmail(email)) { emailInp.focus(); emailInp.style.borderColor = '#ef4444'; return; }
-      emailInp.style.borderColor = '';
-
-      const btn = document.getElementById('wl-sub');
-      btn.textContent = 'Wysyłanie…'; btn.disabled = true;
-      const name = document.getElementById('wl-nm').value.trim();
-
-      const payload = {
-        template:   'wellness-calm',
-        need:       WD.need,
-        priorities: WD.priorities,
-        timeline:   WD.timeline,
-        name,
-        email,
-        phone:      document.getElementById('wl-ph').value.trim(),
-        timestamp:  new Date().toISOString(),
-      };
-
-      const result = await sendToMake(payload);
-
-      document.getElementById('ok-name').textContent = name || 'drogi gościu';
-      document.getElementById('ok-em').textContent = email;
-      document.getElementById('w4').classList.remove('vis');
-      document.getElementById('w-ok').classList.add('vis');
-      cur = 99;
-
-      if (!result.ok && result.reason !== 'no-url') {
-        const note = document.getElementById('ok-err');
-        if (note) note.style.display = 'block';
-      }
-    }
-  </script>
+  <script src="/js/wellness.js" defer></script>
 </body>
 </html>
