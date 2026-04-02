@@ -1,10 +1,9 @@
 {
-  "routes": [
-    { "src": "/", "dest": "/index.html" },
-    { "src": "/templates", "dest": "/templates.html" },
-    { "src": "/template-saas", "dest": "/template-saas.html" },
-    { "src": "/template-ecommerce", "dest": "/template-ecommerce.html" },
-    { "src": "/template-finance", "dest": "/template-finance.html" },
-    { "src": "/template-wellness", "dest": "/template-wellness.html" }
+  "rewrites": [
+    { "source": "/templates", "destination": "/templates.html" },
+    { "source": "/template-saas", "destination": "/template-saas.html" },
+    { "source": "/template-ecommerce", "destination": "/template-ecommerce.html" },
+    { "source": "/template-finance", "destination": "/template-finance.html" },
+    { "source": "/template-wellness", "destination": "/template-wellness.html" }
   ]
 }

@@ -30,8 +30,56 @@
     .card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,.1); border-color: transparent; }
     .card-preview {
       height: 160px; display: flex; align-items: center; justify-content: center;
-      font-size: 52px; position: relative; overflow: hidden;
+      position: relative; overflow: hidden;
     }
+
+    /* ── CSS MOCKUPS ─────────────────────────────── */
+    .mock-chat { display:flex;flex-direction:column;gap:7px;padding:14px 18px;width:100%; }
+    .mc-msg { height:10px;border-radius:99px; }
+    .mc-r { width:62%;align-self:flex-end;background:rgba(255,255,255,.3); }
+    .mc-l { width:74%;align-self:flex-start;background:rgba(255,255,255,.15); }
+    .mc-s { width:38%;align-self:flex-end;background:rgba(255,255,255,.2); }
+    .mc-tp { display:flex;gap:4px;align-self:flex-start;margin-top:2px; }
+    .mc-tp span { width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3); }
+
+    .mock-wizard { display:flex;width:100%;height:100%; }
+    .mwz-sb { width:54px;background:rgba(0,0,0,.28);padding:10px 8px;display:flex;flex-direction:column;gap:6px; }
+    .mwz-st { height:8px;border-radius:4px;background:rgba(255,255,255,.15); }
+    .mwz-st.dn { background:rgba(16,185,129,.7); }
+    .mwz-st.ac { background:rgba(99,102,241,.9); }
+    .mwz-mn { flex:1;padding:10px 12px;display:flex;flex-direction:column;gap:6px;background:rgba(255,255,255,.05); }
+    .mwz-pg { height:3px;border-radius:99px;background:rgba(99,102,241,.8);width:52%; }
+    .mwz-tl { height:9px;border-radius:4px;background:rgba(255,255,255,.5);width:80%;margin-bottom:1px; }
+    .mwz-fi { height:19px;border-radius:5px;background:rgba(255,255,255,.12); }
+    .mwz-fi.sh { width:68%; }
+    .mwz-bt { height:13px;border-radius:4px;background:rgba(99,102,241,.75);width:38%;margin-top:2px; }
+
+    .mock-quiz { display:flex;flex-direction:column;padding:12px 14px;gap:8px;width:100%; }
+    .mqz-q { height:9px;border-radius:99px;background:rgba(255,255,255,.65);width:78%; }
+    .mqz-gr { display:grid;grid-template-columns:repeat(3,1fr);gap:6px; }
+    .mqz-c { height:38px;border-radius:9px;background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.1); }
+    .mqz-c.on { background:rgba(255,255,255,.5);border-color:rgba(255,255,255,.7);box-shadow:0 3px 10px rgba(0,0,0,.18); }
+
+    .mock-finance { display:flex;gap:8px;padding:10px 12px;width:100%;height:100%;align-items:stretch; }
+    .mfn-tr { width:74px;background:rgba(255,255,255,.06);border-radius:7px;padding:8px 7px;display:flex;flex-direction:column;gap:6px; }
+    .mfn-tr-row { display:flex;gap:4px;align-items:center; }
+    .mfn-tr-row::before { content:'';width:6px;height:6px;border-radius:50%;background:rgba(245,158,11,.75);flex-shrink:0; }
+    .mfn-tr-row::after { content:'';flex:1;height:5px;border-radius:99px;background:rgba(255,255,255,.18); }
+    .mfn-stars { font-size:9px;color:rgba(245,158,11,.9);letter-spacing:1px;margin-top:1px; }
+    .mfn-fm { flex:1;display:flex;flex-direction:column;gap:5px; }
+    .mfn-lb { height:5px;border-radius:99px;background:rgba(255,255,255,.28);width:48%; }
+    .mfn-in { height:17px;border-radius:4px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18); }
+    .mfn-lb.sm { width:34%; }
+    .mfn-bn { height:14px;border-radius:4px;background:rgba(255,255,255,.38);width:52%;margin-top:3px; }
+
+    .mock-wl { display:flex;flex-direction:column;align-items:center;gap:7px;padding:14px 16px;width:100%; }
+    .mwl-q { height:9px;border-radius:99px;background:rgba(5,150,105,.45);width:72%; }
+    .mwl-op { width:100%;height:25px;border-radius:9px;background:rgba(255,255,255,.55);border:1.5px solid rgba(5,150,105,.18);display:flex;align-items:center;padding:0 8px;gap:6px; }
+    .mwl-op::before { content:'';width:12px;height:12px;border-radius:50%;background:rgba(5,150,105,.2);flex-shrink:0; }
+    .mwl-op::after { content:'';flex:1;height:5px;border-radius:99px;background:rgba(5,150,105,.15); }
+    .mwl-op.on { background:rgba(209,250,229,.92);border-color:rgba(5,150,105,.55); }
+    .mwl-op.on::before { background:rgba(5,150,105,.65); }
+    .mwl-op.on::after { background:rgba(5,150,105,.38); }
     .card-preview.p1 { background: linear-gradient(135deg, #1e1b4b, #3730a3); }
     .card-preview.p2 { background: linear-gradient(135deg, #f97316, #ec4899, #8b5cf6); }
     .card-preview.p3 { background: linear-gradient(135deg, #0a1628, #1d3558); }
@@ -92,55 +140,119 @@
   <div class="grid">
 
     <div class="card">
-      <div class="card-preview p5"><span>💬</span><div class="preview-label">Chat / Rozmowa</div></div>
+      <div class="card-preview p5">
+        <div class="mock-chat">
+          <div class="mc-msg mc-r"></div>
+          <div class="mc-msg mc-l"></div>
+          <div class="mc-msg mc-r"></div>
+          <div class="mc-msg mc-s"></div>
+          <div class="mc-tp"><span></span><span></span><span></span></div>
+        </div>
+        <div class="preview-label">Chat / Rozmowa</div>
+      </div>
       <div class="card-body">
         <span class="card-tag t5">Agencja / Freelance</span>
         <div class="card-title">Konwersacyjny chat</div>
-        <div class="card-desc">Przyjazna rozmowa krok po kroku z animowanymi wiadomościami. Naturalny, ciepły styl — idealny dla agencji kreatywnych.</div>
+        <div class="card-desc">Wiadomości pojawiają się jak w prawdziwej rozmowie. Każda odpowiedź otwiera kolejne pytanie — bez tabelek, bez formularzy, bez wrażenia ankiety.</div>
         <div class="card-features"><span class="feat">Chat UI</span><span class="feat">Animacje</span><span class="feat">Cząsteczki</span><span class="feat">5 kroków</span></div>
         <a href="/index.html" class="btn-view bv5">Podgląd →</a>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-preview p1"><span>🧭</span><div class="preview-label">Wizard / Sidebar</div></div>
+      <div class="card-preview p1">
+        <div class="mock-wizard">
+          <div class="mwz-sb">
+            <div class="mwz-st dn"></div>
+            <div class="mwz-st ac"></div>
+            <div class="mwz-st"></div>
+            <div class="mwz-st"></div>
+          </div>
+          <div class="mwz-mn">
+            <div class="mwz-pg"></div>
+            <div class="mwz-tl"></div>
+            <div class="mwz-fi"></div>
+            <div class="mwz-fi sh"></div>
+            <div class="mwz-bt"></div>
+          </div>
+        </div>
+        <div class="preview-label">Wizard / Sidebar</div>
+      </div>
       <div class="card-body">
         <span class="card-tag t1">SaaS / Tech</span>
         <div class="card-title">Wizard z sidebarem</div>
-        <div class="card-desc">Profesjonalny wizard z ciemnym panelem bocznym i widocznym postępem — jak Stripe, Linear czy Notion. Buduje zaufanie i przejrzystość.</div>
+        <div class="card-desc">Ciemny sidebar z numerowanymi krokami i paskiem postępu na górze — każdy użytkownik wie dokładnie, gdzie jest i ile zostało. Styl znany z Stripe i Notion.</div>
         <div class="card-features"><span class="feat">Sidebar</span><span class="feat">4 kroki</span><span class="feat">Multi-select</span><span class="feat">Pasek postępu</span></div>
         <a href="/template-saas.html" class="btn-view bv1">Podgląd →</a>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-preview p2"><span>🛒</span><div class="preview-label">Wizualny Quiz</div></div>
+      <div class="card-preview p2">
+        <div class="mock-quiz">
+          <div class="mqz-q"></div>
+          <div class="mqz-gr">
+            <div class="mqz-c"></div>
+            <div class="mqz-c on"></div>
+            <div class="mqz-c"></div>
+            <div class="mqz-c"></div>
+            <div class="mqz-c on"></div>
+            <div class="mqz-c"></div>
+          </div>
+        </div>
+        <div class="preview-label">Wizualny Quiz</div>
+      </div>
       <div class="card-body">
         <span class="card-tag t2">E-commerce / Retail</span>
         <div class="card-title">Wizualny quiz z kartami</div>
-        <div class="card-desc">Energetyczny, pełnoekranowy quiz z ikonograficznymi kartami i gradientowym tłem. Klient wybiera odpowiedź — następny krok ładuje się automatycznie.</div>
-        <div class="card-features"><span class="feat">Gradient BG</span><span class="feat">Karty z emoji</span><span class="feat">Auto-next</span><span class="feat">Animacje</span></div>
+        <div class="card-desc">Gradient w tle, duże karty do kliknięcia, automatyczne przejście po wyborze. Klient odpowiada na 4 pytania zanim dotrze do pola z adresem e-mail.</div>
+        <div class="card-features"><span class="feat">Gradient BG</span><span class="feat">Karty wyboru</span><span class="feat">Auto-next</span><span class="feat">Animacje</span></div>
         <a href="/template-ecommerce.html" class="btn-view bv2">Podgląd →</a>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-preview p3"><span>⚖️</span><div class="preview-label">Trust-First</div></div>
+      <div class="card-preview p3">
+        <div class="mock-finance">
+          <div class="mfn-tr">
+            <div class="mfn-tr-row"></div>
+            <div class="mfn-tr-row"></div>
+            <div class="mfn-tr-row"></div>
+            <div class="mfn-stars">★★★★★</div>
+          </div>
+          <div class="mfn-fm">
+            <div class="mfn-lb"></div>
+            <div class="mfn-in"></div>
+            <div class="mfn-lb sm"></div>
+            <div class="mfn-in"></div>
+            <div class="mfn-bn"></div>
+          </div>
+        </div>
+        <div class="preview-label">Trust-First</div>
+      </div>
       <div class="card-body">
         <span class="card-tag t3">Finanse / Prawo</span>
         <div class="card-title">Formularz z panelem zaufania</div>
-        <div class="card-desc">Konserwatywny, profesjonalny layout z nagłówkiem nawigacyjnym i bocznym panelem certyfikatów, ocen i cytatów klientów. Bezpieczeństwo na pierwszym miejscu.</div>
+        <div class="card-desc">Stały panel zaufania z certyfikatami i opiniami widoczny przez cały czas obok formularza. Breadcrumb w nagłówku — żadnego zgadywania, ile kroków zostało.</div>
         <div class="card-features"><span class="feat">Panel zaufania</span><span class="feat">Breadcrumby</span><span class="feat">SSL badge</span><span class="feat">RODO</span></div>
         <a href="/template-finance.html" class="btn-view bv3">Podgląd →</a>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-preview p4"><span>🌿</span><div class="preview-label">Calm / Wellness</div></div>
+      <div class="card-preview p4">
+        <div class="mock-wl">
+          <div class="mwl-q"></div>
+          <div class="mwl-op on"></div>
+          <div class="mwl-op"></div>
+          <div class="mwl-op"></div>
+        </div>
+        <div class="preview-label">Calm / Wellness</div>
+      </div>
       <div class="card-body">
         <span class="card-tag t4">Wellness / Zdrowie</span>
         <div class="card-title">Spokojny, jedno pytanie na raz</div>
-        <div class="card-desc">Miękki, organiczny design ze spokojnymi animacjami i dużymi, przyjaznymi opcjami. Bez pasków postępu — bez presji. Idealny dla klinik, spa i terapeutów.</div>
+        <div class="card-desc">Jedno pytanie naraz, bez licznika kroków ani paska postępu. Opcje jako duże przyciski-karty z płynnym przejściem. Dla gabinetów i klinik, gdzie liczy się spokój.</div>
         <div class="card-features"><span class="feat">Organiczne kształty</span><span class="feat">Delikatne przejścia</span><span class="feat">Brak presji</span><span class="feat">Ciepły ton</span></div>
         <a href="/template-wellness.html" class="btn-view bv4">Podgląd →</a>
       </div>
