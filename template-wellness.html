@@ -83,6 +83,7 @@
     .opt:hover { transform: translateX(4px) scale(1.01); box-shadow: 0 4px 20px rgba(5,150,105,.12); border-color: var(--accent-lt); }
     .opt.on { border-color: var(--accent); background: linear-gradient(135deg, #ecfdf5, #f0fdf4); transform: translateX(4px) scale(1.01); box-shadow: 0 6px 20px rgba(5,150,105,.16); }
     .opt-em { font-size: 26px; flex-shrink: 0; }
+    .opt-dot { width:36px;height:36px;border-radius:50%;font-size:11px;font-weight:800;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
     .opt-body { flex: 1; }
     .opt-nm { font-size: 15px; font-weight: 700; color: var(--ink); }
     .opt-ds { font-size: 12px; color: var(--ink-s); margin-top: 2px; }
@@ -175,7 +176,7 @@
 
   <div class="wrap">
     <div class="brand">
-      <div class="brand-icon">🌿</div>
+      <div class="brand-icon" style="font-size:0"><div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#059669,#10b981);display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:15px;font-weight:800;color:#fff;letter-spacing:-.02em">TK</div></div>
       <div class="brand-name">TwojaKlinika</div>
     </div>
 
@@ -185,19 +186,19 @@
       <p class="step-sub">Nie ma złej odpowiedzi — powiedz nam, co Cię sprowadziło, a dopasujemy najlepszą ścieżkę.</p>
       <div class="opts">
         <div class="opt" data-v="relax" onclick="pickW1(this)">
-          <div class="opt-em">🧘</div><div class="opt-body"><div class="opt-nm">Relaks i redukcja stresu</div><div class="opt-ds">Spokój, równowaga, odpoczynek</div></div><div class="opt-check">✓</div>
+          <div class="opt-em opt-dot" style="background:#059669">RS</div><div class="opt-body"><div class="opt-nm">Relaks i redukcja stresu</div><div class="opt-ds">Spokój, równowaga, odpoczynek</div></div><div class="opt-check">✓</div>
         </div>
         <div class="opt" data-v="health" onclick="pickW1(this)">
-          <div class="opt-em">💪</div><div class="opt-body"><div class="opt-nm">Poprawa zdrowia fizycznego</div><div class="opt-ds">Kondycja, rehabilitacja, dieta</div></div><div class="opt-check">✓</div>
+          <div class="opt-em opt-dot" style="background:#0ea5e9">FZ</div><div class="opt-body"><div class="opt-nm">Poprawa zdrowia fizycznego</div><div class="opt-ds">Kondycja, rehabilitacja, dieta</div></div><div class="opt-check">✓</div>
         </div>
         <div class="opt" data-v="mental" onclick="pickW1(this)">
-          <div class="opt-em">🧠</div><div class="opt-body"><div class="opt-nm">Zdrowie psychiczne</div><div class="opt-ds">Wsparcie, terapia, coaching</div></div><div class="opt-check">✓</div>
+          <div class="opt-em opt-dot" style="background:#8b5cf6">PS</div><div class="opt-body"><div class="opt-nm">Zdrowie psychiczne</div><div class="opt-ds">Wsparcie, terapia, coaching</div></div><div class="opt-check">✓</div>
         </div>
         <div class="opt" data-v="beauty" onclick="pickW1(this)">
-          <div class="opt-em">✨</div><div class="opt-body"><div class="opt-nm">Uroda i pielęgnacja</div><div class="opt-ds">Zabiegi estetyczne i spa</div></div><div class="opt-check">✓</div>
+          <div class="opt-em opt-dot" style="background:#ec4899">UR</div><div class="opt-body"><div class="opt-nm">Uroda i pielęgnacja</div><div class="opt-ds">Zabiegi estetyczne i spa</div></div><div class="opt-check">✓</div>
         </div>
         <div class="opt" data-v="general" onclick="pickW1(this)">
-          <div class="opt-em">🌱</div><div class="opt-body"><div class="opt-nm">Ogólna poprawa stylu życia</div><div class="opt-ds">Holistyczne podejście do wellbeing</div></div><div class="opt-check">✓</div>
+          <div class="opt-em opt-dot" style="background:#10b981">WB</div><div class="opt-body"><div class="opt-nm">Ogólna poprawa stylu życia</div><div class="opt-ds">Holistyczne podejście do wellbeing</div></div><div class="opt-check">✓</div>
         </div>
       </div>
     </div>
@@ -209,19 +210,19 @@
       <div class="multi-note">Zaznacz wszystko, co rezonuje z Tobą</div>
       <div class="opts">
         <div class="opt" data-v="personal" onclick="togW2(this)">
-          <div class="opt-em">👤</div><div class="opt-body"><div class="opt-nm">Indywidualne podejście</div><div class="opt-ds">Program szyty na miarę</div></div><div class="opt-check">✓</div>
+          <div class="opt-em opt-dot" style="background:#6366f1">IN</div><div class="opt-body"><div class="opt-nm">Indywidualne podejście</div><div class="opt-ds">Program szyty na miarę</div></div><div class="opt-check">✓</div>
         </div>
         <div class="opt" data-v="results" onclick="togW2(this)">
-          <div class="opt-em">🎯</div><div class="opt-body"><div class="opt-nm">Szybkie i trwałe efekty</div><div class="opt-ds">Mierzalne postępy i wyniki</div></div><div class="opt-check">✓</div>
+          <div class="opt-em opt-dot" style="background:#f97316">EF</div><div class="opt-body"><div class="opt-nm">Szybkie i trwałe efekty</div><div class="opt-ds">Mierzalne postępy i wyniki</div></div><div class="opt-check">✓</div>
         </div>
         <div class="opt" data-v="comfort" onclick="togW2(this)">
-          <div class="opt-em">🛋️</div><div class="opt-body"><div class="opt-nm">Komfort i dyskrecja</div><div class="opt-ds">Bezpieczna, przyjazna atmosfera</div></div><div class="opt-check">✓</div>
+          <div class="opt-em opt-dot" style="background:#0ea5e9">KO</div><div class="opt-body"><div class="opt-nm">Komfort i dyskrecja</div><div class="opt-ds">Bezpieczna, przyjazna atmosfera</div></div><div class="opt-check">✓</div>
         </div>
         <div class="opt" data-v="online" onclick="togW2(this)">
-          <div class="opt-em">💻</div><div class="opt-body"><div class="opt-nm">Możliwość online</div><div class="opt-ds">Wizyty zdalne i aplikacja</div></div><div class="opt-check">✓</div>
+          <div class="opt-em opt-dot" style="background:#8b5cf6">ON</div><div class="opt-body"><div class="opt-nm">Możliwość online</div><div class="opt-ds">Wizyty zdalne i aplikacja</div></div><div class="opt-check">✓</div>
         </div>
         <div class="opt" data-v="price" onclick="togW2(this)">
-          <div class="opt-em">💚</div><div class="opt-body"><div class="opt-nm">Przystępna cena</div><div class="opt-ds">Dobry stosunek ceny do jakości</div></div><div class="opt-check">✓</div>
+          <div class="opt-em opt-dot" style="background:#059669">$$</div><div class="opt-body"><div class="opt-nm">Przystępna cena</div><div class="opt-ds">Dobry stosunek ceny do jakości</div></div><div class="opt-check">✓</div>
         </div>
       </div>
       <button class="auto-next" onclick="goW(3)">Dalej →</button>
@@ -234,13 +235,13 @@
       <p class="step-sub">Nie ma presji — jesteśmy tu wtedy, kiedy Ty jesteś gotowy.</p>
       <div class="opts">
         <div class="opt" data-v="now" onclick="pickW3(this)">
-          <div class="opt-em">🌅</div><div class="opt-body"><div class="opt-nm">Jak najszybciej</div><div class="opt-ds">Chcę zacząć już teraz</div></div><div class="opt-check">✓</div>
+          <div class="opt-em opt-dot" style="background:#f97316">TD</div><div class="opt-body"><div class="opt-nm">Jak najszybciej</div><div class="opt-ds">Chcę zacząć już teraz</div></div><div class="opt-check">✓</div>
         </div>
         <div class="opt" data-v="soon" onclick="pickW3(this)">
-          <div class="opt-em">📆</div><div class="opt-body"><div class="opt-nm">W ciągu miesiąca</div><div class="opt-ds">Najpierw chcę się zapoznać z ofertą</div></div><div class="opt-check">✓</div>
+          <div class="opt-em opt-dot" style="background:#3b82f6">1M</div><div class="opt-body"><div class="opt-nm">W ciągu miesiąca</div><div class="opt-ds">Najpierw chcę się zapoznać z ofertą</div></div><div class="opt-check">✓</div>
         </div>
         <div class="opt" data-v="later" onclick="pickW3(this)">
-          <div class="opt-em">🌙</div><div class="opt-body"><div class="opt-nm">Nie śpieszy mi się</div><div class="opt-ds">Zbieram informacje, bez pośpiechu</div></div><div class="opt-check">✓</div>
+          <div class="opt-em opt-dot" style="background:#8b5cf6">NP</div><div class="opt-body"><div class="opt-nm">Nie śpieszy mi się</div><div class="opt-ds">Zbieram informacje, bez pośpiechu</div></div><div class="opt-check">✓</div>
         </div>
       </div>
       <div class="back-lnk" onclick="goW(2)">← Wróć</div>
@@ -248,22 +249,22 @@
 
     <!-- Step 4: Contact -->
     <div class="step" id="w4">
-      <h2 class="step-q">Jesteśmy tu dla Ciebie 🌿</h2>
+      <h2 class="step-q">Jesteśmy tu dla Ciebie</h2>
       <p class="step-sub">Zostaw kontakt — odezwiemy się z ciepłą, spersonalizowaną propozycją. Bez presji i bez spamu.</p>
       <div class="form-wrap">
         <div class="f-row"><label class="f-lbl" for="wl-nm">Jak masz na imię?</label><input type="text" id="wl-nm" class="f-inp" placeholder="np. Marta" autocomplete="given-name"></div>
         <div class="f-row"><label class="f-lbl" for="wl-em">Adres e-mail <span style="color:#ef4444">*</span></label><input type="email" id="wl-em" class="f-inp" placeholder="marta@przykład.pl" autocomplete="email"></div>
         <div class="f-row"><label class="f-lbl" for="wl-ph">Telefon <span style="color:var(--ink-s);font-weight:500">(opcjonalnie)</span></label><input type="tel" id="wl-ph" class="f-inp" placeholder="+48 123 456 789" autocomplete="tel"></div>
-        <div class="privacy-line"><span>🔒</span><span>Twoje dane są bezpieczne. Nie wysyłamy spamu — tylko jeden przyjazny kontakt od naszego specjalisty.</span></div>
+        <div class="privacy-line"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#059669;flex-shrink:0;margin-top:4px"></span><span>Twoje dane są bezpieczne. Nie wysyłamy spamu — tylko jeden przyjazny kontakt od naszego specjalisty.</span></div>
       </div>
-      <button class="btn-cta" id="wl-sub" onclick="wlSubmit()">Chcę dowiedzieć się więcej 🌿</button>
+      <button class="btn-cta" id="wl-sub" onclick="wlSubmit()">Chcę dowiedzieć się więcej →</button>
       <div class="back-lnk" onclick="goW(3)">← Wróć</div>
     </div>
 
     <!-- Success -->
     <div class="step" id="w-ok">
       <div class="ok-wrap">
-        <div class="ok-art">🌸</div>
+        <div class="ok-art" style="font-size:0;margin-bottom:16px"><div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#059669,#10b981);display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:30px;color:#fff;font-weight:700">✓</div></div>
         <div class="ok-title">Dziękujemy, <span id="ok-name">drogi gościu</span>!</div>
         <p class="ok-msg">Twoje zgłoszenie dotarło do nas. Nasz specjalista skontaktuje się z Tobą z ciepłą, spersonalizowaną propozycją.</p>
         <div class="ok-card">

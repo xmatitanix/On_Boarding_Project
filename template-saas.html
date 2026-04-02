@@ -73,6 +73,8 @@
     }
     .trust-row { display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 12px; color: rgba(255,255,255,.5); }
     .trust-row span:first-child { font-size: 14px; }
+    .tr-ic { width:8px;height:8px;border-radius:50%;flex-shrink:0; }
+    .ic-badge { display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:var(--accent-lt);color:var(--accent);font-size:10px;font-weight:800;letter-spacing:-.01em; }
 
     /* ── MAIN ────────────────────────────────── */
     .main { margin-left: 272px; flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
@@ -223,9 +225,9 @@
     </div>
   </nav>
   <div class="sidebar-trust">
-    <div class="trust-row"><span>🔒</span><span>Szyfrowanie SSL</span></div>
-    <div class="trust-row"><span>🛡️</span><span>Zgodność z RODO</span></div>
-    <div class="trust-row"><span>✉️</span><span>Żadnego spamu</span></div>
+    <div class="trust-row"><span class="tr-ic" style="background:#818cf8"></span><span>Szyfrowanie SSL</span></div>
+    <div class="trust-row"><span class="tr-ic" style="background:#10b981"></span><span>Zgodność z RODO</span></div>
+    <div class="trust-row"><span class="tr-ic" style="background:#f59e0b"></span><span>Żadnego spamu</span></div>
   </div>
 </aside>
 
@@ -241,8 +243,8 @@
     <!-- Step 1 -->
     <div class="card show" id="c1">
       <div class="step-tag">Krok 1 z 4</div>
-      <h1 class="card-title">Opowiedz nam o swojej firmie</h1>
-      <p class="card-desc">Kilka szybkich pytań, abyśmy mogli dopasować platformę do Twoich potrzeb. Zajmie to mniej niż 3 minuty.</p>
+      <h1 class="card-title">Zacznijmy od Twojej firmy</h1>
+      <p class="card-desc">Trzy minuty — tyle wystarczy, żebyśmy mogli skonfigurować platformę pod konkretne potrzeby Twojej firmy, a nie pod szablon.</p>
       <div class="field">
         <label class="field-lbl" for="f-company">Nazwa firmy</label>
         <input type="text" id="f-company" class="field-inp" placeholder="np. Acme Sp. z o.o." autocomplete="organization">
@@ -254,10 +256,10 @@
       <div class="field">
         <label class="field-lbl">Branża</label>
         <div class="sel-grid">
-          <div class="sel-card" data-g="industry" data-v="tech" onclick="pickOne(this)"><div class="ic">💻</div><div class="nm">Technologia</div><div class="ds">IT, software, SaaS</div></div>
-          <div class="sel-card" data-g="industry" data-v="retail" onclick="pickOne(this)"><div class="ic">🛍️</div><div class="nm">Handel / Retail</div><div class="ds">Sklepy, dystrybucja</div></div>
-          <div class="sel-card" data-g="industry" data-v="services" onclick="pickOne(this)"><div class="ic">🤝</div><div class="nm">Usługi B2B</div><div class="ds">Consulting, agencje</div></div>
-          <div class="sel-card" data-g="industry" data-v="other" onclick="pickOne(this)"><div class="ic">✨</div><div class="nm">Inna branża</div><div class="ds">Coś innego</div></div>
+          <div class="sel-card" data-g="industry" data-v="tech" onclick="pickOne(this)"><div class="ic"><span class="ic-badge">IT</span></div><div class="nm">Technologia</div><div class="ds">IT, software, SaaS</div></div>
+          <div class="sel-card" data-g="industry" data-v="retail" onclick="pickOne(this)"><div class="ic"><span class="ic-badge" style="background:#fce7f3;color:#be185d">RT</span></div><div class="nm">Handel / Retail</div><div class="ds">Sklepy, dystrybucja</div></div>
+          <div class="sel-card" data-g="industry" data-v="services" onclick="pickOne(this)"><div class="ic"><span class="ic-badge" style="background:#d1fae5;color:#065f46">B2B</span></div><div class="nm">Usługi B2B</div><div class="ds">Consulting, agencje</div></div>
+          <div class="sel-card" data-g="industry" data-v="other" onclick="pickOne(this)"><div class="ic"><span class="ic-badge" style="background:#fef3c7;color:#92400e">···</span></div><div class="nm">Inna branża</div><div class="ds">Coś innego</div></div>
         </div>
       </div>
       <div class="actions"><button class="btn-next" onclick="go(2)">Dalej →</button></div>
@@ -266,15 +268,15 @@
     <!-- Step 2 -->
     <div class="card" id="c2">
       <div class="step-tag">Krok 2 z 4</div>
-      <h1 class="card-title">Jakie masz cele?</h1>
-      <p class="card-desc">Zaznacz wszystko, co pasuje — możesz wybrać kilka. Dzięki temu lepiej dopasujemy funkcje.</p>
+      <h1 class="card-title">Co chcesz osiągnąć w pierwszej kolejności?</h1>
+      <p class="card-desc">Zaznacz priorytety — skonfigurujemy funkcje dokładnie tam, gdzie widzisz największy potencjał. Możesz wybrać kilka.</p>
       <div class="goal-grid">
-        <div class="goal-card" data-g="goals" data-v="sales" onclick="pickMany(this)"><div class="ic">📈</div><div class="nm">Zwiększyć sprzedaż</div></div>
-        <div class="goal-card" data-g="goals" data-v="automate" onclick="pickMany(this)"><div class="ic">⚙️</div><div class="nm">Automatyzować procesy</div></div>
-        <div class="goal-card" data-g="goals" data-v="team" onclick="pickMany(this)"><div class="ic">👥</div><div class="nm">Zarządzać zespołem</div></div>
-        <div class="goal-card" data-g="goals" data-v="analytics" onclick="pickMany(this)"><div class="ic">📊</div><div class="nm">Analizować dane</div></div>
-        <div class="goal-card" data-g="goals" data-v="ux" onclick="pickMany(this)"><div class="ic">😊</div><div class="nm">Poprawić UX</div></div>
-        <div class="goal-card" data-g="goals" data-v="costs" onclick="pickMany(this)"><div class="ic">💰</div><div class="nm">Obniżyć koszty</div></div>
+        <div class="goal-card" data-g="goals" data-v="sales" onclick="pickMany(this)"><div class="ic"><span class="ic-badge">↑%</span></div><div class="nm">Zwiększyć sprzedaż</div></div>
+        <div class="goal-card" data-g="goals" data-v="automate" onclick="pickMany(this)"><div class="ic"><span class="ic-badge" style="background:#fce7f3;color:#be185d">AU</span></div><div class="nm">Automatyzować procesy</div></div>
+        <div class="goal-card" data-g="goals" data-v="team" onclick="pickMany(this)"><div class="ic"><span class="ic-badge" style="background:#d1fae5;color:#065f46">ZS</span></div><div class="nm">Zarządzać zespołem</div></div>
+        <div class="goal-card" data-g="goals" data-v="analytics" onclick="pickMany(this)"><div class="ic"><span class="ic-badge" style="background:#fef3c7;color:#92400e">DA</span></div><div class="nm">Analizować dane</div></div>
+        <div class="goal-card" data-g="goals" data-v="ux" onclick="pickMany(this)"><div class="ic"><span class="ic-badge">UX</span></div><div class="nm">Poprawić UX</div></div>
+        <div class="goal-card" data-g="goals" data-v="costs" onclick="pickMany(this)"><div class="ic"><span class="ic-badge" style="background:#fce7f3;color:#be185d">KO</span></div><div class="nm">Obniżyć koszty</div></div>
       </div>
       <div class="actions">
         <button class="btn-back" onclick="go(1)">← Wróć</button>
@@ -331,14 +333,14 @@
       </div>
       <div class="actions">
         <button class="btn-back" onclick="go(3)">← Wróć</button>
-        <button class="btn-next" id="submit-btn" onclick="doSubmit()">Wyślij zgłoszenie ✓</button>
+        <button class="btn-next" id="submit-btn" onclick="doSubmit()">Wyślij zgłoszenie →</button>
       </div>
     </div>
 
     <!-- Success -->
     <div class="card" id="c-ok">
       <div class="success-wrap">
-        <div class="big-icon">🎉</div>
+        <div class="big-icon" style="font-size:0;margin-bottom:18px"><div style="width:64px;height:64px;border-radius:50%;background:#10b981;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:28px;color:#fff;font-weight:700">✓</div></div>
         <h2>Gotowe! Dziękujemy.</h2>
         <p>Twoje zgłoszenie dotarło do nas.<br>Odezwiemy się w ciągu <strong>24 godzin</strong> na podany adres e-mail.</p>
         <div class="what-next">

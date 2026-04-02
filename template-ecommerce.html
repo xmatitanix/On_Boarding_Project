@@ -72,6 +72,9 @@
     .ind-card:hover { transform: translateY(-4px); border-color: var(--c1); background: #fff5f0; }
     .ind-card.on { border-color: var(--c1); background: linear-gradient(145deg,#fff3e0,#fce4ec); transform: translateY(-4px); box-shadow: 0 10px 28px rgba(249,115,22,.18); }
     .ind-card .em { font-size: 34px; line-height: 1; margin-bottom: 8px; }
+    .em-badge { display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;font-size:12px;font-weight:800;color:#fff;letter-spacing:-.02em; }
+    .sz-badge { display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;font-size:12px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--c1),var(--c2)); }
+    .need-badge { display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;font-size:10px;font-weight:800;color:var(--c2);background:linear-gradient(135deg,#fce4ec,#f3e5f5);letter-spacing:-.03em; }
     .ind-card .nm { font-size: 12px; font-weight: 600; color: var(--ink); }
 
     /* size list */
@@ -174,41 +177,41 @@
 
     <!-- Step 1: Industry -->
     <div class="step vis" id="s1">
-      <div class="q">Czym zajmuje się Twój sklep? 🛒</div>
-      <div class="hint">Wybierz branżę — dopasujemy rozwiązanie idealnie do Ciebie</div>
+      <div class="q">Czym zajmuje się Twój sklep?</div>
+      <div class="hint">Wybierz kategorię — zbudujemy rozwiązanie pod specyfikę Twojej branży</div>
       <div class="ind-grid">
-        <div class="ind-card" data-v="fashion" onclick="pickInd(this)"><div class="em">👗</div><div class="nm">Moda</div></div>
-        <div class="ind-card" data-v="electronics" onclick="pickInd(this)"><div class="em">📱</div><div class="nm">Elektronika</div></div>
-        <div class="ind-card" data-v="food" onclick="pickInd(this)"><div class="em">🍕</div><div class="nm">Jedzenie</div></div>
-        <div class="ind-card" data-v="beauty" onclick="pickInd(this)"><div class="em">💄</div><div class="nm">Uroda</div></div>
-        <div class="ind-card" data-v="home" onclick="pickInd(this)"><div class="em">🏠</div><div class="nm">Dom i ogród</div></div>
-        <div class="ind-card" data-v="sport" onclick="pickInd(this)"><div class="em">⚽</div><div class="nm">Sport</div></div>
+        <div class="ind-card" data-v="fashion" onclick="pickInd(this)"><div class="em"><span class="em-badge" style="background:linear-gradient(135deg,#ec4899,#f97316)">MO</span></div><div class="nm">Moda</div></div>
+        <div class="ind-card" data-v="electronics" onclick="pickInd(this)"><div class="em"><span class="em-badge" style="background:linear-gradient(135deg,#8b5cf6,#3b82f6)">EL</span></div><div class="nm">Elektronika</div></div>
+        <div class="ind-card" data-v="food" onclick="pickInd(this)"><div class="em"><span class="em-badge" style="background:linear-gradient(135deg,#f97316,#eab308)">JD</span></div><div class="nm">Jedzenie</div></div>
+        <div class="ind-card" data-v="beauty" onclick="pickInd(this)"><div class="em"><span class="em-badge" style="background:linear-gradient(135deg,#ec4899,#a855f7)">UR</span></div><div class="nm">Uroda</div></div>
+        <div class="ind-card" data-v="home" onclick="pickInd(this)"><div class="em"><span class="em-badge" style="background:linear-gradient(135deg,#06b6d4,#3b82f6)">DO</span></div><div class="nm">Dom i ogród</div></div>
+        <div class="ind-card" data-v="sport" onclick="pickInd(this)"><div class="em"><span class="em-badge" style="background:linear-gradient(135deg,#10b981,#3b82f6)">SP</span></div><div class="nm">Sport</div></div>
       </div>
       <button class="btn" onclick="nxt(2)">Dalej →</button>
     </div>
 
     <!-- Step 2: Size -->
     <div class="step" id="s2">
-      <div class="q">Jak duży jest Twój sklep? 📦</div>
+      <div class="q">Ile produktów masz w ofercie?</div>
       <div class="hint">Nie ma złej odpowiedzi — jesteśmy tu dla każdego</div>
       <div class="sizes">
         <div class="sz" data-v="start" onclick="pickSz(this)">
-          <div class="em">🌱</div>
+          <div class="em"><span class="sz-badge">S</span></div>
           <div class="txt"><div class="nm">Dopiero zaczynam</div><div class="ds">Poniżej 100 produktów</div></div>
           <div class="chk"></div>
         </div>
         <div class="sz" data-v="small" onclick="pickSz(this)">
-          <div class="em">🚀</div>
+          <div class="em"><span class="sz-badge">M</span></div>
           <div class="txt"><div class="nm">Mały sklep</div><div class="ds">100–1 000 produktów</div></div>
           <div class="chk"></div>
         </div>
         <div class="sz" data-v="medium" onclick="pickSz(this)">
-          <div class="em">📈</div>
+          <div class="em"><span class="sz-badge">L</span></div>
           <div class="txt"><div class="nm">Rozwijający się</div><div class="ds">1 000–10 000 produktów</div></div>
           <div class="chk"></div>
         </div>
         <div class="sz" data-v="large" onclick="pickSz(this)">
-          <div class="em">🏢</div>
+          <div class="em"><span class="sz-badge">XL</span></div>
           <div class="txt"><div class="nm">Duży gracz</div><div class="ds">Ponad 10 000 produktów</div></div>
           <div class="chk"></div>
         </div>
@@ -219,13 +222,13 @@
 
     <!-- Step 3: Needs -->
     <div class="step" id="s3">
-      <div class="q">Czego potrzebujesz najbardziej? ✨</div>
+      <div class="q">Gdzie czujesz największą lukę?</div>
       <div class="hint">Możesz wybrać kilka opcji naraz</div>
       <div class="needs">
-        <div class="need" data-v="design" onclick="togNeed(this)"><div class="em">🎨</div><div class="nm">Piękny design</div><div class="ds">Sklep, który zachwyca</div></div>
-        <div class="need" data-v="marketing" onclick="togNeed(this)"><div class="em">📣</div><div class="nm">Marketing</div><div class="ds">Więcej klientów i ruchu</div></div>
-        <div class="need" data-v="tech" onclick="togNeed(this)"><div class="em">⚙️</div><div class="nm">Technologia</div><div class="ds">Integracje i automatyzacja</div></div>
-        <div class="need" data-v="strategy" onclick="togNeed(this)"><div class="em">🧭</div><div class="nm">Strategia</div><div class="ds">Plan rozwoju e-commerce</div></div>
+        <div class="need" data-v="design" onclick="togNeed(this)"><div class="em"><span class="need-badge">DES</span></div><div class="nm">Piękny design</div><div class="ds">Sklep, który zachwyca</div></div>
+        <div class="need" data-v="marketing" onclick="togNeed(this)"><div class="em"><span class="need-badge">MKT</span></div><div class="nm">Marketing</div><div class="ds">Więcej klientów i ruchu</div></div>
+        <div class="need" data-v="tech" onclick="togNeed(this)"><div class="em"><span class="need-badge">TECH</span></div><div class="nm">Technologia</div><div class="ds">Integracje i automatyzacja</div></div>
+        <div class="need" data-v="strategy" onclick="togNeed(this)"><div class="em"><span class="need-badge">STR</span></div><div class="nm">Strategia</div><div class="ds">Plan rozwoju e-commerce</div></div>
       </div>
       <button class="btn" onclick="nxt(4)">Dalej →</button>
       <a class="back-lnk" onclick="prv(2)">← Wróć</a>
@@ -233,21 +236,21 @@
 
     <!-- Step 4: Contact -->
     <div class="step" id="s4">
-      <div class="q">Prawie gotowe! 🙌</div>
+      <div class="q">Ostatni krok</div>
       <div class="hint">Zostaw kontakt — odezwiemy się w ciągu 24 godzin</div>
       <div class="fields">
         <div class="fld"><label class="lbl" for="ec-nm">Twoje imię</label><input type="text" id="ec-nm" class="inp" placeholder="np. Anna" autocomplete="given-name"></div>
         <div class="fld"><label class="lbl" for="ec-em">Adres e-mail <span style="color:#ef4444">*</span></label><input type="email" id="ec-em" class="inp" placeholder="anna@twojesklep.pl" autocomplete="email"></div>
         <div class="fld"><label class="lbl" for="ec-ph">Telefon <span style="color:var(--ink-s);font-weight:400;text-transform:none;letter-spacing:0">(opcjonalnie)</span></label><input type="tel" id="ec-ph" class="inp" placeholder="+48 123 456 789" autocomplete="tel"></div>
       </div>
-      <button class="btn" id="ec-sub" onclick="ecSubmit()">Wyślij i zacznijmy! 🚀</button>
+      <button class="btn" id="ec-sub" onclick="ecSubmit()">Wyślij zgłoszenie →</button>
       <a class="back-lnk" onclick="prv(3)">← Wróć</a>
     </div>
 
     <!-- Success -->
     <div class="step" id="s-ok">
       <div class="ok">
-        <div class="big">🎊</div>
+        <div class="big" style="font-size:0"><div style="width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,#f97316,#ec4899);display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:30px;color:#fff;font-weight:700">✓</div></div>
         <h2>Jesteś w kolejce!</h2>
         <p>Twoje zgłoszenie dotarło do nas.<br>Odezwiemy się w ciągu <strong>24 godzin</strong> na adres:</p>
         <div class="email-badge" id="ok-email">—</div>

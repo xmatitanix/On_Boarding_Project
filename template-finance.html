@@ -78,6 +78,10 @@
     }
     .tp-badge:last-of-type { border-bottom: none; }
     .tp-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .tp-dot { width:12px;height:12px;border-radius:50%;font-size:0;flex-shrink:0;margin-top:4px; }
+    .tc-badge { display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:var(--gold-lt);color:var(--gold);font-size:10px;font-weight:800;letter-spacing:-.02em; }
+    .srv-dot { width:12px;height:12px;border-radius:50%;font-size:0;flex-shrink:0; }
+    .tl-dot { width:12px;height:12px;border-radius:50%;font-size:0; }
     .tp-text .tpt-name { font-size: 12px; font-weight: 600; color: var(--ink); }
     .tp-text .tpt-desc { font-size: 11px; color: var(--ink-s); margin-top: 2px; line-height: 1.4; }
     .tp-rating { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border); }
@@ -226,7 +230,7 @@
 <!-- HEADER -->
 <header>
   <div class="h-logo">
-    <div class="h-emblem">⚖️</div>
+    <div class="h-emblem" style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.02em">F</div>
     <span class="h-name brand-name">TwojaFirma</span>
   </div>
   <div class="breadcrumb">
@@ -247,19 +251,19 @@
   <aside class="trust-panel">
     <div class="tp-title">Dlaczego nam zaufać?</div>
     <div class="tp-badge">
-      <div class="tp-icon">🔒</div>
+      <div class="tp-icon tp-dot" style="background:#059669"></div>
       <div class="tp-text"><div class="tpt-name">Szyfrowanie SSL</div><div class="tpt-desc">Wszystkie dane są przesyłane w sposób bezpieczny</div></div>
     </div>
     <div class="tp-badge">
-      <div class="tp-icon">🛡️</div>
+      <div class="tp-icon tp-dot" style="background:#3b82f6"></div>
       <div class="tp-text"><div class="tpt-name">Zgodność z RODO</div><div class="tpt-desc">Pełna ochrona Twoich danych osobowych</div></div>
     </div>
     <div class="tp-badge">
-      <div class="tp-icon">🏛️</div>
+      <div class="tp-icon tp-dot" style="background:#f59e0b"></div>
       <div class="tp-text"><div class="tpt-name">15 lat na rynku</div><div class="tpt-desc">Zaufało nam ponad 1 200 firm</div></div>
     </div>
     <div class="tp-badge">
-      <div class="tp-icon">📋</div>
+      <div class="tp-icon tp-dot" style="background:#8b5cf6"></div>
       <div class="tp-text"><div class="tpt-name">Umowa NDA</div><div class="tpt-desc">Na życzenie podpisujemy umowę o poufności</div></div>
     </div>
     <div class="tp-rating">
@@ -278,15 +282,15 @@
       <h2 class="sc-title">Kim jest Twoja firma?</h2>
       <p class="sc-desc">Wybierz kategorię, która najlepiej opisuje Twoją działalność. Pomoże nam to zaproponować odpowiednie rozwiązania.</p>
       <div class="type-grid">
-        <div class="type-card" data-v="finance" onclick="pickType(this)"><div class="tc-ic">🏦</div><div class="tc-nm">Finanse / Bankowość</div><div class="tc-ds">Instytucje finansowe</div></div>
-        <div class="type-card" data-v="law" onclick="pickType(this)"><div class="tc-ic">⚖️</div><div class="tc-nm">Kancelaria prawna</div><div class="tc-ds">Prawo, radcowie, adwokaci</div></div>
-        <div class="type-card" data-v="realestate" onclick="pickType(this)"><div class="tc-ic">🏢</div><div class="tc-nm">Nieruchomości</div><div class="tc-ds">Deweloperzy, agencje</div></div>
-        <div class="type-card" data-v="consulting" onclick="pickType(this)"><div class="tc-ic">📊</div><div class="tc-nm">Doradztwo</div><div class="tc-ds">Consulting, audyt</div></div>
-        <div class="type-card" data-v="insurance" onclick="pickType(this)"><div class="tc-ic">🛡️</div><div class="tc-nm">Ubezpieczenia</div><div class="tc-ds">Towarzystwa, brokerzy</div></div>
-        <div class="type-card" data-v="other" onclick="pickType(this)"><div class="tc-ic">🤝</div><div class="tc-nm">Inna branża</div><div class="tc-ds">Coś innego</div></div>
+        <div class="type-card" data-v="finance" onclick="pickType(this)"><div class="tc-ic"><span class="tc-badge">FN</span></div><div class="tc-nm">Finanse / Bankowość</div><div class="tc-ds">Instytucje finansowe</div></div>
+        <div class="type-card" data-v="law" onclick="pickType(this)"><div class="tc-ic"><span class="tc-badge">PR</span></div><div class="tc-nm">Kancelaria prawna</div><div class="tc-ds">Prawo, radcowie, adwokaci</div></div>
+        <div class="type-card" data-v="realestate" onclick="pickType(this)"><div class="tc-ic"><span class="tc-badge">NR</span></div><div class="tc-nm">Nieruchomości</div><div class="tc-ds">Deweloperzy, agencje</div></div>
+        <div class="type-card" data-v="consulting" onclick="pickType(this)"><div class="tc-ic"><span class="tc-badge">DO</span></div><div class="tc-nm">Doradztwo</div><div class="tc-ds">Consulting, audyt</div></div>
+        <div class="type-card" data-v="insurance" onclick="pickType(this)"><div class="tc-ic"><span class="tc-badge">UB</span></div><div class="tc-nm">Ubezpieczenia</div><div class="tc-ds">Towarzystwa, brokerzy</div></div>
+        <div class="type-card" data-v="other" onclick="pickType(this)"><div class="tc-ic"><span class="tc-badge">···</span></div><div class="tc-nm">Inna branża</div><div class="tc-ds">Coś innego</div></div>
       </div>
       <div class="actions"><button class="btn-cta" onclick="goTo(2)">Dalej →</button></div>
-      <div class="foot-note">🔒 Twoje dane są bezpieczne — nigdy ich nie udostępnimy</div>
+      <div class="foot-note">SSL · Twoje dane są bezpieczne — nigdy ich nie udostępnimy</div>
     </div>
 
     <!-- Step 2 -->
@@ -295,18 +299,18 @@
       <h2 class="sc-title">Jakiej pomocy szukasz?</h2>
       <p class="sc-desc">Zaznacz wszystko, co Cię interesuje. To pomoże nam przygotować spersonalizowaną ofertę.</p>
       <div class="srv-list">
-        <div class="srv" data-v="digital" onclick="togSrv(this)"><div class="srv-ic">💻</div><div class="srv-nm">Transformacja cyfrowa</div><div class="srv-chk"></div></div>
-        <div class="srv" data-v="compliance" onclick="togSrv(this)"><div class="srv-ic">📋</div><div class="srv-nm">Compliance i regulacje</div><div class="srv-chk"></div></div>
-        <div class="srv" data-v="automation" onclick="togSrv(this)"><div class="srv-ic">⚙️</div><div class="srv-nm">Automatyzacja procesów</div><div class="srv-chk"></div></div>
-        <div class="srv" data-v="security" onclick="togSrv(this)"><div class="srv-ic">🔐</div><div class="srv-nm">Bezpieczeństwo danych</div><div class="srv-chk"></div></div>
-        <div class="srv" data-v="reporting" onclick="togSrv(this)"><div class="srv-ic">📊</div><div class="srv-nm">Raportowanie i analityka</div><div class="srv-chk"></div></div>
-        <div class="srv" data-v="crm" onclick="togSrv(this)"><div class="srv-ic">👥</div><div class="srv-nm">Zarządzanie klientami (CRM)</div><div class="srv-chk"></div></div>
+        <div class="srv" data-v="digital" onclick="togSrv(this)"><div class="srv-ic srv-dot" style="background:#6366f1"></div><div class="srv-nm">Transformacja cyfrowa</div><div class="srv-chk"></div></div>
+        <div class="srv" data-v="compliance" onclick="togSrv(this)"><div class="srv-ic srv-dot" style="background:#059669"></div><div class="srv-nm">Compliance i regulacje</div><div class="srv-chk"></div></div>
+        <div class="srv" data-v="automation" onclick="togSrv(this)"><div class="srv-ic srv-dot" style="background:#f59e0b"></div><div class="srv-nm">Automatyzacja procesów</div><div class="srv-chk"></div></div>
+        <div class="srv" data-v="security" onclick="togSrv(this)"><div class="srv-ic srv-dot" style="background:#ef4444"></div><div class="srv-nm">Bezpieczeństwo danych</div><div class="srv-chk"></div></div>
+        <div class="srv" data-v="reporting" onclick="togSrv(this)"><div class="srv-ic srv-dot" style="background:#8b5cf6"></div><div class="srv-nm">Raportowanie i analityka</div><div class="srv-chk"></div></div>
+        <div class="srv" data-v="crm" onclick="togSrv(this)"><div class="srv-ic srv-dot" style="background:#0ea5e9"></div><div class="srv-nm">Zarządzanie klientami (CRM)</div><div class="srv-chk"></div></div>
       </div>
       <div class="actions">
         <button class="btn-ghost" onclick="goTo(1)">← Wróć</button>
         <button class="btn-cta" onclick="goTo(3)">Dalej →</button>
       </div>
-      <div class="foot-note">🔒 Twoje dane są bezpieczne — nigdy ich nie udostępnimy</div>
+      <div class="foot-note">SSL · Twoje dane są bezpieczne — nigdy ich nie udostępnimy</div>
     </div>
 
     <!-- Step 3 -->
@@ -316,19 +320,19 @@
       <p class="sc-desc">Informacja o terminie pomaga nam odpowiednio zaplanować zasoby i priorytety dla Twojego projektu.</p>
       <div class="tl-pills">
         <div class="tl-pill" data-v="asap" onclick="pickTl(this)">
-          <div class="tl-left"><div class="tl-ic">🚀</div><div><div class="tl-nm">Jak najszybciej</div><div class="tl-ds">Projekt pilny — potrzebujemy działać natychmiast</div></div></div>
+          <div class="tl-left"><div class="tl-ic tl-dot" style="background:#f97316"></div><div><div class="tl-nm">Jak najszybciej</div><div class="tl-ds">Projekt pilny — potrzebujemy działać natychmiast</div></div></div>
           <div class="tl-radio"></div>
         </div>
         <div class="tl-pill" data-v="1-2m" onclick="pickTl(this)">
-          <div class="tl-left"><div class="tl-ic">📅</div><div><div class="tl-nm">Za 1–2 miesiące</div><div class="tl-ds">Mamy czas na solidne przygotowanie</div></div></div>
+          <div class="tl-left"><div class="tl-ic tl-dot" style="background:#3b82f6"></div><div><div class="tl-nm">Za 1–2 miesiące</div><div class="tl-ds">Mamy czas na solidne przygotowanie</div></div></div>
           <div class="tl-radio"></div>
         </div>
         <div class="tl-pill" data-v="q" onclick="pickTl(this)">
-          <div class="tl-left"><div class="tl-ic">🗓️</div><div><div class="tl-nm">W tym kwartale</div><div class="tl-ds">Planujemy w perspektywie 3 miesięcy</div></div></div>
+          <div class="tl-left"><div class="tl-ic tl-dot" style="background:#8b5cf6"></div><div><div class="tl-nm">W tym kwartale</div><div class="tl-ds">Planujemy w perspektywie 3 miesięcy</div></div></div>
           <div class="tl-radio"></div>
         </div>
         <div class="tl-pill" data-v="explore" onclick="pickTl(this)">
-          <div class="tl-left"><div class="tl-ic">🔍</div><div><div class="tl-nm">Dopiero rozpoznaję rynek</div><div class="tl-ds">Szukam informacji, bez presji</div></div></div>
+          <div class="tl-left"><div class="tl-ic tl-dot" style="background:#059669"></div><div><div class="tl-nm">Dopiero rozpoznaję rynek</div><div class="tl-ds">Szukam informacji, bez presji</div></div></div>
           <div class="tl-radio"></div>
         </div>
       </div>
@@ -336,7 +340,7 @@
         <button class="btn-ghost" onclick="goTo(2)">← Wróć</button>
         <button class="btn-cta" onclick="goTo(4)">Dalej →</button>
       </div>
-      <div class="foot-note">🔒 Twoje dane są bezpieczne — nigdy ich nie udostępnimy</div>
+      <div class="foot-note">SSL · Twoje dane są bezpieczne — nigdy ich nie udostępnimy</div>
     </div>
 
     <!-- Step 4 -->
@@ -345,7 +349,7 @@
       <h2 class="sc-title">Dane do kontaktu</h2>
       <p class="sc-desc">Skontaktujemy się z Tobą w ciągu 24 godzin roboczych z indywidualną propozycją współpracy.</p>
       <div class="sec-note">
-        <div class="sn-ic">🔒</div>
+        <div class="sn-ic" style="font-size:0"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#059669;margin-top:2px"></span></div>
         <div class="sn-tx">Twoje dane są chronione zgodnie z RODO. Nie będziemy ich udostępniać podmiotom trzecim ani wysyłać Ci niechcianych wiadomości.</div>
       </div>
       <div class="field"><label class="f-lbl" for="fn-nm">Imię i nazwisko</label><input type="text" id="fn-nm" class="f-inp" placeholder="Jan Kowalski" autocomplete="name"></div>
@@ -356,13 +360,13 @@
         <button class="btn-ghost" onclick="goTo(3)">← Wróć</button>
         <button class="btn-cta" id="fn-sub" onclick="fnSubmit()">Wyślij zgłoszenie →</button>
       </div>
-      <div class="foot-note">🔒 Szyfrowanie SSL · Zgodność z RODO · Żadnego spamu</div>
+      <div class="foot-note">Szyfrowanie SSL · Zgodność z RODO · Żadnego spamu</div>
     </div>
 
     <!-- Success -->
     <div class="step-card" id="f-ok">
       <div class="ok">
-        <div class="ok-seal">📬</div>
+        <div class="ok-seal" style="font-size:0"><div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#0a1628,#1d3558);display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:26px;color:#f59e0b;font-weight:700">✓</div></div>
         <h2>Zgłoszenie przyjęte</h2>
         <p>Dziękujemy za zaufanie. Nasz konsultant skontaktuje się z Tobą w ciągu <strong>24 godzin roboczych</strong> z indywidualną propozycją.</p>
         <div class="ok-steps">
