@@ -353,10 +353,10 @@
         <div class="sn-ic" style="font-size:0"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#059669;margin-top:2px"></span></div>
         <div class="sn-tx">Twoje dane są chronione zgodnie z RODO. Nie będziemy ich udostępniać podmiotom trzecim ani wysyłać Ci niechcianych wiadomości.</div>
       </div>
-      <div class="field"><label class="f-lbl" for="fn-nm">Imię i nazwisko</label><input type="text" id="fn-nm" class="f-inp" placeholder="Jan Kowalski" autocomplete="name"></div>
-      <div class="field"><label class="f-lbl" for="fn-co">Nazwa firmy</label><input type="text" id="fn-co" class="f-inp" placeholder="Kowalski & Wspólnicy Sp. z o.o." autocomplete="organization"></div>
-      <div class="field"><label class="f-lbl" for="fn-em">Adres e-mail <span style="color:#ef4444;font-weight:400;letter-spacing:0;text-transform:none">*</span></label><input type="email" id="fn-em" class="f-inp" placeholder="jan.kowalski@firma.pl" autocomplete="email"></div>
-      <div class="field"><label class="f-lbl" for="fn-ph">Telefon <span style="color:var(--ink-s);font-weight:400;letter-spacing:0;text-transform:none">(opcjonalnie)</span></label><input type="tel" id="fn-ph" class="f-inp" placeholder="+48 123 456 789" autocomplete="tel"></div>
+      <div class="field"><label class="f-lbl" for="fn-nm">Imię i nazwisko</label><input type="text" id="fn-nm" class="f-inp" placeholder="Jan Kowalski" autocomplete="name" maxlength="100"></div>
+      <div class="field"><label class="f-lbl" for="fn-co">Nazwa firmy</label><input type="text" id="fn-co" class="f-inp" placeholder="Kowalski & Wspólnicy Sp. z o.o." autocomplete="organization" maxlength="150"></div>
+      <div class="field"><label class="f-lbl" for="fn-em">Adres e-mail <span style="color:#ef4444;font-weight:400;letter-spacing:0;text-transform:none">*</span></label><input type="email" id="fn-em" class="f-inp" placeholder="jan.kowalski@firma.pl" autocomplete="email" maxlength="254"></div>
+      <div class="field"><label class="f-lbl" for="fn-ph">Telefon <span style="color:var(--ink-s);font-weight:400;letter-spacing:0;text-transform:none">(opcjonalnie)</span></label><input type="tel" id="fn-ph" class="f-inp" placeholder="+48 123 456 789" autocomplete="tel" maxlength="30"></div>
       <!-- honeypot -->
       <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
         <input type="text" id="_hp" name="address" tabindex="-1" autocomplete="off">
@@ -430,6 +430,7 @@
       try {
         const res = await fetch(CONFIG.webhookUrl, {
           method: 'POST',
+          credentials: 'omit',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
@@ -475,6 +476,8 @@
     el.classList.add('on'); FD.timeline = el.dataset.v;
   }
 
+  function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e) && e.length <= 254; }
+
   function _silentOk() {
     document.getElementById('f4').classList.remove('vis');
     document.getElementById('f-ok').classList.add('vis');
@@ -488,7 +491,7 @@
     }
     const emailInp = document.getElementById('fn-em');
     const email = emailInp.value.trim();
-    if (!email) { emailInp.focus(); emailInp.style.borderColor = '#ef4444'; return; }
+    if (!email || !isValidEmail(email)) { emailInp.focus(); emailInp.style.borderColor = '#ef4444'; return; }
     emailInp.style.borderColor = '';
 
     const btn = document.getElementById('fn-sub');

@@ -717,6 +717,12 @@ let budget = '';
 let deadline = '';
 let userStarted = false;
 
+function sanitize(s) {
+  return String(s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 const wait = ms => new Promise(r => setTimeout(r, ms));
 
 function show(id, delay = 0) {
@@ -829,14 +835,14 @@ async function submitName() {
   row.style.opacity = '.3';
   row.style.pointerEvents = 'none';
 
-  document.getElementById('ub-name').innerHTML = `<div class="user-bubble">${uname}</div>`;
+  document.getElementById('ub-name').innerHTML = `<div class="user-bubble">${sanitize(uname)}</div>`;
   await show('ub-name', 100);
   setP(25);
 
   const m = [
-    `Miło mi, <span class="hi">${uname}</span>. Zanim zaczniemy — nad czym chciałbyś/chciałabyś z nami pracować?`,
-    `Fajnie, <span class="hi">${uname}</span>! Czego szukasz? Czym możemy Ci pomóc?`,
-    `Świetnie, <span class="hi">${uname}</span>. Co możemy razem zrobić?`
+    `Miło mi, <span class="hi">${sanitize(uname)}</span>. Zanim zaczniemy — nad czym chciałbyś/chciałabyś z nami pracować?`,
+    `Fajnie, <span class="hi">${sanitize(uname)}</span>! Czego szukasz? Czym możemy Ci pomóc?`,
+    `Świetnie, <span class="hi">${sanitize(uname)}</span>. Co możemy razem zrobić?`
   ];
 
   await type('m1-txt', m[Math.floor(Math.random() * m.length)], 400);
@@ -892,7 +898,7 @@ async function pickDeadline(el, val) {
   await show('ub-deadline', 150);
   setP(90);
 
-  await type('m4-txt', `Mam wszystko czego potrzebuję, <span class="hi">${uname}</span>. 🙌<br><br>Przekażę to do zespołu i ktoś odezwie się do Ciebie osobiście. Żadnych automatycznych maili — prawdziwa rozmowa o Twoim projekcie.`, 450);
+  await type('m4-txt', `Mam wszystko czego potrzebuję, <span class="hi">${sanitize(uname)}</span>. 🙌<br><br>Przekażę to do zespołu i ktoś odezwie się do Ciebie osobiście. Żadnych automatycznych maili — prawdziwa rozmowa o Twoim projekcie.`, 450);
   await show('cta', 700);
 }
 
@@ -909,23 +915,27 @@ async function submit(e) {
   const _sc = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG.security : null;
   if (_sc) {
     if (_sc.honeypot && document.getElementById('_hp')?.value) {
-      await type('m5-txt', `Gotowe! ✦<br><br>Dzięki za zaufanie, <span class="hi">${uname}</span>. Do zobaczenia wkrótce.`, 350);
+      await type('m5-txt', `Gotowe! ✦<br><br>Dzięki za zaufanie, <span class="hi">${sanitize(uname)}</span>. Do zobaczenia wkrótce.`, 350);
       document.getElementById('restart-area').style.display = 'block';
       return;
     }
     if (((Date.now() - (window._t0 || 0)) / 1000) < (_sc.minFillSeconds || 5)) {
-      await type('m5-txt', `Gotowe! ✦<br><br>Dzięki za zaufanie, <span class="hi">${uname}</span>. Do zobaczenia wkrótce.`, 350);
+      await type('m5-txt', `Gotowe! ✦<br><br>Dzięki za zaufanie, <span class="hi">${sanitize(uname)}</span>. Do zobaczenia wkrótce.`, 350);
       document.getElementById('restart-area').style.display = 'block';
       return;
     }
   }
 
-  const _webhookUrl = (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.webhooks?.chat)
-    || 'https://hook.eu1.make.com/8jim8g7chyfpgvolryyal8md0thdfgj7';
+  const _webhookUrl = (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.webhooks?.chat) || '';
+  if (!_webhookUrl) {
+    console.warn('[Make.com] webhookUrl nie jest ustawiony w config.js');
+  }
 
   try {
+    if (!_webhookUrl) throw new Error('no-url');
     await fetch(_webhookUrl, {
       method: 'POST',
+      credentials: 'omit',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         imie: uname,
@@ -939,7 +949,7 @@ async function submit(e) {
     console.error('Błąd wysyłki do Make:', err);
   }
 
-  await type('m5-txt', `Gotowe! ✦<br><br>Dzięki za zaufanie, <span class="hi">${uname}</span>. To dla nas naprawdę coś znaczy — nie traktujemy tego jak kolejne zapytanie.<br><br><em>Do zobaczenia wkrótce.</em>`, 350);
+  await type('m5-txt', `Gotowe! ✦<br><br>Dzięki za zaufanie, <span class="hi">${sanitize(uname)}</span>. To dla nas naprawdę coś znaczy — nie traktujemy tego jak kolejne zapytanie.<br><br><em>Do zobaczenia wkrótce.</em>`, 350);
   document.getElementById('restart-area').style.display = 'block';
 }
 

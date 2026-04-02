@@ -248,11 +248,11 @@
       <p class="card-desc">Trzy minuty — tyle wystarczy, żebyśmy mogli skonfigurować platformę pod konkretne potrzeby Twojej firmy, a nie pod szablon.</p>
       <div class="field">
         <label class="field-lbl" for="f-company">Nazwa firmy</label>
-        <input type="text" id="f-company" class="field-inp" placeholder="np. Acme Sp. z o.o." autocomplete="organization">
+        <input type="text" id="f-company" class="field-inp" placeholder="np. Acme Sp. z o.o." autocomplete="organization" maxlength="150">
       </div>
       <div class="field">
         <label class="field-lbl" for="f-website">Strona internetowa <span class="opt">(opcjonalnie)</span></label>
-        <input type="url" id="f-website" class="field-inp" placeholder="https://twojafirma.pl">
+        <input type="url" id="f-website" class="field-inp" placeholder="https://twojafirma.pl" maxlength="255">
       </div>
       <div class="field">
         <label class="field-lbl">Branża</label>
@@ -322,15 +322,15 @@
       <p class="card-desc">Twoje dane służą wyłącznie do kontaktu w sprawie Twojego projektu. Żadnego spamu — obiecujemy.</p>
       <div class="field">
         <label class="field-lbl" for="f-name">Imię i nazwisko</label>
-        <input type="text" id="f-name" class="field-inp" placeholder="Jan Kowalski" autocomplete="name">
+        <input type="text" id="f-name" class="field-inp" placeholder="Jan Kowalski" autocomplete="name" maxlength="100">
       </div>
       <div class="field">
         <label class="field-lbl" for="f-email">Adres e-mail <span style="color:#ef4444">*</span></label>
-        <input type="email" id="f-email" class="field-inp" placeholder="jan@twojafirma.pl" autocomplete="email">
+        <input type="email" id="f-email" class="field-inp" placeholder="jan@twojafirma.pl" autocomplete="email" maxlength="254">
       </div>
       <div class="field">
         <label class="field-lbl" for="f-phone">Telefon <span class="opt">(opcjonalnie)</span></label>
-        <input type="tel" id="f-phone" class="field-inp" placeholder="+48 123 456 789" autocomplete="tel">
+        <input type="tel" id="f-phone" class="field-inp" placeholder="+48 123 456 789" autocomplete="tel" maxlength="30">
       </div>
       <!-- honeypot: niewidoczne dla ludzi, pułapka na boty -->
       <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
@@ -397,6 +397,8 @@
       └──────────────┴──────────────────────────────────────────┘  */
 
   /* ── helper: wyślij do Make.com z retry (3 próby) ── */
+  function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e) && e.length <= 254; }
+
   function _silentOk() {
     document.getElementById('c4').classList.remove('show');
     document.getElementById('c-ok').classList.add('show');
@@ -411,6 +413,7 @@
       try {
         const res = await fetch(CONFIG.webhookUrl, {
           method: 'POST',
+          credentials: 'omit',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
@@ -477,7 +480,7 @@
     }
     const emailInp = document.getElementById('f-email');
     const email = emailInp.value.trim();
-    if (!email) { emailInp.focus(); emailInp.style.borderColor = '#ef4444'; return; }
+    if (!email || !isValidEmail(email)) { emailInp.focus(); emailInp.style.borderColor = '#ef4444'; return; }
     emailInp.style.borderColor = '';
 
     const btn = document.getElementById('submit-btn');

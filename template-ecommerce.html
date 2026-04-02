@@ -240,9 +240,9 @@
       <div class="q">Ostatni krok</div>
       <div class="hint">Zostaw kontakt — odezwiemy się w ciągu 24 godzin</div>
       <div class="fields">
-        <div class="fld"><label class="lbl" for="ec-nm">Twoje imię</label><input type="text" id="ec-nm" class="inp" placeholder="np. Anna" autocomplete="given-name"></div>
-        <div class="fld"><label class="lbl" for="ec-em">Adres e-mail <span style="color:#ef4444">*</span></label><input type="email" id="ec-em" class="inp" placeholder="anna@twojesklep.pl" autocomplete="email"></div>
-        <div class="fld"><label class="lbl" for="ec-ph">Telefon <span style="color:var(--ink-s);font-weight:400;text-transform:none;letter-spacing:0">(opcjonalnie)</span></label><input type="tel" id="ec-ph" class="inp" placeholder="+48 123 456 789" autocomplete="tel"></div>
+        <div class="fld"><label class="lbl" for="ec-nm">Twoje imię</label><input type="text" id="ec-nm" class="inp" placeholder="np. Anna" autocomplete="given-name" maxlength="100"></div>
+        <div class="fld"><label class="lbl" for="ec-em">Adres e-mail <span style="color:#ef4444">*</span></label><input type="email" id="ec-em" class="inp" placeholder="anna@twojesklep.pl" autocomplete="email" maxlength="254"></div>
+        <div class="fld"><label class="lbl" for="ec-ph">Telefon <span style="color:var(--ink-s);font-weight:400;text-transform:none;letter-spacing:0">(opcjonalnie)</span></label><input type="tel" id="ec-ph" class="inp" placeholder="+48 123 456 789" autocomplete="tel" maxlength="30"></div>
       </div>
       <!-- honeypot -->
       <div style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
@@ -307,6 +307,7 @@
         try {
           const res = await fetch(CONFIG.webhookUrl, {
             method: 'POST',
+            credentials: 'omit',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload),
           });
@@ -360,6 +361,8 @@
       D.needs = el.classList.contains('on') ? [...new Set([...D.needs, v])] : D.needs.filter(x => x !== v);
     }
 
+    function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e) && e.length <= 254; }
+
     function _silentOk() {
       document.getElementById('ok-email').textContent = document.getElementById('ec-em').value.trim();
       document.getElementById('s4').classList.remove('vis');
@@ -374,7 +377,7 @@
       }
       const emailInp = document.getElementById('ec-em');
       const email = emailInp.value.trim();
-      if (!email) { emailInp.focus(); emailInp.style.borderColor = '#ef4444'; return; }
+      if (!email || !isValidEmail(email)) { emailInp.focus(); emailInp.style.borderColor = '#ef4444'; return; }
       emailInp.style.borderColor = '';
 
       const btn = document.getElementById('ec-sub');
