@@ -59,8 +59,11 @@
 
     /* steps */
     .step { display: none; }
-    .step.vis { display: flex; flex-direction: column; align-items: center; animation: gentleFade .6s cubic-bezier(.22,1,.36,1); }
-    @keyframes gentleFade { from{opacity:0;transform:translateY(14px);} to{opacity:1;transform:translateY(0);} }
+    .step.vis { display: flex; flex-direction: column; align-items: center; }
+    .step.slide-fwd { animation: slideFwd .4s cubic-bezier(.22,1,.36,1); }
+    .step.slide-back { animation: slideBack .4s cubic-bezier(.22,1,.36,1); }
+    @keyframes slideFwd  { from{opacity:0;transform:translateX(48px);} to{opacity:1;transform:translateX(0);} }
+    @keyframes slideBack { from{opacity:0;transform:translateX(-48px);} to{opacity:1;transform:translateX(0);} }
 
     .step-q {
       font-size: 28px; font-weight: 800; color: var(--ink);
@@ -348,10 +351,12 @@
     });
 
     function goW(n) {
-      document.getElementById('w' + cur).classList.remove('vis');
+      const dir = n > cur ? 'slide-fwd' : 'slide-back';
+      document.getElementById('w' + cur).classList.remove('vis', 'slide-fwd', 'slide-back');
       cur = n;
       const next = document.getElementById('w' + n) || document.getElementById('w-ok');
-      next.classList.add('vis');
+      next.classList.add('vis', dir);
+      next.addEventListener('animationend', () => next.classList.remove(dir), { once: true });
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
