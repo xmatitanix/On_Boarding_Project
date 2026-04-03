@@ -70,12 +70,38 @@ document.querySelectorAll('.pill[data-group]').forEach(p => {
     const g = p.dataset.group;
     document.querySelectorAll('.pill[data-group="'+g+'"]').forEach(x => x.classList.remove('selected'));
     p.classList.add('selected');
+    if (g === 'time') updateSchedule();
   });
 });
 
+// ── WEEKLY SCHEDULE VISUALIZER ───────────────────────────────
+const DAY_ORDER = ['mon','tue','wed','thu','fri','sat','sun'];
+const TIME_LABELS = {
+  morning:   'Rano (6:00–10:00)',
+  afternoon: 'Popołudnie (14:00–18:00)',
+  evening:   'Wieczór (18:00–22:00)',
+  flexible:  'Elastycznie',
+};
+
+function updateSchedule() {
+  const days = getSelectedDays();
+  const time = getPillVal('time');
+  const panel = document.getElementById('sched-panel');
+  if (days.length === 0) { panel.style.display = 'none'; return; }
+  panel.style.display = 'block';
+  DAY_ORDER.forEach(d => {
+    const col = document.getElementById('sd-' + d);
+    if (col) col.classList.toggle('active', days.includes(d));
+  });
+  const n = days.length;
+  const sessWord = n === 1 ? 'sesja' : n < 5 ? 'sesje' : 'sesji';
+  document.getElementById('sched-sessions').textContent = n + ' ' + sessWord + ' / tydzień';
+  document.getElementById('sched-time-lbl').textContent = time ? TIME_LABELS[time] || '' : 'Wybierz porę dnia';
+}
+
 // ── MULTI-SELECT: day pills ───────────────────────────────────
 document.querySelectorAll('.day-pill').forEach(p => {
-  p.addEventListener('click', () => p.classList.toggle('selected'));
+  p.addEventListener('click', () => { p.classList.toggle('selected'); updateSchedule(); });
 });
 
 // ── STEP VALIDATION ───────────────────────────────────────────

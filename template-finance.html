@@ -205,6 +205,16 @@
     .step-err { display:none; font-size:12px; color:#9a3412; background:#fff7ed; border:1px solid #fed7aa; border-radius:6px; padding:8px 12px; margin-top:4px; }
     .step-err.show { display:block; }
 
+    /* ── COVERAGE PANEL ─────────────────────────── */
+    .cov-panel { margin:14px 0 10px; }
+    .cov-header { display:flex; justify-content:space-between; align-items:center; font-size:12px; color:var(--ink-m); margin-bottom:7px; }
+    .cov-label-txt { font-weight:500; }
+    .cov-pct { font-weight:700; font-size:13px; color:var(--navy); transition:color .3s; }
+    .cov-bar { display:flex; gap:5px; height:9px; }
+    .cov-seg { flex:1; border-radius:4px; background:#e2e8f0; transition:background .35s ease, transform .2s ease; }
+    .cov-seg.fill { transform:scaleY(1.15); }
+    .cov-msg { font-size:12px; color:var(--ink-m); margin-top:8px; font-style:italic; min-height:16px; transition:opacity .25s; }
+
     /* footer note */
     .foot-note { text-align: center; margin-top: 16px; font-size: 12px; color: var(--ink-s); }
 
@@ -314,6 +324,21 @@
         <div class="srv" data-v="security"><div class="srv-ic srv-dot" style="background:#ef4444"></div><div class="srv-nm">Bezpieczeństwo danych</div><div class="srv-chk"></div></div>
         <div class="srv" data-v="reporting"><div class="srv-ic srv-dot" style="background:#8b5cf6"></div><div class="srv-nm">Raportowanie i analityka</div><div class="srv-chk"></div></div>
         <div class="srv" data-v="crm"><div class="srv-ic srv-dot" style="background:#0ea5e9"></div><div class="srv-nm">Zarządzanie klientami (CRM)</div><div class="srv-chk"></div></div>
+      </div>
+      <div class="cov-panel" id="cov-panel" style="display:none">
+        <div class="cov-header">
+          <span class="cov-label-txt">Pokrycie obszarów</span>
+          <span class="cov-pct" id="cov-pct">0%</span>
+        </div>
+        <div class="cov-bar">
+          <div class="cov-seg" id="cs0"></div>
+          <div class="cov-seg" id="cs1"></div>
+          <div class="cov-seg" id="cs2"></div>
+          <div class="cov-seg" id="cs3"></div>
+          <div class="cov-seg" id="cs4"></div>
+          <div class="cov-seg" id="cs5"></div>
+        </div>
+        <div class="cov-msg" id="cov-msg"></div>
       </div>
       <div class="step-err" id="err2">Zaznacz przynajmniej jedną interesującą Cię usługę.</div>
       <div class="actions">

@@ -105,6 +105,19 @@
     .day-pill:hover { border-color: var(--accent); color: var(--ink); }
     .day-pill.selected { border-color: var(--accent); background: var(--accent-lt); color: var(--accent); }
 
+    /* ── WEEKLY SCHEDULE VISUALIZER ───────────── */
+    .sched-panel { margin-top:20px; background:#f8fafc; border:1px solid var(--border); border-radius:14px; padding:14px 16px 12px; animation:schedIn .3s ease; }
+    @keyframes schedIn { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:none} }
+    .sched-eyebrow { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:#94a3b8; margin-bottom:11px; }
+    .sched-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+    .sched-col { display:flex; flex-direction:column; align-items:center; gap:5px; }
+    .sched-dname { font-size:11px; font-weight:600; color:#94a3b8; transition:color .2s; }
+    .sched-dot { width:100%; aspect-ratio:1; border-radius:7px; background:#e2e8f0; transition:background .25s ease, transform .2s ease; }
+    .sched-col.active .sched-dname { color:var(--accent); }
+    .sched-col.active .sched-dot { background:var(--accent); transform:scale(1.1); }
+    .sched-footer { display:flex; justify-content:space-between; align-items:center; margin-top:11px; font-size:12px; color:#64748b; }
+    .sched-sessions { font-weight:600; color:var(--accent); }
+
     /* ── CONTACT FORM ──────────────────────────── */
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
     @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
@@ -301,6 +314,23 @@
         </div>
 
         <div class="err-msg" id="e3">Zaznacz przynajmniej jeden dzień i porę dnia.</div>
+
+        <div class="sched-panel" id="sched-panel" style="display:none">
+          <div class="sched-eyebrow">Twój plan treningowy</div>
+          <div class="sched-grid">
+            <div class="sched-col" id="sd-mon"><div class="sched-dname">Pn</div><div class="sched-dot"></div></div>
+            <div class="sched-col" id="sd-tue"><div class="sched-dname">Wt</div><div class="sched-dot"></div></div>
+            <div class="sched-col" id="sd-wed"><div class="sched-dname">Śr</div><div class="sched-dot"></div></div>
+            <div class="sched-col" id="sd-thu"><div class="sched-dname">Cz</div><div class="sched-dot"></div></div>
+            <div class="sched-col" id="sd-fri"><div class="sched-dname">Pt</div><div class="sched-dot"></div></div>
+            <div class="sched-col" id="sd-sat"><div class="sched-dname">So</div><div class="sched-dot"></div></div>
+            <div class="sched-col" id="sd-sun"><div class="sched-dname">Nd</div><div class="sched-dot"></div></div>
+          </div>
+          <div class="sched-footer">
+            <span class="sched-sessions" id="sched-sessions"></span>
+            <span id="sched-time-lbl"></span>
+          </div>
+        </div>
 
         <div class="btn-row">
           <button class="btn-back" data-goto="2">← Wróć</button>

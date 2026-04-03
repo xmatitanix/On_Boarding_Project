@@ -89,10 +89,42 @@
     document.querySelectorAll('.type-card').forEach(c => c.classList.remove('on'));
     el.classList.add('on'); FD.type = el.dataset.v;
   }
+  const COV_LEVELS = [
+    { min:  0, color: '#94a3b8', msg: 'Zaznacz obszary, które Cię interesują.' },
+    { min: 17, color: '#6366f1', msg: 'Dobry start — możemy to omówić na pierwszym spotkaniu.' },
+    { min: 34, color: '#f59e0b', msg: 'Solidny zakres — przygotujemy wstępną wycenę.' },
+    { min: 51, color: '#0ea5e9', msg: 'Kompleksowe podejście — to nasza specjalność.' },
+    { min: 84, color: '#059669', msg: 'Pełna transformacja — dostaniesz dedykowaną ofertę.' },
+  ];
+
+  function updateCoverage() {
+    const n = FD.services.length;
+    const total = 6;
+    const panel = document.getElementById('cov-panel');
+    if (n === 0) { panel.style.display = 'none'; return; }
+    panel.style.display = 'block';
+    const pct = Math.round(n / total * 100);
+    document.getElementById('cov-pct').textContent = pct + '%';
+    const level = [...COV_LEVELS].reverse().find(l => pct >= l.min) || COV_LEVELS[0];
+    document.getElementById('cov-msg').textContent = level.msg;
+    for (let i = 0; i < total; i++) {
+      const seg = document.getElementById('cs' + i);
+      if (!seg) continue;
+      if (i < n) {
+        seg.style.background = level.color;
+        seg.classList.add('fill');
+      } else {
+        seg.style.background = '#e2e8f0';
+        seg.classList.remove('fill');
+      }
+    }
+  }
+
   function togSrv(el) {
     el.classList.toggle('on');
     const v = el.dataset.v;
     FD.services = el.classList.contains('on') ? [...new Set([...FD.services, v])] : FD.services.filter(x => x !== v);
+    updateCoverage();
   }
   function pickTl(el) {
     document.querySelectorAll('.tl-pill').forEach(p => p.classList.remove('on'));
