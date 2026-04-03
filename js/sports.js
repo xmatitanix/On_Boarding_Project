@@ -3,8 +3,7 @@ window._t0 = Date.now();
 // ── CONFIG ────────────────────────────────────────────────────
 const SC = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG : {};
 const CONFIG = {
-  webhookUrl: SC.webhooks?.sports || '',
-  brandName:  SC.brand?.name     || 'SportClub',
+  brandName:       SC.brand?.name               || 'SportClub',
   honeypot:        SC.security?.honeypot        ?? true,
   minFillSeconds:  SC.security?.minFillSeconds  ?? 5,
 };
@@ -127,15 +126,11 @@ async function doSubmit() {
   // timing check
   if ((Date.now() - window._t0) / 1000 < CONFIG.minFillSeconds) { _silentOk(); return; }
 
-  if (!CONFIG.webhookUrl) {
-    console.warn('[sports] Brak webhookUrl w config.js — dane nie zostały wysłane.');
-    _silentOk(); return;
-  }
-
   const btn = document.getElementById('btnSubmit');
   btn.disabled = true; btn.textContent = 'Wysyłam…';
 
   const payload = {
+    _route:    'sports',
     template:  'sports-club',
     sports:    getSelectedSports(),
     who:       getPillVal('who'),
@@ -151,10 +146,9 @@ async function doSubmit() {
   };
 
   try {
-    const res = await fetch(CONFIG.webhookUrl, {
+    const res = await fetch('/api/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      credentials: 'omit',
       body: JSON.stringify(payload),
     });
     if (!res.ok) throw new Error('HTTP '+res.status);

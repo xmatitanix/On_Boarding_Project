@@ -15,24 +15,22 @@ window.SITE_CONFIG = {
   },
 
   // ── MAKE.COM — adresy webhooków ─────────────────────────────────
-  //  Jak uzyskać URL webhooka:
-  //    1. Wejdź na make.com i utwórz nowy scenariusz
-  //    2. Dodaj moduł: Webhooks → Custom webhook → Add
-  //    3. Skopiuj wygenerowany URL i wklej poniżej
+  //  Webhooki są teraz chronione po stronie serwera.
+  //  Ustaw poniższe zmienne środowiskowe w panelu Vercel
+  //  (Settings → Environment Variables):
   //
-  //  Każdy szablon ma osobny webhook (możesz wpisać ten sam URL
-  //  do wszystkich, jeśli chcesz jedno miejsce odbioru).
+  //    MAKE_WEBHOOK_CHAT
+  //    MAKE_WEBHOOK_SAAS
+  //    MAKE_WEBHOOK_ECOMMERCE
+  //    MAKE_WEBHOOK_FINANCE
+  //    MAKE_WEBHOOK_WELLNESS
+  //    MAKE_WEBHOOK_CRM
+  //    MAKE_WEBHOOK_SPORTS
+  //    MAKE_WEBHOOK_INDUSTRIAL
   //
-  webhooks: {
-    chat:      '',   // ← index.html              (styl: konwersacyjny chat)
-    saas:      '',   // ← template-saas.html       (styl: wizard z sidebarem)
-    ecommerce: '',   // ← template-ecommerce.html  (styl: wizualny quiz)
-    finance:   '',   // ← template-finance.html    (styl: panel zaufania)
-    wellness:  '',   // ← template-wellness.html   (styl: jedno pytanie naraz)
-    crm:       '',   // ← template-crm.html         (styl: enterprise CRM/wizard)
-    sports:      '',   // ← template-sports.html        (styl: klub sportowy)
-    industrial:  '',   // ← template-industrial.html   (styl: przemysł / CNC)
-  },
+  //  Formularze wysyłają dane do /api/submit (serverless proxy),
+  //  który odczytuje URL webhooka z env i przekazuje dalej.
+  //  URL webhooka nigdy nie trafia do przeglądarki klienta.
 
   // ── ZABEZPIECZENIA ───────────────────────────────────────────────
   security: {

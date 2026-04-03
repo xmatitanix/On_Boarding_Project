@@ -2,8 +2,7 @@ window._t0 = Date.now();
 
 const SC = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG : {};
 const CONFIG = {
-  webhookUrl: SC.webhooks?.crm   || '',
-  brandName:  SC.brand?.name     || 'TwojaCRM',
+  brandName: SC.brand?.name || 'TwojaCRM',
 };
 
 const PROG = { 1:25, 2:50, 3:75, 4:100 };
@@ -112,11 +111,10 @@ function _silentOk() {
 }
 
 async function sendToMake(payload) {
-  if (!CONFIG.webhookUrl) { console.warn('[Make.com] webhookUrl nie ustawiony w config.js'); return { ok: false, reason: 'no-url' }; }
   for (let i = 1; i <= 3; i++) {
     try {
-      const r = await fetch(CONFIG.webhookUrl, {
-        method: 'POST', credentials: 'omit',
+      const r = await fetch('/api/submit', {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
@@ -144,6 +142,7 @@ async function doSubmit() {
   btn.textContent = 'Wysyłanie…'; btn.disabled = true;
 
   const result = await sendToMake({
+    _route:    'crm',
     template:  'crm-enterprise',
     industry:  D.industry,
     size:      D.size,

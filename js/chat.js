@@ -295,27 +295,21 @@ async function submit(e) {
     }
   }
 
-  const _webhookUrl = (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.webhooks?.chat) || '';
-  if (!_webhookUrl) {
-    console.warn('[Make.com] webhookUrl nie jest ustawiony w config.js');
-  }
-
   try {
-    if (!_webhookUrl) throw new Error('no-url');
-    await fetch(_webhookUrl, {
+    await fetch('/api/submit', {
       method: 'POST',
-      credentials: 'omit',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        imie: uname,
-        usluga: service,
-        budzet: budget,
-        termin: deadline,
+        _route:    'chat',
+        imie:      uname,
+        usluga:    service,
+        budzet:    budget,
+        termin:    deadline,
         timestamp: new Date().toISOString()
       })
     });
   } catch (err) {
-    console.error('Błąd wysyłki do Make:', err);
+    console.error('Błąd wysyłki:', err);
   }
 
   await type('m5-txt', `Gotowe! ✦<br><br>Dzięki za zaufanie, <span class="hi">${sanitize(uname)}</span>. To dla nas naprawdę coś znaczy — nie traktujemy tego jak kolejne zapytanie.<br><br><em>Do zobaczenia wkrótce.</em>`, 350);

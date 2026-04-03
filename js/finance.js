@@ -10,8 +10,7 @@
   // Odczytaj konfigurację z config.js; lokalne wartości jako fallback
   const SC = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG : {};
   const CONFIG = {
-    webhookUrl: SC.webhooks?.finance || '',
-    brandName:  SC.brand?.name       || 'TwojaFirma',
+    brandName: SC.brand?.name || 'TwojaFirma',
   };
   window._t0 = Date.now();
 
@@ -30,15 +29,10 @@
 
   /* ── helper: wyślij do Make.com z retry (3 próby) ── */
   async function sendToMake(payload) {
-    if (!CONFIG.webhookUrl) {
-      console.warn('[Make.com] webhookUrl nie jest ustawiony w CONFIG.');
-      return { ok: false, reason: 'no-url' };
-    }
     for (let attempt = 1; attempt <= 3; attempt++) {
       try {
-        const res = await fetch(CONFIG.webhookUrl, {
+        const res = await fetch('/api/submit', {
           method: 'POST',
-          credentials: 'omit',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
@@ -140,6 +134,7 @@
     btn.textContent = 'Wysyłanie…'; btn.disabled = true;
 
     const payload = {
+      _route:    'finance',
       template:  'finance-trust',
       type:      FD.type,
       services:  FD.services,

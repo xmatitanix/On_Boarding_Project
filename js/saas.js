@@ -10,8 +10,7 @@
   // Odczytaj konfigurację z config.js; lokalne wartości jako fallback
   const SC = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG : {};
   const CONFIG = {
-    webhookUrl: SC.webhooks?.saas      || '',
-    brandName:  SC.brand?.name         || 'TwojaSaaS',
+    brandName: SC.brand?.name || 'TwojaSaaS',
   };
   window._t0 = Date.now(); // pomiar czasu wypełnienia formularza
 
@@ -44,15 +43,10 @@
   }
 
   async function sendToMake(payload) {
-    if (!CONFIG.webhookUrl || CONFIG.webhookUrl === '') {
-      console.warn('[Make.com] webhookUrl nie jest ustawiony w CONFIG. Uzupełnij pole webhookUrl.');
-      return { ok: false, reason: 'no-url' };
-    }
     for (let attempt = 1; attempt <= 3; attempt++) {
       try {
-        const res = await fetch(CONFIG.webhookUrl, {
+        const res = await fetch('/api/submit', {
           method: 'POST',
-          credentials: 'omit',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
@@ -202,6 +196,7 @@
     btn.textContent = 'Wysyłanie…'; btn.disabled = true;
 
     const payload = {
+      _route:    'saas',
       template:  'saas-wizard',
       company:   document.getElementById('f-company').value.trim(),
       website:   document.getElementById('f-website').value.trim(),

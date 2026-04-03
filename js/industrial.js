@@ -2,8 +2,7 @@ window._t0 = Date.now();
 
 const SC = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG : {};
 const CONFIG = {
-  webhookUrl:     SC.webhooks?.industrial || '',
-  brandName:      SC.brand?.name          || 'MetalWorks',
+  brandName:      SC.brand?.name               || 'MetalWorks',
   honeypot:       SC.security?.honeypot        ?? true,
   minFillSeconds: SC.security?.minFillSeconds  ?? 5,
 };
@@ -101,13 +100,10 @@ async function doSubmit() {
   err4.classList.remove('show');
   if (CONFIG.honeypot && document.getElementById('hp').value !== '') { _silentOk(); return; }
   if ((Date.now()-window._t0)/1000 < CONFIG.minFillSeconds) { _silentOk(); return; }
-  if (!CONFIG.webhookUrl) {
-    console.warn('[industrial] Brak webhookUrl w config.js.');
-    _silentOk(); return;
-  }
   const btn = document.getElementById('btnSubmit');
   btn.disabled = true; btn.textContent = 'Wysyłam\u2026';
   const payload = {
+    _route:     'industrial',
     template:   'industrial-cnc',
     products:   getProds(),
     material:   getPill('mat'),
@@ -123,9 +119,10 @@ async function doSubmit() {
     timestamp:  new Date().toISOString(),
   };
   try {
-    const res = await fetch(CONFIG.webhookUrl, {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      credentials:'omit', body:JSON.stringify(payload),
+    const res = await fetch('/api/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
     });
     if (!res.ok) throw new Error('HTTP '+res.status);
     document.querySelectorAll('.step').forEach(s=>{ s.style.display='none'; });
