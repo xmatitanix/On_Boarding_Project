@@ -141,6 +141,17 @@
     .sel-card .nm { font-size: 13px; font-weight: 500; color: var(--ink); }
     .sel-card .ds { font-size: 11px; color: var(--ink-soft); margin-top: 1px; }
 
+    /* savings calculator panel */
+    .savings-panel { margin-top: 18px; background: linear-gradient(135deg,#eff6ff,#dbeafe); border: 1px solid #bfdbfe; border-radius: 14px; padding: 16px 20px; animation: savUp .35s ease; }
+    @keyframes savUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+    .savings-row { display:flex; align-items:center; justify-content:center; gap:0; margin-bottom:8px; }
+    .savings-stat { flex:1; text-align:center; }
+    .savings-num { font-size:30px; font-weight:800; color:var(--accent); line-height:1; letter-spacing:-.02em; }
+    .savings-unit { font-size:11px; font-weight:700; color:var(--accent); margin-left:2px; vertical-align:super; font-size:13px; }
+    .savings-lbl { font-size:10px; font-weight:700; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.07em; margin-top:4px; }
+    .savings-divider { width:1px; height:44px; background:#bfdbfe; margin:0 16px; flex-shrink:0; }
+    .savings-msg { font-size:12px; color:#1e40af; text-align:center; font-style:italic; }
+
     /* pills */
     .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
     .pill {
@@ -326,6 +337,22 @@
           <button class="pill" data-g="role" data-v="other">Inna</button>
         </div>
       </div>
+      <!-- Savings calculator — appears after teamsize selection -->
+      <div class="savings-panel" id="savings-panel" style="display:none">
+        <div class="savings-row">
+          <div class="savings-stat">
+            <div class="savings-num" id="sav-hours">0</div>
+            <div class="savings-lbl">godzin / tydzień</div>
+          </div>
+          <div class="savings-divider"></div>
+          <div class="savings-stat">
+            <div class="savings-num" id="sav-yearly">0</div>
+            <div class="savings-lbl">zł zaoszczędzone / rok</div>
+          </div>
+        </div>
+        <div class="savings-msg" id="sav-msg"></div>
+      </div>
+
       <div class="step-err" id="err3">Wybierz rozmiar zespołu i swoją rolę.</div>
       <div class="actions">
         <button class="btn-back" data-goto="2">← Wróć</button>

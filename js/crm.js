@@ -62,6 +62,46 @@ function togArea(el) {
   const n = D.areas.length;
   document.getElementById('area-count').textContent = n + ' / 6';
   document.getElementById('area-bar').style.width = (n / 6 * 100) + '%';
+  updateCRMGauge();
+}
+
+/* ── CRM Readiness Score gauge ───────────────────────────────── */
+const AREA_WEIGHTS = { sales: 22, marketing: 18, support: 20, ops: 16, hr: 12, finance: 12 };
+const GAUGE_LEVELS = [
+  { min: 0,  color: '#94a3b8', msg: 'Zaznacz obszary — zobaczymy gdzie CRM pomoże najbardziej.' },
+  { min: 10, color: '#3b82f6', msg: 'Dobry start — widzimy realne obszary do usprawnienia.' },
+  { min: 40, color: '#8b5cf6', msg: 'Solidna baza — CRM znacząco przyspieszy te procesy.' },
+  { min: 65, color: '#059669', msg: 'Kompleksowa potrzeba — idealny scenariusz dla pełnego CRM.' },
+  { min: 90, color: '#10b981', msg: 'Maksymalny potencjał — CRM zmieni Twój biznes o 360°.' },
+];
+
+function updateCRMGauge() {
+  const score = Math.min(D.areas.reduce((s, a) => s + (AREA_WEIGHTS[a] || 10), 0), 100);
+  const wrap = document.getElementById('crm-gauge-wrap');
+  if (!wrap) return;
+  if (!D.areas.length) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'flex';
+
+  const arc = document.getElementById('gauge-arc');
+  arc.style.strokeDashoffset = String(176 - (score / 100) * 176);
+
+  const level = GAUGE_LEVELS.reduce((best, l) => score >= l.min ? l : best, GAUGE_LEVELS[0]);
+  arc.style.stroke = level.color;
+
+  const numEl = document.getElementById('gauge-num');
+  numEl.style.color = level.color;
+  animateGaugeNum(numEl, score);
+  document.getElementById('gauge-msg').textContent = level.msg;
+}
+
+function animateGaugeNum(el, target) {
+  clearInterval(el._gt);
+  let cur = +el.textContent || 0;
+  el._gt = setInterval(() => {
+    cur += Math.max(1, Math.ceil((target - cur) / 8));
+    if (cur >= target) { cur = target; clearInterval(el._gt); }
+    el.textContent = cur;
+  }, 16);
 }
 
 function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e) && e.length <= 254; }

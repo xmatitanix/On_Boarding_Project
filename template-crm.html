@@ -140,6 +140,15 @@
     .step-err { display:none; margin-bottom:10px; padding:9px 13px; background:#fff7ed; border:1px solid #fed7aa; border-radius:8px; font-size:12px; color:#9a3412; }
     .step-err.show { display:block; }
 
+    /* CRM readiness gauge */
+    .crm-gauge-wrap { margin-top:18px; display:flex; flex-direction:column; align-items:center; gap:6px; padding:16px; background:var(--bg); border:1px solid var(--border); border-radius:14px; animation:gaugeIn .3s ease; }
+    @keyframes gaugeIn { from { opacity:0; transform:scale(.96); } to { opacity:1; transform:scale(1); } }
+    .gauge-svg { overflow:visible; }
+    .gauge-label { display:flex; flex-direction:column; align-items:center; margin-top:4px; }
+    .gauge-num { font-size:28px; font-weight:800; color:var(--accent); line-height:1; transition:color .3s; }
+    .gauge-pct { font-size:11px; font-weight:700; color:var(--ink-m); letter-spacing:.05em; }
+    .gauge-msg { font-size:12px; font-weight:500; color:var(--ink-m); text-align:center; max-width:280px; transition:color .3s; }
+
     @media (max-width: 700px) {
       .hdr { padding: 0 20px; }
       .h-steps { display: none; }
@@ -256,6 +265,23 @@
         <span class="area-nm">Finanse i rozliczenia</span>
         <div class="area-chk"></div>
       </div>
+    </div>
+
+    <!-- CRM Readiness Score gauge — appears when areas are selected -->
+    <div class="crm-gauge-wrap" id="crm-gauge-wrap" style="display:none">
+      <svg class="gauge-svg" viewBox="0 0 140 80" width="160" height="92">
+        <!-- background arc -->
+        <path d="M14,70 A56,56 0 0,1 126,70" fill="none" stroke="#e2e8f0" stroke-width="11" stroke-linecap="round"/>
+        <!-- animated fill arc; full arc ≈ 176px -->
+        <path id="gauge-arc" d="M14,70 A56,56 0 0,1 126,70" fill="none" stroke="#2563eb" stroke-width="11"
+              stroke-linecap="round" stroke-dasharray="176" stroke-dashoffset="176"
+              style="transition:stroke-dashoffset .55s ease,stroke .35s ease;"/>
+      </svg>
+      <div class="gauge-label">
+        <div class="gauge-num" id="gauge-num">0</div>
+        <div class="gauge-pct">/ 100 pkt CRM Score</div>
+      </div>
+      <div class="gauge-msg" id="gauge-msg">Zaznacz obszary, które chcesz usprawnić</div>
     </div>
 
     <div class="step-err" id="err2">Zaznacz co najmniej jeden obszar, aby przejść dalej.</div>

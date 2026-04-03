@@ -134,6 +134,18 @@
     }
     .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(249,115,22,.3); }
     .btn:disabled { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    /* revenue estimator panel */
+    .rev-panel { background:linear-gradient(135deg,#fef3c7,#fde68a); border:1px solid #fcd34d; border-radius:16px; padding:18px; margin-bottom:22px; animation:revIn .4s ease; }
+    @keyframes revIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+    .rev-header { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:#92400e; margin-bottom:4px; }
+    .rev-range { font-size:28px; font-weight:800; color:#92400e; line-height:1.1; }
+    .rev-unit { font-size:12px; font-weight:700; color:#b45309; text-transform:uppercase; letter-spacing:.05em; margin-bottom:12px; }
+    .rev-growth { display:flex; align-items:center; gap:6px; background:rgba(255,255,255,.55); border-radius:10px; padding:7px 12px; font-size:12px; }
+    .rev-arrow { font-size:16px; color:#059669; font-weight:900; }
+    .rev-pct { font-weight:800; color:#059669; font-size:14px; }
+    .rev-lbl { color:#374151; font-weight:500; }
+
     .step-err { display:none; margin-bottom:10px; padding:9px 13px; background:#fff7ed; border:1px solid #fed7aa; border-radius:8px; font-size:12px; color:#9a3412; }
     .step-err.show { display:block; }
     .back-lnk {
@@ -232,6 +244,19 @@
     <div class="step" id="s3">
       <div class="q">Gdzie czujesz największą lukę?</div>
       <div class="hint">Możesz wybrać kilka opcji naraz</div>
+
+      <!-- Revenue estimator — appears based on industry+size selections -->
+      <div class="rev-panel" id="rev-panel" style="display:none">
+        <div class="rev-header">📊 Szacowany potencjał przychodowy Twojego sklepu</div>
+        <div class="rev-range" id="rev-range">— —</div>
+        <div class="rev-unit">zł miesięcznie</div>
+        <div class="rev-growth">
+          <span class="rev-arrow">↑</span>
+          <span class="rev-pct" id="rev-pct">+40%</span>
+          <span class="rev-lbl" id="rev-lbl">możliwy wzrost z właściwą strategią e-commerce</span>
+        </div>
+      </div>
+
       <div class="needs">
         <div class="need" data-v="design"><div class="em"><span class="need-badge">DES</span></div><div class="nm">Piękny design</div><div class="ds">Sklep, który zachwyca</div></div>
         <div class="need" data-v="marketing"><div class="em"><span class="need-badge">MKT</span></div><div class="nm">Marketing</div><div class="ds">Więcej klientów i ruchu</div></div>

@@ -149,6 +149,36 @@
     document.querySelectorAll('.pill[data-g="' + g + '"]').forEach(b => b.classList.remove('picked'));
     el.classList.add('picked');
     D[g] = el.dataset.v;
+    if (g === 'teamsize') showSavings(D[g]);
+  }
+
+  /* ── Savings calculator ─────────────────────────────────────── */
+  const SAVINGS_DATA = {
+    '1':     { hours: 4,   yearly: 8000,   msg: 'Automatyzacja w jednoosobowej firmie zwalnia czas na to, co naprawdę ważne.' },
+    '2-10':  { hours: 14,  yearly: 26000,  msg: 'Małe zespoły zyskują najbardziej na automatyzacji powtarzalnych zadań.' },
+    '11-50': { hours: 52,  yearly: 94000,  msg: 'Firmy tej skali redukują czas operacyjny średnio o 30–35%.' },
+    '50+':   { hours: 140, yearly: 270000, msg: 'Przy dużym zespole każde usprawnienie mnoży się przez wszystkich.' },
+  };
+
+  function animateCount(el, target) {
+    const dur = 650, step = 16;
+    let cur = +(el.textContent.replace(/\s/g, '')) || 0;
+    clearInterval(el._savTimer);
+    el._savTimer = setInterval(() => {
+      cur += Math.max(1, Math.ceil((target - cur) / 10));
+      if (cur >= target) { cur = target; clearInterval(el._savTimer); }
+      el.textContent = cur.toLocaleString('pl-PL');
+    }, step);
+  }
+
+  function showSavings(teamsize) {
+    const s = SAVINGS_DATA[teamsize];
+    const panel = document.getElementById('savings-panel');
+    if (!s || !panel) return;
+    panel.style.display = 'block';
+    animateCount(document.getElementById('sav-hours'), s.hours);
+    animateCount(document.getElementById('sav-yearly'), s.yearly);
+    document.getElementById('sav-msg').textContent = s.msg;
   }
 
   async function doSubmit() {

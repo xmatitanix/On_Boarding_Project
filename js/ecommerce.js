@@ -82,6 +82,35 @@ function nxt(n) {
 }
 function prv(n) { nxt(n); }
 
+/* ── Revenue estimator data ─────────────────────────────────── */
+const REV_DATA = {
+  fashion:     { start:'2–8k',    small:'8–30k',   medium:'30–120k',  large:'120–600k'  },
+  electronics: { start:'3–12k',   small:'12–50k',  medium:'50–200k',  large:'200k–1M+'  },
+  food:        { start:'5–15k',   small:'15–50k',  medium:'50–180k',  large:'180–700k'  },
+  beauty:      { start:'2–8k',    small:'8–28k',   medium:'28–90k',   large:'90–400k'   },
+  home:        { start:'3–10k',   small:'10–35k',  medium:'35–140k',  large:'140–600k'  },
+  sport:       { start:'2–9k',    small:'9–30k',   medium:'30–110k',  large:'110–500k'  },
+};
+const REV_GROWTH = {
+  start:  { pct:'+120%', lbl:'możliwy wzrost przy profesjonalnej platformie' },
+  small:  { pct:'+65%',  lbl:'możliwy wzrost po optymalizacji konwersji' },
+  medium: { pct:'+40%',  lbl:'możliwy wzrost przy skalowaniu i automatyzacji' },
+  large:  { pct:'+25%',  lbl:'możliwy wzrost przez nowe kanały sprzedaży' },
+};
+
+function updateRevPanel() {
+  const panel = document.getElementById('rev-panel');
+  if (!panel) return;
+  if (!D.industry || !D.size) { panel.style.display = 'none'; return; }
+  const r = REV_DATA[D.industry];
+  const g = REV_GROWTH[D.size];
+  if (!r || !g) return;
+  panel.style.display = 'block';
+  document.getElementById('rev-range').textContent = r[D.size] || '—';
+  document.getElementById('rev-pct').textContent = g.pct;
+  document.getElementById('rev-lbl').textContent = g.lbl;
+}
+
 function pickInd(el) {
   document.querySelectorAll('.ind-card').forEach(c => c.classList.remove('on'));
   el.classList.add('on');
@@ -92,7 +121,7 @@ function pickSz(el) {
   document.querySelectorAll('.sz').forEach(o => o.classList.remove('on'));
   el.classList.add('on');
   D.size = el.dataset.v;
-  setTimeout(() => nxt(3), 220);
+  setTimeout(() => { nxt(3); updateRevPanel(); }, 220);
 }
 function togNeed(el) {
   el.classList.toggle('on');
