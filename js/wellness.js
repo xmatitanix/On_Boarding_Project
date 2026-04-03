@@ -117,6 +117,7 @@ async function wlSubmit() {
     need:       WD.need,
     priorities: WD.priorities,
     timeline:   WD.timeline,
+    energy:     document.getElementById('wl-energy')?.value || '3',
     name,
     email,
     phone:      document.getElementById('wl-ph').value.trim(),
@@ -137,6 +138,15 @@ async function wlSubmit() {
   }
 }
 
+/* ── Energy slider ───────────────────────────────────────────── */
+const ENERGY_LABELS = {
+  1: 'Niski poziom energii — zaczynamy spokojnie, bez presji',
+  2: 'Trochę zmęczony/a — dobierzemy łagodne podejście',
+  3: 'Normalny poziom — dobry moment na start',
+  4: 'Dobra energia — jesteś gotowy/a na zmiany',
+  5: 'Wysoka energia 💪 — idealny moment, działamy!',
+};
+
 function setupHandlers() {
   document.querySelectorAll('#w1 .opt').forEach(el => el.addEventListener('click', function() { pickW1(this); }));
   document.querySelectorAll('#w2 .opt').forEach(el => el.addEventListener('click', function() { togW2(this); }));
@@ -144,5 +154,11 @@ function setupHandlers() {
   document.querySelectorAll('[data-gow]').forEach(b => b.addEventListener('click', function() { goW(+this.dataset.gow); }));
   document.querySelectorAll('[data-action="submit"]').forEach(b => b.addEventListener('click', wlSubmit));
   document.querySelectorAll('[data-action="reload"]').forEach(b => b.addEventListener('click', () => location.reload()));
+
+  const slider = document.getElementById('wl-energy');
+  const caption = document.getElementById('energy-caption');
+  if (slider && caption) {
+    slider.addEventListener('input', () => { caption.textContent = ENERGY_LABELS[slider.value] || ''; });
+  }
 }
 setupHandlers();
