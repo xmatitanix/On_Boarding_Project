@@ -11,7 +11,7 @@ window.SITE_CONFIG = {
   // ── BRANDING ────────────────────────────────────────────────────
   //  Nazwa pojawia się w nagłówku / logotypie każdego szablonu.
   brand: {
-    name: 'TwojaSaaS',      // ← Zmień na nazwę klienta
+    name: 'Karate Orzeł Poznań',      // ← Zmień na nazwę klienta
   },
 
   // ── MAKE.COM — adresy webhooków ─────────────────────────────────
