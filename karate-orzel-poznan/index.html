@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karate Orzeł Poznań — Dołącz do nas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="/config.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f172a; --card: #1e293b; --accent: #ef4444; --accent-lt: rgba(239,68,68,.12);
+      --accent-dk: #dc2626; --ink: #f1f5f9; --ink-m: #94a3b8; --ink-s: #64748b;
+      --accent-r: 239; --accent-g: 68; --accent-b: 68;
+      --border: #334155; --red: #f43f5e; --orange: #fb923c;
+      --font: 'Poppins', system-ui, sans-serif;
+    }
+    html, body { height: 100%; font-family: var(--font); }
+    body { background: var(--bg); color: var(--ink); min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* ── HEADER ─────────────────────────────── */
+    .hdr {
+      background: #0f172a; border-bottom: 1px solid var(--border);
+      padding: 0 40px; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 10; flex-shrink: 0;
+    }
+    .h-logo { display: flex; align-items: center; gap: 10px; }
+    * { transition: border-color .25s, background-color .25s, color .25s, box-shadow .25s; }
+    input, button { transition: border-color .15s, background-color .15s; }
+    .h-mark {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--accent); color: #0f172a;
+      font-size: 14px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .h-brand { font-size: 15px; font-weight: 700; color: var(--ink); }
+    .h-prog-wrap { display: flex; align-items: center; gap: 12px; }
+    .h-prog-label { font-size: 12px; font-weight: 500; color: var(--ink-m); }
+    .h-prog-bar { width: 120px; height: 4px; background: var(--border); border-radius: 99px; overflow: hidden; }
+    .h-prog-fill { height: 100%; background: var(--accent); border-radius: 99px; transition: width .4s; }
+
+    /* ── MAIN ────────────────────────────────── */
+    .main { flex: 1; display: flex; align-items: flex-start; justify-content: center; padding: 40px 16px 60px; }
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+      padding: 40px 44px; width: 100%; max-width: 600px;
+    }
+    @media (max-width: 640px) { .card { padding: 28px 20px; } .hdr { padding: 0 20px; } }
+
+    /* ── STEPS ───────────────────────────────── */
+    .step { display: none; }
+    .step.active { display: block; }
+
+    .step-tag {
+      display: inline-block; padding: 3px 10px; border-radius: 99px;
+      font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      background: var(--accent-lt); color: var(--accent); margin-bottom: 12px;
+    }
+    .step-title { font-size: 24px; font-weight: 800; color: var(--ink); line-height: 1.25; margin-bottom: 6px; }
+    .step-sub { font-size: 14px; color: var(--ink-m); margin-bottom: 28px; }
+
+    /* ── SPORT GRID ───────────────────────────── */
+    .sport-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 32px;
+    }
+    @media (max-width: 400px) { .sport-grid { grid-template-columns: repeat(2, 1fr); } }
+    .sport-card {
+      border: 2px solid var(--border); border-radius: 14px; padding: 18px 12px;
+      cursor: pointer; transition: all .18s; text-align: center; position: relative;
+      background: transparent;
+    }
+    .sport-card:hover { border-color: var(--accent); background: var(--accent-lt); }
+    .sport-card.selected { border-color: var(--accent); background: var(--accent-lt); }
+    .sport-card.selected::after {
+      content: '✓'; position: absolute; top: 8px; right: 10px;
+      font-size: 11px; font-weight: 700; color: var(--accent);
+    }
+    .sp-icon {
+      width: 48px; height: 48px; border-radius: 12px; margin: 0 auto 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 800; letter-spacing: -.5px;
+    }
+    .sp-name { font-size: 13px; font-weight: 600; color: var(--ink); }
+
+    /* ── PILLS ──────────────────────────────────── */
+    .section-label { font-size: 12px; font-weight: 600; color: var(--ink-m); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 10px; margin-top: 24px; }
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+    .pill {
+      padding: 8px 18px; border-radius: 99px; border: 2px solid var(--border);
+      font-size: 14px; font-weight: 500; cursor: pointer; transition: all .15s;
+      color: var(--ink-m); background: transparent;
+    }
+    .pill:hover { border-color: var(--accent); color: var(--ink); }
+    .pill.selected { border-color: var(--accent); background: var(--accent-lt); color: var(--accent); font-weight: 600; }
+
+    /* ── DAYS GRID ──────────────────────────────── */
+    .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 8px; }
+    .day-pill {
+      padding: 10px 4px; border-radius: 10px; border: 2px solid var(--border);
+      font-size: 12px; font-weight: 600; cursor: pointer; transition: all .15s;
+      color: var(--ink-m); background: transparent; text-align: center;
+    }
+    .day-pill:hover { border-color: var(--accent); color: var(--ink); }
+    .day-pill.selected { border-color: var(--accent); background: var(--accent-lt); color: var(--accent); }
+
+    /* ── WEEKLY SCHEDULE VISUALIZER ───────────── */
+    .sched-panel { margin-top:20px; background:#f8fafc; border:1px solid var(--border); border-radius:14px; padding:14px 16px 12px; animation:schedIn .3s ease; }
+    @keyframes schedIn { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:none} }
+    .sched-eyebrow { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:#94a3b8; margin-bottom:11px; }
+    .sched-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+    .sched-col { display:flex; flex-direction:column; align-items:center; gap:5px; }
+    .sched-dname { font-size:11px; font-weight:600; color:#94a3b8; transition:color .2s; }
+    .sched-dot { width:100%; aspect-ratio:1; border-radius:7px; background:#e2e8f0; transition:background .25s ease, transform .2s ease; }
+    .sched-col.active .sched-dname { color:var(--accent); }
+    .sched-col.active .sched-dot { background:var(--accent); transform:scale(1.1); }
+    .sched-footer { display:flex; justify-content:space-between; align-items:center; margin-top:11px; font-size:12px; color:#64748b; }
+    .sched-sessions { font-weight:600; color:var(--accent); }
+
+    /* ── CONTACT FORM ──────────────────────────── */
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+    .f-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .f-label { font-size: 13px; font-weight: 600; color: var(--ink-m); }
+    .f-input {
+      background: rgba(255,255,255,.04); border: 1.5px solid var(--border); border-radius: 10px;
+      padding: 12px 14px; font-size: 15px; font-family: var(--font); color: var(--ink);
+      transition: border-color .15s; width: 100%;
+    }
+    .f-input:focus { outline: none; border-color: var(--accent); }
+    .f-input::placeholder { color: var(--ink-s); }
+    .f-opt { font-size: 11px; color: var(--ink-s); margin-top: 2px; }
+    .f-group.row { flex-direction: row; gap: 16px; }
+    .f-group.row .f-sub { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+
+    /* ── PRIVACY LINE ──────────────────────────── */
+    .privacy {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 12px; color: var(--ink-s); margin-top: 12px; line-height: 1.5;
+    }
+    .priv-dot {
+      width: 14px; height: 14px; border-radius: 50%; background: var(--accent);
+      flex-shrink: 0; margin-top: 1px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 8px; color: #0f172a; font-weight: 800;
+    }
+
+    /* ── BUTTONS ──────────────────────────────── */
+    .btn-row { display: flex; align-items: center; justify-content: space-between; margin-top: 32px; gap: 12px; }
+    .btn-back {
+      background: transparent; border: 1.5px solid var(--border); border-radius: 10px;
+      padding: 12px 22px; font-size: 14px; font-weight: 600; color: var(--ink-m);
+      cursor: pointer; font-family: var(--font); transition: all .15s;
+    }
+    .btn-back:hover { border-color: var(--ink-m); color: var(--ink); }
+    .btn-next {
+      background: var(--accent); border: none; border-radius: 10px;
+      padding: 13px 32px; font-size: 15px; font-weight: 700; color: #fff;
+      cursor: pointer; font-family: var(--font); transition: background .15s; flex: 1; max-width: 260px;
+    }
+    .btn-next:hover { background: var(--accent-dk); }
+    .btn-next:disabled { opacity: .45; cursor: not-allowed; }
+    .btn-submit {
+      background: var(--accent); border: none; border-radius: 10px;
+      padding: 14px 0; font-size: 16px; font-weight: 700; color: #fff;
+      cursor: pointer; font-family: var(--font); transition: background .15s; width: 100%; margin-top: 20px;
+    }
+    .btn-submit:hover { background: var(--accent-dk); }
+    .btn-submit:disabled { opacity: .45; cursor: not-allowed; }
+
+    /* ── SUCCESS ───────────────────────────────── */
+    #success { display: none; text-align: center; padding: 20px 0; }
+    .suc-icon {
+      width: 72px; height: 72px; border-radius: 50%; background: var(--accent);
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
+      font-size: 30px; font-weight: 800; color: #fff;
+    }
+    .suc-title { font-size: 26px; font-weight: 800; color: var(--ink); margin-bottom: 10px; }
+    .suc-sub { font-size: 15px; color: var(--ink-m); line-height: 1.6; }
+
+    /* ── ERROR ─────────────────────────────────── */
+    .err-msg { color: var(--red); font-size: 13px; margin-top: 6px; display: none; }
+    .err-msg.show { display: block; }
+
+    /* ── HONEYPOT ──────────────────────────────── */
+    .hp-field { opacity: 0; position: absolute; top: -9999px; left: -9999px; height: 0; }
+  </style>
+</head>
+<body>
+  <header class="hdr">
+    <div class="h-logo">
+      <div class="h-mark" id="hMark">KO</div>
+      <span class="h-brand" id="hBrand">Karate Orzeł Poznań</span>
+    </div>
+    <div class="h-prog-wrap">
+      <span class="h-prog-label" id="hProgLabel">Krok 1 z 4</span>
+      <div class="h-prog-bar"><div class="h-prog-fill" id="hProgFill" style="width:25%"></div></div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="card">
+
+      <!-- HONEYPOT -->
+      <div class="hp-field" aria-hidden="true">
+        <input type="text" name="website" id="hp" tabindex="-1" autocomplete="off">
+      </div>
+
+      <!-- ─── STEP 1: Dyscyplina ────────────────── -->
+      <div class="step active" id="s1">
+        <div class="step-tag">Krok 1</div>
+        <h1 class="step-title">Czego szukasz w karate?</h1>
+        <p class="step-sub">Wybierz to, co najlepiej opisuje Twój cel. Możesz zaznaczyć więcej niż jedno.</p>
+
+        <div class="sport-grid" id="sportGrid">
+          <div class="sport-card" data-val="karate">
+            <div class="sp-icon" style="background:#3b0d0d;color:#f87171;">KT</div>
+            <div class="sp-name">Karate tradycyjne</div>
+          </div>
+          <div class="sport-card" data-val="kumite">
+            <div class="sp-icon" style="background:#3b1c08;color:#fb923c;">KM</div>
+            <div class="sp-name">Kumite (walka)</div>
+          </div>
+          <div class="sport-card" data-val="kata">
+            <div class="sp-icon" style="background:#1a1640;color:#a78bfa;">KA</div>
+            <div class="sp-name">Kata (formy)</div>
+          </div>
+          <div class="sport-card" data-val="samoobrona">
+            <div class="sp-icon" style="background:#0c2a3b;color:#38bdf8;">SB</div>
+            <div class="sp-name">Samoobrona</div>
+          </div>
+          <div class="sport-card" data-val="dzieci">
+            <div class="sp-icon" style="background:#1c2f1e;color:#4ade80;">DZ</div>
+            <div class="sp-name">Dzieci (5–12 lat)</div>
+          </div>
+          <div class="sport-card" data-val="mlodziez">
+            <div class="sp-icon" style="background:#2a1a08;color:#fbbf24;">MŁ</div>
+            <div class="sp-name">Młodzież (13–17)</div>
+          </div>
+        </div>
+
+        <div class="err-msg" id="e1">Wybierz co najmniej jedną opcję.</div>
+
+        <div class="btn-row">
+          <div></div>
+          <button class="btn-next" data-action="go1">Dalej →</button>
+        </div>
+      </div>
+
+      <!-- ─── STEP 2: Profil ─────────────────────── -->
+      <div class="step" id="s2">
+        <div class="step-tag">Krok 2</div>
+        <h1 class="step-title">Powiedz nam o sobie</h1>
+        <p class="step-sub">Dopasujemy grupę treningową do Twojego wieku i doświadczenia.</p>
+
+        <div class="section-label">Dla kogo szukasz miejsca?</div>
+        <div class="pills" id="whoGroup">
+          <div class="pill" data-group="who" data-val="adult">Dla siebie (dorosły)</div>
+          <div class="pill" data-group="who" data-val="junior">Dla dziecka / młodzieży</div>
+          <div class="pill" data-group="who" data-val="family">Dla całej rodziny</div>
+          <div class="pill" data-group="who" data-val="senior">Senior (60+)</div>
+        </div>
+
+        <div class="section-label" style="margin-top:20px;">Doświadczenie w karate</div>
+        <div class="pills" id="levelGroup">
+          <div class="pill" data-group="level" data-val="beginner">Zupełny początkujący</div>
+          <div class="pill" data-group="level" data-val="intermediate">Trenowałem/am już wcześniej</div>
+          <div class="pill" data-group="level" data-val="advanced">Chcę startować w zawodach</div>
+        </div>
+
+        <div class="err-msg" id="e2">Wybierz dla kogo i poziom doświadczenia.</div>
+
+        <div class="btn-row">
+          <button class="btn-back" data-goto="1">← Wróć</button>
+          <button class="btn-next" data-action="go2">Dalej →</button>
+        </div>
+      </div>
+
+      <!-- ─── STEP 3: Dostępność ─────────────────── -->
+      <div class="step" id="s3">
+        <div class="step-tag">Krok 3</div>
+        <h1 class="step-title">Kiedy możesz trenować?</h1>
+        <p class="step-sub">Pomożemy Ci znaleźć grupę pasującą do Twojego kalendarza.</p>
+
+        <div class="section-label">Dni tygodnia (zaznacz wszystkie pasujące)</div>
+        <div class="days-grid" id="daysGrid">
+          <div class="day-pill" data-val="mon">Pn</div>
+          <div class="day-pill" data-val="tue">Wt</div>
+          <div class="day-pill" data-val="wed">Śr</div>
+          <div class="day-pill" data-val="thu">Cz</div>
+          <div class="day-pill" data-val="fri">Pt</div>
+          <div class="day-pill" data-val="sat">So</div>
+          <div class="day-pill" data-val="sun">Nd</div>
+        </div>
+
+        <div class="section-label" style="margin-top:24px;">Pora dnia</div>
+        <div class="pills" id="timeGroup">
+          <div class="pill" data-group="time" data-val="morning">Rano (6:00–10:00)</div>
+          <div class="pill" data-group="time" data-val="afternoon">Popołudnie (14:00–18:00)</div>
+          <div class="pill" data-group="time" data-val="evening">Wieczór (18:00–22:00)</div>
+          <div class="pill" data-group="time" data-val="flexible">Elastycznie</div>
+        </div>
+
+        <div class="err-msg" id="e3">Zaznacz przynajmniej jeden dzień i porę dnia.</div>
+
+        <div class="sched-panel" id="sched-panel" style="display:none">
+          <div class="sched-eyebrow">Twój plan treningowy</div>
+          <div class="sched-grid">
+            <div class="sched-col" id="sd-mon"><div class="sched-dname">Pn</div><div class="sched-dot"></div></div>
+            <div class="sched-col" id="sd-tue"><div class="sched-dname">Wt</div><div class="sched-dot"></div></div>
+            <div class="sched-col" id="sd-wed"><div class="sched-dname">Śr</div><div class="sched-dot"></div></div>
+            <div class="sched-col" id="sd-thu"><div class="sched-dname">Cz</div><div class="sched-dot"></div></div>
+            <div class="sched-col" id="sd-fri"><div class="sched-dname">Pt</div><div class="sched-dot"></div></div>
+            <div class="sched-col" id="sd-sat"><div class="sched-dname">So</div><div class="sched-dot"></div></div>
+            <div class="sched-col" id="sd-sun"><div class="sched-dname">Nd</div><div class="sched-dot"></div></div>
+          </div>
+          <div class="sched-footer">
+            <span class="sched-sessions" id="sched-sessions"></span>
+            <span id="sched-time-lbl"></span>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-back" data-goto="2">← Wróć</button>
+          <button class="btn-next" data-action="go3">Dalej →</button>
+        </div>
+      </div>
+
+      <!-- ─── STEP 4: Kontakt ────────────────────── -->
+      <div class="step" id="s4">
+        <div class="step-tag">Krok 4</div>
+        <h1 class="step-title">Zostaw kontakt do siebie</h1>
+        <p class="step-sub">Sensei odezwie się w ciągu 24 godzin, żeby ustalić termin pierwszych zajęć.</p>
+
+        <div class="f-group row">
+          <div class="f-sub">
+            <label class="f-label" for="fName">Imię</label>
+            <input class="f-input" id="fName" type="text" placeholder="Anna" maxlength="100" autocomplete="given-name">
+          </div>
+          <div class="f-sub">
+            <label class="f-label" for="fSurname">Nazwisko</label>
+            <input class="f-input" id="fSurname" type="text" placeholder="Kowalska" maxlength="100" autocomplete="family-name">
+          </div>
+        </div>
+
+        <div class="f-group">
+          <label class="f-label" for="fEmail">Adres e-mail <span style="color:var(--accent)">*</span></label>
+          <input class="f-input" id="fEmail" type="email" placeholder="anna@email.com" maxlength="254" autocomplete="email">
+        </div>
+
+        <div class="f-group">
+          <label class="f-label" for="fPhone">Telefon <span style="font-weight:400;color:var(--ink-s)">(opcjonalnie)</span></label>
+          <input class="f-input" id="fPhone" type="tel" placeholder="+48 600 000 000" maxlength="30" autocomplete="tel">
+          <span class="f-opt">Sensei może zadzwonić, żeby lepiej doradzić.</span>
+        </div>
+
+        <div class="err-msg" id="e4">Podaj prawidłowy adres e-mail.</div>
+
+        <div class="privacy">
+          <div class="priv-dot">✓</div>
+          <span>Twoje dane są przetwarzane wyłącznie w celu odpowiedzi na zgłoszenie. Nie trafiają do żadnych zewnętrznych list marketingowych.</span>
+        </div>
+
+        <button class="btn-submit" id="btnSubmit">Zapisz mnie →</button>
+      </div>
+
+      <!-- ─── SUCCESS ────────────────────────────── -->
+      <div id="success">
+        <div class="suc-icon">OSU</div>
+        <div class="suc-title">Zgłoszenie przyjęte!</div>
+        <p class="suc-sub">Sensei odezwie się do Ciebie w ciągu 24 godzin,<br>żeby ustalić termin pierwszych zajęć.<br><br>Osu! Do zobaczenia na tatami 🥋</p>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/js/sports.js" defer></script>
+</body>
+</html>
